@@ -9,8 +9,13 @@
     <ion-row>
       <ion-col>
         <ion-item>
+          <app-generate-password (password)="getPassword($event)"></app-generate-password>
+          <app-copy-button [copyInput]="suggestedPassword" (copyOutput)="itemCopied($event)"></app-copy-button>
+        </ion-item>
+        <ion-item>
           <ion-label position="floating">Password</ion-label>
           <ion-input></ion-input>
+          
         </ion-item>
         <ion-item>
           <ion-button>Save</ion-button>
