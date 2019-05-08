@@ -1,5 +1,7 @@
 {
   "name": "sazaWallet",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
