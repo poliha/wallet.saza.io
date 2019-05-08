@@ -12,14 +12,62 @@
           <app-generate-password (password)="getPassword($event)"></app-generate-password>
           <app-copy-button [copyInput]="suggestedPassword" (copyOutput)="itemCopied($event)"></app-copy-button>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input></ion-input>
-          
-        </ion-item>
-        <ion-item>
-          <ion-button>Save</ion-button>
-        </ion-item>
+
+        <form [formGroup]="passwordForm" (submit)="formSubmit()">
+          <ion-item>
+            <ion-label>Use suggestion</ion-label>
+            <ion-checkbox name="useSuggestion" formControlName="useSuggestion" (ionChange)="setSuggestion($event)"
+              checked="false">
+            </ion-checkbox>
+          </ion-item>
+          <ion-item *ngIf="useSuggestion.value === true">
+            <ion-label>I have copied password to a safe place</ion-label>
+            <ion-checkbox formControlName="passwordSaved" name="passwordSaved" checked="false"></ion-checkbox>
+
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input name="password" formControlName="password"></ion-input>
+            <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+
+              <div *ngIf="password.errors.required">
+                value is required.
+              </div>
+
+              <div *ngIf="password.errors.minlength">
+                Minimum length is 8 characters
+              </div>
+            </div>
+
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-input name="confirmPassword" formControlName="confirmPassword"></ion-input>
+            <div class="text-danger"
+              *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+
+              <div *ngIf="confirmPassword.errors.required">
+                value is required.
+              </div>
+
+              <div *ngIf="confirmPassword.errors.minlength">
+                Minimum length is 8 characters
+              </div>
+              <div *ngIf="confirmPassword.errors.equalTo">
+                Passphrase mismatch
+              </div>
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <button type="submit" [disabled]="passwordForm.invalid">Save</button>
+          </ion-item>
+
+        </form>
+
+
       </ion-col>
     </ion-row>
   </ion-grid>
