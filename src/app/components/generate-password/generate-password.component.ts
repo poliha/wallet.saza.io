@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import * as niceware from 'niceware';
+import { Utility } from '../../providers/providers';
 
 @Component({
   selector: 'app-generate-password',
@@ -10,16 +10,15 @@ export class GeneratePasswordComponent implements OnInit {
 
   suggestion = '';
   @Output() password: EventEmitter<any> = new EventEmitter();
-  constructor() { }
+  constructor(private utility: Utility) { }
+
 
   ngOnInit() {
     this.suggestPassword();
   }
 
   suggestPassword() {
-    const temp = niceware.generatePassphrase(10);
-    const tempCaps = temp.map(p => p.charAt().toUpperCase() + p.slice(1));
-    this.suggestion = tempCaps.join(' ');
+    this.suggestion = this.utility.generatePassword();
     console.log('pg: ', this.suggestion);
     this.password.emit(this.suggestion);
   }

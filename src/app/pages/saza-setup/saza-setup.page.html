@@ -28,7 +28,7 @@
 
           <ion-item>
             <ion-label position="floating">Password</ion-label>
-            <ion-input name="password" formControlName="password"></ion-input>
+            <ion-input type="password" name="password" formControlName="password"></ion-input>
             <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
 
               <div *ngIf="password.errors.required">
@@ -44,7 +44,7 @@
 
           <ion-item>
             <ion-label position="floating">Confirm Password</ion-label>
-            <ion-input name="confirmPassword" formControlName="confirmPassword"></ion-input>
+            <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"></ion-input>
             <div class="text-danger"
               *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
 
