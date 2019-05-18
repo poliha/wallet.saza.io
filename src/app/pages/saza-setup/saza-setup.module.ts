@@ -2,12 +2,15 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { CopyButtonComponent } from '../../components/copy-button/copy-button.component';
+import { CopyButtonComponentModule } from '../../components/copy-button/copy-button.module';
 import { GeneratePasswordComponent } from '../../components/generate-password/generate-password.component';
 import { UserService } from '../../providers/providers';
 import { IonicModule } from '@ionic/angular';
 
 import { SazaSetupPage } from './saza-setup.page';
+import { RecoveryPasswordModalComponentModule } from '../../components/recovery-password-modal/recovery-password-modal.module';
+
+import { RecoveryPasswordModalComponent } from '../../components/recovery-password-modal/recovery-password-modal.component';
 
 const routes: Routes = [
   {
@@ -23,12 +26,15 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    RecoveryPasswordModalComponentModule,
+    CopyButtonComponentModule
   ],
-  declarations: [GeneratePasswordComponent, CopyButtonComponent, SazaSetupPage],
+  declarations: [GeneratePasswordComponent, SazaSetupPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     UserService
-  ]
+  ],
+  entryComponents: [RecoveryPasswordModalComponent],
 })
 export class SazaSetupPageModule {}

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CustomValidators, Utility, UserService } from '../../providers/providers';
+import { ModalController } from '@ionic/angular';
+import { RecoveryPasswordModalComponent } from '../../components/recovery-password-modal/recovery-password-modal.component';
+import { OverlayEventDetail } from '@ionic/core';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-saza-setup',
   templateUrl: './saza-setup.page.html',
@@ -9,7 +14,8 @@ import { CustomValidators, Utility, UserService } from '../../providers/provider
 export class SazaSetupPage implements OnInit {
   suggestedPassword = '';
   private passwordForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private utility: Utility, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private utility: Utility, private userService: UserService,
+    public modalController: ModalController, private router: Router) { }
 
   ngOnInit() {
     this.makeForm();
@@ -66,13 +72,30 @@ export class SazaSetupPage implements OnInit {
       console.log("PE: ", encrpytedPassword);
       console.log("PH: ", passwordHash);
       console.log("PR: ", recoveryPassword)
-      this.userService.setPassword(encrpytedPassword);
-      this.userService.setPasswordRecovery(recoveryPassword);
+      this.userService.setPassword(passwordHash);
+      this.userService.setPasswordRecovery(encrpytedPassword);
+     this.presentModal(recoveryPassword);
+
 
     } catch (error) {
       
     }
 
+  }
+
+  async presentModal(modalValue) {
+    const modal = await this.modalController.create({
+      component: RecoveryPasswordModalComponent,
+      componentProps: { recoveryPassword: modalValue },
+      backdropDismiss: false
+    });
+
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      console.log("modal dismissed");
+      this.router.navigate(['home/']);
+    });
+
+    return await modal.present();
   }
 
 }
