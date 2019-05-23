@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, INVALID_PASSWORD_ERROR } from '../../providers/providers';
+import { Utility, UserService, INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../providers/providers';
+import { SazaAccount } from '../../interfaces/saza';
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.page.html',
@@ -62,12 +63,19 @@ export class CreateAccountPage implements OnInit {
       }
 
       const encrpytedObject = this.utility.encrypt(this.pairObj.private, this.password.value)
-      const sazaAccount = {
+
+      if (!encrpytedObject) {
+        throw new Error(ENCRYPTION_FAILED_ERROR);
+      }
+
+      const sazaAccount: SazaAccount = {
         public: this.pairObj.public,
         private: encrpytedObject
       };
 
       this.userService.setAccount(sazaAccount);
+      this.pairObj.private = '';
+      this.pairObj.public = '';
       this.createAccountForm.reset();
       console.log("account saved")
 

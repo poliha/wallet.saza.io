@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { SazaAccount } from '../interfaces/saza';
 
 const STORAGE_KEYS = {
   'ACCOUNT': 'user.saza.account',
@@ -7,6 +8,8 @@ const STORAGE_KEYS = {
   'PASSWORD': 'user.saza.pwd',
   'PASSWORDRECOVERY': 'user.saza.pwd.recovery'
 }
+
+
 
 // todo create account interface for storing account objects
 // use behaviour subjects for local member variable.
@@ -72,17 +75,19 @@ export class UserService {
    * Stores and account object
    * @param data - account object to be stored
    */
-  setAccount(data) {
-    return this.getAccounts().then(accounts => {
+  setAccount(data: SazaAccount) {
+    return this.getAccounts().then((accounts: Array<SazaAccount>) => {
       let accountFound = false;
-
-      let allAccounts = accounts.map(a => {
-        if (a.publicKey === data.publicKey) {
-          accountFound = true;
-          a = data;
-        }
-        return a;
-      });
+      let allAccounts: Array<SazaAccount> = [];
+      if (accounts) {
+        allAccounts = accounts.map(a => {
+          if (a.public === data.public) {
+            accountFound = true;
+            a = data;
+          }
+          return a;
+        });
+      }
 
       if (!accountFound) {
         allAccounts.push(data);
