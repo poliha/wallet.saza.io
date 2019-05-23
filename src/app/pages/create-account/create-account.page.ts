@@ -15,7 +15,10 @@ export class CreateAccountPage implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.makeForm()
+    this.userService.userAccounts.subscribe((data) => {
+      console.log(data);
+    });
+    this.makeForm();
   }
 
   generateKeypair() {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { SazaAccount } from '../interfaces/saza';
+import { BehaviorSubject } from 'rxjs';
+
 
 const STORAGE_KEYS = {
   'ACCOUNT': 'user.saza.account',
@@ -9,15 +11,14 @@ const STORAGE_KEYS = {
   'PASSWORDRECOVERY': 'user.saza.pwd.recovery'
 }
 
-
-
-// todo create account interface for storing account objects
-// use behaviour subjects for local member variable.
-
 @Injectable()
 export class UserService {
 
-  constructor(public storage: Storage) { }
+  public userAccounts: BehaviorSubject<SazaAccount[]> = new BehaviorSubject<SazaAccount[]>([]);
+
+  constructor(public storage: Storage) {
+    this.getAccounts()
+   }
 
   /**
    * Get the value of ID
@@ -68,7 +69,11 @@ export class UserService {
    * Get stored accounts
    */
   getAccounts() {
-    return this.getData(STORAGE_KEYS.ACCOUNT);
+    return this.getData(STORAGE_KEYS.ACCOUNT).then((accounts: Array<SazaAccount>) => {
+      this.userAccounts.next(accounts);
+      // to do: refactor this
+      return this.getData(STORAGE_KEYS.ACCOUNT)
+    });
   }
 
   /**
@@ -93,7 +98,8 @@ export class UserService {
         allAccounts.push(data);
       }
 
-      return this.setData(STORAGE_KEYS.ACCOUNT, allAccounts);
+      this.setData(STORAGE_KEYS.ACCOUNT, allAccounts);
+      this.userAccounts.next(allAccounts);
     });
   }
 
