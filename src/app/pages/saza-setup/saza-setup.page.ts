@@ -78,7 +78,8 @@ export class SazaSetupPage implements OnInit {
 
 
     } catch (error) {
-      
+      // to do handle and show error
+      console.log(error);
     }
 
   }

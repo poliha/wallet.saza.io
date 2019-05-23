@@ -6,3 +6,5 @@ export {
   Utility,
   UserService
 };
+
+export const INVALID_PASSWORD_ERROR = `Invalid password.`;

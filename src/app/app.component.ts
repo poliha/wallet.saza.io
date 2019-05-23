@@ -24,6 +24,11 @@ export class AppComponent {
       title: 'Saza Setup',
       url: '/saza-setup',
       icon: 'list'
+    },
+    {
+      title: 'Create Account',
+      url: '/create-account',
+      icon: 'list'
     }
   ];
 

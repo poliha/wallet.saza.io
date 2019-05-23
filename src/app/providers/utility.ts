@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as Forge from 'node-forge';
-// import {
-//   Keypair, Asset, Operation, TransactionBuilder, StrKey,
-//   FederationServer, StellarTomlResolver, Memo, Account
-// } from 'stellar-sdk';
+import {
+  Keypair, Asset, Operation, TransactionBuilder, StrKey,
+  FederationServer, StellarTomlResolver, Memo, Account
+} from 'stellar-sdk';
 import * as bcrypt from 'bcryptjs';
 import * as niceware from 'niceware';
 // import { Validators, FormControl } from '@angular/forms';
@@ -92,4 +92,21 @@ export class Utility {
       return false;
     }
   }
+
+  keypairFromPrivateKey(secret) {
+    try {
+      return Keypair.fromSecret(secret);
+    } catch (error) {
+      return false;
+    }
+  }
+
+  randomKeypair() {
+    try {
+      return Keypair.random();
+    } catch (error) {
+      return false;
+    }
+  }
+
 }
