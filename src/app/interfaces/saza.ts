@@ -6,3 +6,11 @@ export interface SazaAccount {
     salt: string;
   };
 }
+
+// export const EmptySazaAccount = {
+//   public: '', private: {
+//     text: '',
+//     iv: '',
+//     salt: ''
+//   }
+// };

@@ -5,20 +5,78 @@ import { BehaviorSubject } from 'rxjs';
 
 
 const STORAGE_KEYS = {
-  'ACCOUNT': 'user.saza.account',
+  'ACCOUNTS': 'user.saza.account',
   'ID': 'user.saza.id',
   'PASSWORD': 'user.saza.pwd',
-  'PASSWORDRECOVERY': 'user.saza.pwd.recovery'
-}
+  'PASSWORDRECOVERY': 'user.saza.pwd.recovery',
+  'ACTIVE_ACCOUNT': 'user.saza.account.active',
+  'ACTIVE_NETWORK': 'user.saza.network.active',
+};
+
+const STELLAR_NETWORKS = {
+  'pubnet': {
+    'passphrase': '',
+    'horizon': ''
+  },
+  'testnet': {
+    'passphrase': '',
+    'horizon': ''
+  },
+};
 
 @Injectable()
 export class UserService {
 
   public userAccounts: BehaviorSubject<SazaAccount[]> = new BehaviorSubject<SazaAccount[]>([]);
+  public activeAccount: BehaviorSubject<SazaAccount> = new BehaviorSubject<SazaAccount>(null);
+  public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(STELLAR_NETWORKS.pubnet);
 
   constructor(public storage: Storage) {
-    this.getAccounts()
-   }
+    this.getAccounts();
+    this.getActiveAccount();
+    this.getActiveNetwork();
+  }
+
+  /**
+   * Get the value of the active account
+   */
+  getActiveAccount() {
+    return this.getData(STORAGE_KEYS.ACTIVE_ACCOUNT).then((account: SazaAccount) => {
+      this.activeAccount.next(account);
+    });
+  }
+
+  /**
+   * Set the active account
+   * @param account - account to be saved
+   */
+  setActiveAccount(account) {
+    this.activeAccount.next(account);
+    return this.setData(STORAGE_KEYS.ACTIVE_ACCOUNT, account);
+  }
+
+  /**
+   * Get the value of the active network
+   */
+  getActiveNetwork() {
+    return this.getData(STORAGE_KEYS.ACTIVE_NETWORK).then((network: SazaAccount) => {
+      if (network == null) {
+        this.activeNetwork.next(STELLAR_NETWORKS.pubnet);
+      } else {
+        this.activeNetwork.next(network);
+      }
+    });
+  }
+
+  /**
+   * Set the active network
+   * @param network - network to be saved
+   */
+  setActiveNetwork(network) {
+    this.activeNetwork.next(network);
+    return this.setData(STORAGE_KEYS.ACTIVE_NETWORK, network);
+  }
+
 
   /**
    * Get the value of ID
@@ -69,10 +127,10 @@ export class UserService {
    * Get stored accounts
    */
   getAccounts() {
-    return this.getData(STORAGE_KEYS.ACCOUNT).then((accounts: Array<SazaAccount>) => {
+    return this.getData(STORAGE_KEYS.ACCOUNTS).then((accounts: Array<SazaAccount>) => {
       this.userAccounts.next(accounts);
       // to do: refactor this
-      return this.getData(STORAGE_KEYS.ACCOUNT)
+      return this.getData(STORAGE_KEYS.ACCOUNTS)
     });
   }
 
@@ -98,7 +156,7 @@ export class UserService {
         allAccounts.push(data);
       }
 
-      this.setData(STORAGE_KEYS.ACCOUNT, allAccounts);
+      this.setData(STORAGE_KEYS.ACCOUNTS, allAccounts);
       this.userAccounts.next(allAccounts);
     });
   }
