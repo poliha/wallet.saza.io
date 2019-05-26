@@ -29,6 +29,11 @@ export class AppComponent {
       title: 'Create Account',
       url: '/create-account',
       icon: 'list'
+    },
+    {
+      title: 'Link Account',
+      url: '/link-account',
+      icon: 'list'
     }
   ];
 

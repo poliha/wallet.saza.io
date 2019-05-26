@@ -16,7 +16,8 @@ const routes: Routes = [
     loadChildren: './list/list.module#ListPageModule'
   },
   { path: 'saza-setup', loadChildren: './pages/saza-setup/saza-setup.module#SazaSetupPageModule' },
-  { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule' }
+  { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule' },
+  { path: 'link-account', loadChildren: './pages/link-account/link-account.module#LinkAccountPageModule' }
 ];
 
 @NgModule({

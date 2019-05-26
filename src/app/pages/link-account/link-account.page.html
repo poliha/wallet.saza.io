@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>LinkAccount</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+
+  <form [formGroup]="linkAccountForm" (submit)="formSubmit()">
+    <ion-item>
+      <ion-label position="floating">Private Key</ion-label>
+      <ion-input type="text" name="privateKey" formControlName="privateKey" (keyup)="generateKeypair()"></ion-input>
+      <div class="text-danger" *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
+
+        <div *ngIf="privateKey.errors.required">
+          A value is required.
+        </div>
+        <div *ngIf="privateKey.errors.isValidPrivateKey">
+          Invalid Private Key
+        </div>
+      </div>
+
+    </ion-item>
+    <ion-item>
+      <ion-label>Public Key</ion-label>
+      {{pairObj.public}}
+    </ion-item>
+    <ion-item>
+      <ion-label>Private Key</ion-label>
+      {{pairObj.private}}
+    </ion-item>
+    <ion-item>
+      <ion-label>I have copied keys to a safe place</ion-label>
+      <ion-checkbox name="keysCopied" formControlName="keysCopied" checked="false">
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" name="password" formControlName="password"></ion-input>
+      <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+
+        <div *ngIf="password.errors.required">
+          A value is required.
+        </div>
+
+        <div *ngIf="password.errors.minlength">
+          Minimum length is 8 characters
+        </div>
+      </div>
+
+    </ion-item>
+    <ion-item>
+      <button type="submit" [disabled]="linkAccountForm.invalid">Save</button>
+    </ion-item>
+  </form>
+</ion-content>
