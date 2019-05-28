@@ -15,12 +15,12 @@ const STORAGE_KEYS = {
 
 const STELLAR_NETWORKS = {
   'pubnet': {
-    'passphrase': '',
-    'horizon': ''
+    'passphrase': `Public Global Stellar Network ; September 2015`,
+    'horizon': `https://horizon.stellar.org/`
   },
   'testnet': {
-    'passphrase': '',
-    'horizon': ''
+    'passphrase': `Test SDF Network ; September 2015`,
+    'horizon': `https://horizon-testnet.stellar.org/`
   },
 };
 
@@ -59,9 +59,9 @@ export class UserService {
    * Get the value of the active network
    */
   getActiveNetwork() {
-    return this.getData(STORAGE_KEYS.ACTIVE_NETWORK).then((network: SazaAccount) => {
+    return this.getData(STORAGE_KEYS.ACTIVE_NETWORK).then((network: any) => {
       if (network == null) {
-        this.activeNetwork.next(STELLAR_NETWORKS.pubnet);
+        this.setActiveNetwork('pubnet');
       } else {
         this.activeNetwork.next(network);
       }
@@ -73,8 +73,8 @@ export class UserService {
    * @param network - network to be saved
    */
   setActiveNetwork(network) {
-    this.activeNetwork.next(network);
-    return this.setData(STORAGE_KEYS.ACTIVE_NETWORK, network);
+    this.activeNetwork.next(STELLAR_NETWORKS[network]);
+    return this.setData(STORAGE_KEYS.ACTIVE_NETWORK, STELLAR_NETWORKS[network]);
   }
 
 
