@@ -42,7 +42,7 @@ export class UserService {
    */
   getActiveAccount() {
     return this.getData(STORAGE_KEYS.ACTIVE_ACCOUNT).then((account: SazaAccount) => {
-      this.activeAccount.next(account);
+      this.setActiveAccount(account);
     });
   }
 

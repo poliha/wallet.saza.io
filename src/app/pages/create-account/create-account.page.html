@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <app-account-picker></app-account-picker>
+  </ion-item>
+  
 <ion-button expand="block" (click)="generateKeypair()">Generate Keys</ion-button>
 
        <form [formGroup]="createAccountForm" (submit)="formSubmit()">

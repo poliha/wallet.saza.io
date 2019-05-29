@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { CreateAccountPage } from './create-account.page';
 
 import { UserService } from '../../providers/providers';
+import { AccountPickerComponentModule } from '../../components/account-picker/account-picker.module';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,7 +23,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AccountPickerComponentModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

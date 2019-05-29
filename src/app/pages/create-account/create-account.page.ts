@@ -21,6 +21,9 @@ export class CreateAccountPage implements OnInit {
     this.userService.activeNetwork.subscribe((data) => {
       console.log(data);
     });
+    this.userService.activeAccount.subscribe((data) => {
+      console.log(data);
+    });    
     this.makeForm();
   }
 
