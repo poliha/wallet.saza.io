@@ -35,6 +35,11 @@ export class AppComponent {
       title: 'Link Account',
       url: '/link-account',
       icon: 'list'
+    },
+    {
+      title: 'Ops Create Account',
+      url: '/operations/create-account',
+      icon: 'list'
     }
   ];
 
