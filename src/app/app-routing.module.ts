@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'saza-setup', loadChildren: './pages/saza-setup/saza-setup.module#SazaSetupPageModule' },
   { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule' },
   { path: 'link-account', loadChildren: './pages/link-account/link-account.module#LinkAccountPageModule' },
-  { path: 'operations/create-account', loadChildren: './pages/operations/create-account/create-account.module#CreateAccountPageModule' }
+  { path: 'operations/create-account', loadChildren: './pages/operations/create-account/create-account.module#CreateAccountPageModule' },
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' }
 ];
 
 @NgModule({
