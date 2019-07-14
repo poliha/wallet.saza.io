@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from './providers/providers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -60,6 +62,10 @@ export class AppComponent {
     });
   }
 
+  logout(){
+    this.userService.logout();
+    this.router.navigate(['/']);
+  }
   setNetwork(event){
     if (event.target.checked) {
       this.userService.setActiveNetwork('testnet');

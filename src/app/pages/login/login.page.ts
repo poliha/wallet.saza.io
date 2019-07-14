@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
       if (!this.utility.validateHash(this.password.value, passwordHash)) {
         throw new Error(INVALID_PASSWORD_ERROR);
       }
-
+      this.userService.login();
       this.router.navigate(['create-account/']);
     } catch (error) {
       // to do handle and show error

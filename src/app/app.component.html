@@ -16,6 +16,13 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item (click)="logout()">
+              <ion-label>
+                Logout
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
             <ion-item>
               <ion-label>Testnet</ion-label>
               <ion-toggle (ionChange)="setNetwork($event)"></ion-toggle>

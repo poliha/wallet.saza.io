@@ -12,6 +12,7 @@ const STORAGE_KEYS = {
   'ACTIVE_ACCOUNT': 'user.saza.account.active',
   'ACTIVE_NETWORK': 'user.saza.network.active',
   'OPERATIONS': 'user.saza.operations',
+  'LOGGED_IN': 'user.saza.loggedin',
 };
 
 const STELLAR_NETWORKS = {
@@ -32,11 +33,13 @@ export class UserService {
   public activeAccount: BehaviorSubject<SazaAccount> = new BehaviorSubject<SazaAccount>(null);
   public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(STELLAR_NETWORKS.pubnet);
   public operations: BehaviorSubject<any> = new BehaviorSubject([]);
+  public isLoggedIn: BehaviorSubject<any> = new BehaviorSubject(false);
 
   constructor(public storage: Storage) {
     this.getAccounts();
     this.getActiveAccount();
     this.getActiveNetwork();
+    this.getLoginStatus();
   }
 
   /**
@@ -66,6 +69,16 @@ export class UserService {
         this.setActiveNetwork('pubnet');
       } else {
         this.activeNetwork.next(network);
+      }
+    });
+  }
+
+  getLoginStatus() {
+    return this.getData(STORAGE_KEYS.LOGGED_IN).then((status: any) => {
+      if (status == null) {
+        this.isLoggedIn.next(false);
+      } else {
+        this.isLoggedIn.next(status);
       }
     });
   }
@@ -186,6 +199,31 @@ export class UserService {
       this.operations.next(ops);
     });
   }
+
+  login(){
+    this.isLoggedIn.next(true);
+    return this.setData(STORAGE_KEYS.LOGGED_IN, true);
+  }
+
+  logout(){
+    this.isLoggedIn.next(false);
+    return this.setData(STORAGE_KEYS.LOGGED_IN, false);
+  }
+
+  async isSetupComplete() {
+    // to do: complete method
+    const values = await Promise.all([this.getPassword(), this.getPasswordRecovery()])
+
+    if (values.length === 2) {
+      if (values[0] == null || values[1] == null) {
+        return false;
+      }
+      return true;
+    }
+
+    return false;
+  }
+
 
   /**
    * Get the data from storage identified by key.

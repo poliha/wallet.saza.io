@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { RecoveryPasswordModalComponent } from '../../components/recovery-password-modal/recovery-password-modal.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-saza-setup',
@@ -97,6 +98,24 @@ export class SazaSetupPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+   async canDeactivate(nextUrl: string){
+    try {
+      let status = false;
+
+      if (nextUrl === '/' || nextUrl === '/home') {
+        status = true;
+        return status;
+      }
+      status = await this.userService.isSetupComplete();
+      console.log(status);
+      return status;
+    } catch (error) {
+      // to do handle and show error
+      console.log(error);
+      // this.notificationService.show('Hang on ...', 'Please complete account setup.', 'warning');
+    }
   }
 
 }

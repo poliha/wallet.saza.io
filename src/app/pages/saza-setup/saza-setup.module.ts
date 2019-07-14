@@ -12,11 +12,13 @@ import { UserService } from '../../providers/providers';
 import { RecoveryPasswordModalComponentModule } from '../../components/recovery-password-modal/recovery-password-modal.module';
 
 import { RecoveryPasswordModalComponent } from '../../components/recovery-password-modal/recovery-password-modal.component';
+import { AuthGuardService as AuthGuard } from '../../providers/auth-guard.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: SazaSetupPage
+    component: SazaSetupPage,
+    canDeactivate: [AuthGuard]
   }
 ];
 
