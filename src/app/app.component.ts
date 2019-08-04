@@ -41,7 +41,12 @@ export class AppComponent {
       title: 'Ops Create Account',
       url: '/operations/create-account',
       icon: 'list'
-    }
+    },
+    {
+      title: 'Ops Payment',
+      url: '/operations/payment',
+      icon: 'list'
+    }    
   ];
 
 

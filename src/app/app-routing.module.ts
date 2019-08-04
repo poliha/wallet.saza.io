@@ -21,7 +21,8 @@ const routes: Routes = [
   { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule', canActivate: [AuthGuard] },
   { path: 'link-account', loadChildren: './pages/link-account/link-account.module#LinkAccountPageModule', canActivate: [AuthGuard] },
   { path: 'operations/create-account', loadChildren: './pages/operations/create-account/create-account.module#CreateAccountPageModule', canActivate: [AuthGuard] },
-  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule', canActivate: [AuthGuard] }
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule', canActivate: [AuthGuard] },
+  { path: 'operations/payment', loadChildren: './pages/operations/payment/payment.module#PaymentPageModule', canActivate: [AuthGuard] }
 ];
 
 @NgModule({
