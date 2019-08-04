@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CreateAccountPage } from './create-account.page';
+import { TxService } from '../../../providers/providers';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
+  providers: [TxService],
   declarations: [CreateAccountPage]
 })
 export class CreateAccountPageModule {}

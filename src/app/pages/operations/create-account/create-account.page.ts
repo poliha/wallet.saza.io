@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, CustomValidators, INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../../providers/providers';
+import { Utility, UserService, TxService, CustomValidators, INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../../providers/providers';
 import { SazaAccount } from '../../../interfaces/saza';
 import {
   Keypair, Asset, Operation, TransactionBuilder, StrKey,
@@ -16,10 +16,10 @@ export class CreateAccountPage implements OnInit {
   private createAccountForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService) { }
+    private userService: UserService, private txService: TxService) { }
 
   ngOnInit() {
-    this.userService.operations.subscribe((data) => {
+    this.txService.operations.subscribe((data) => {
       console.log(data);
     });
     this.makeForm();
@@ -56,7 +56,7 @@ export class CreateAccountPage implements OnInit {
       console.log('createAccountOps: ', opsObj);
       const createAccountOperation = Operation.createAccount(opsObj);
       const xdrString = createAccountOperation.toXDR().toString('base64');
-      this.userService.addOperation(xdrString);
+      this.txService.addOperation(xdrString);
 
       console.log('createAccountOps: ', xdrString)
       const buffer = Buffer.from(xdrString, 'base64');
