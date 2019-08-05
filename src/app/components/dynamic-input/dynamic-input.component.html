@@ -1,0 +1,31 @@
+<div [formGroup]="form">
+  <ion-input type="{{ inputType }}" name="{{controlName}}" formControlName="{{controlName}}"
+    placeholder="{{placeHolder}}"></ion-input>
+    <!-- <input type="{{ inputType }}" class="form-control" formControlName="{{controlName}}" -->
+      <!-- placeholder="{{placeHolder}}" /> -->
+  
+  <div class="text-danger"
+    *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
+
+    <div *ngIf="form.controls[controlName].errors.required">
+      Please enter a value
+    </div>
+    <div *ngIf="form.controls[controlName].errors.min">
+      Minimum value is {{minValue}}
+    </div>
+
+    <div *ngIf="form.controls[controlName].errors.max">
+      Maximum value is {{maxValue}}
+    </div>
+
+    <div *ngIf="form.controls[controlName].errors.maxlength">
+      Maximum length is {{maxValue}}
+    </div>
+
+    <div *ngIf="form.controls[controlName].errors.minlength">
+      Minimum length is {{minValue}}
+    </div>
+
+  </div>
+
+</div>
