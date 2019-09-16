@@ -22,8 +22,10 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Destination</ion-label>
-    <ion-input type="text" name="destination" formControlName="destination"></ion-input>
-    <div class="text-danger" *ngIf="destination.invalid && (destination.dirty || destination.touched)">
+    <app-dynamic-input [inputType]="'text'" [form]="paymentForm" [controlName]="'destination'"
+      [placeHolder]="'Public key or Federated address'" [isRecipient]="true"></app-dynamic-input>
+    <!-- <ion-input type="text" name="destination" formControlName="destination"></ion-input> -->
+    <!-- <div class="text-danger" *ngIf="destination.invalid && (destination.dirty || destination.touched)">
 
       <div *ngIf="destination.errors.required">
         A value is required.
@@ -31,11 +33,13 @@
       <div *ngIf="destination.errors.isValidRecipient">
         Invalid Destination
       </div>
-    </div>
+    </div> -->
 
   </ion-item>
   <ion-item>
     <ion-label position="floating">Asset</ion-label>
+    <app-asset-picker [form]="paymentForm" [controlName]="'price'"></app-asset-picker>
+    <app-dynamic-input [form]="paymentForm" [controlName]="'buy'" [placeHolder]="'enter'"></app-dynamic-input>
     <ion-input type="text" name="asset" formControlName="asset"></ion-input>
     <div class="text-danger" *ngIf="asset.invalid && (asset.dirty || asset.touched)">
 

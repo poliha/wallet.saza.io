@@ -1,9 +1,6 @@
 <div [formGroup]="form">
   <ion-input type="{{ inputType }}" name="{{controlName}}" formControlName="{{controlName}}"
     placeholder="{{placeHolder}}"></ion-input>
-    <!-- <input type="{{ inputType }}" class="form-control" formControlName="{{controlName}}" -->
-      <!-- placeholder="{{placeHolder}}" /> -->
-  
   <div class="text-danger"
     *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
 
@@ -26,6 +23,12 @@
       Minimum length is {{minValue}}
     </div>
 
-  </div>
+    <div *ngIf="form.controls[controlName].errors.isValidRecipient">
+      Invalid: Expects public key or federation address
+    </div>
 
+    <div *ngIf="form.controls[controlName].errors.isValidPublicKey">
+      Invalid: Expects Stellar public key
+    </div>
+  </div>
 </div>

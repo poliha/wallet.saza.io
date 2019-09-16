@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { PaymentPage } from './payment.page';
 import { TxService } from 'src/app/providers/providers';
+import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
+import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 
 const routes: Routes = [
   {
@@ -21,7 +23,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    AssetPickerComponentModule,
+    RouterModule.forChild(routes),
+    DynamicInputComponentModule
   ],
   providers: [
     TxService,

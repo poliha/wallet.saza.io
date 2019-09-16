@@ -1,7 +1,7 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { UnsignedHyper } from 'stellar-sdk';
-
+import { CustomValidators } from '../../providers/providers';
 
 @Component({
   selector: 'app-dynamic-input',
@@ -17,10 +17,8 @@ export class DynamicInputComponent implements OnInit {
   @Input() minValue = 0;
   @Input() inputType = 'number';
   @Input() isRequired = true;
-  @Input() hasGroupPrepend = false;
-  @Input() hasGroupAppend = false;
-  @Input() prependText = '';
-  @Input() appendText = '';
+  @Input() isEd25519PublicKey = false;
+  @Input() isRecipient = false;
 
   constructor() { }
 
@@ -49,6 +47,15 @@ export class DynamicInputComponent implements OnInit {
       if (this.maxValue) {
         validators.push(Validators.maxLength(this.maxValue));
       }
+
+      if (this.isEd25519PublicKey) {
+        validators.push(CustomValidators.isValidPublicKey());
+      }
+
+      if (this.isRecipient) {
+        validators.push(CustomValidators.isValidRecipient());
+      }
+
     }
 
     this.form.addControl(this.controlName,
