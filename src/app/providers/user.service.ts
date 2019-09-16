@@ -11,7 +11,6 @@ const STORAGE_KEYS = {
   'PASSWORDRECOVERY': 'user.saza.pwd.recovery',
   'ACTIVE_ACCOUNT': 'user.saza.account.active',
   'ACTIVE_NETWORK': 'user.saza.network.active',
-  'OPERATIONS': 'user.saza.operations',
   'LOGGED_IN': 'user.saza.loggedin',
 };
 
@@ -32,7 +31,6 @@ export class UserService {
   public userAccounts: BehaviorSubject<SazaAccount[]> = new BehaviorSubject<SazaAccount[]>([]);
   public activeAccount: BehaviorSubject<SazaAccount> = new BehaviorSubject<SazaAccount>(null);
   public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(STELLAR_NETWORKS.pubnet);
-  public operations: BehaviorSubject<any> = new BehaviorSubject([]);
   public isLoggedIn: BehaviorSubject<any> = new BehaviorSubject(false);
 
   constructor(public storage: Storage) {
@@ -180,25 +178,8 @@ export class UserService {
   }
 
 
-  getOperations() {
-    return this.getData(STORAGE_KEYS.OPERATIONS).then((ops: any) => {
-      this.operations.next(ops);
-      // to do: refactor this
-      return this.getData(STORAGE_KEYS.OPERATIONS);
-    });
-  }
 
-  // to do: deleteOperation
-  addOperation(data: string) {
-    return this.getOperations().then((ops: Array<string>) => {
-      if (ops == null) {
-        ops = [];
-      }
-      ops.push(data);
-      this.setData(STORAGE_KEYS.OPERATIONS, ops);
-      this.operations.next(ops);
-    });
-  }
+
 
   login(){
     this.isLoggedIn.next(true);

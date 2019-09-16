@@ -8,12 +8,12 @@ import {
 } from 'stellar-sdk';
 
 @Component({
-  selector: 'app-create-account',
-  templateUrl: './create-account.page.html',
-  styleUrls: ['./create-account.page.scss'],
+  selector: 'app-payment',
+  templateUrl: './payment.page.html',
+  styleUrls: ['./payment.page.scss'],
 })
-export class CreateAccountPage implements OnInit {
-  private createAccountForm: FormGroup;
+export class PaymentPage implements OnInit {
+  private paymentForm: FormGroup
 
   constructor(private formBuilder: FormBuilder, private utility: Utility,
     private userService: UserService, private txService: TxService) { }
@@ -26,20 +26,22 @@ export class CreateAccountPage implements OnInit {
   }
 
   makeForm() {
-    this.createAccountForm = this.formBuilder.group({
+    this.paymentForm = this.formBuilder.group({
       source: ['', Validators.compose([Validators.required, CustomValidators.isValidPublicKey()])],
       destination: ['', Validators.compose([Validators.required, CustomValidators.isValidRecipient()])],
       amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      asset: ['', Validators.required],
     });
   }
 
   // Getters for template
-  get source() { return this.createAccountForm.get('source'); }
-  get destination() { return this.createAccountForm.get('destination'); }
-  get amount() { return this.createAccountForm.get('amount'); }
+  get source() { return this.paymentForm.get('source'); }
+  get destination() { return this.paymentForm.get('destination'); }
+  get asset() { return this.paymentForm.get('asset'); }
+  get amount() { return this.paymentForm.get('amount'); }
 
-  buildOperation(){
-    // build create account operation
+  buildOperation() {
+    // build payment operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
     // reset form
@@ -49,22 +51,24 @@ export class CreateAccountPage implements OnInit {
       // to do check if source account is active
       const opsObj = {
         destination: this.destination.value,
-        startingBalance: String(this.amount.value),
+        amount: String(this.amount.value),
+        asset: Asset.native(), //to do: replace with custom asset
         source: this.source.value
       };
 
-      console.log('createAccountOps: ', opsObj);
-      const createAccountOperation = Operation.createAccount(opsObj);
-      const xdrString = createAccountOperation.toXDR().toString('base64');
+      console.log('paymentOps: ', opsObj);
+      const paymentOperation = Operation.payment(opsObj);
+      const xdrString = paymentOperation.toXDR().toString('base64');
       this.txService.addOperation(xdrString);
 
-      console.log('createAccountOps: ', xdrString)
+      console.log('paymentOps: ', xdrString)
       const buffer = Buffer.from(xdrString, 'base64');
       console.log('cabuffer: ', buffer);
       console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
-      this.createAccountForm.reset();
+      this.paymentForm.reset();
     } catch (error) {
       console.log('error: ', error)
     }
   }
+
 }

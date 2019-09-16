@@ -1,0 +1,70 @@
+<div [formGroup]="form">
+  <div [ngSwitch]="displayType">
+    <div *ngSwitchCase="'list'">
+      <ion-select placeholder="" (ionChange)="handleListChange($event.target.value)" [compareWith]="compareWith">
+        <ion-select-option [value]="null">Select Asset</ion-select-option>
+        <ion-select-option *ngFor="let b of balances" [value]="b">
+          {{b.asset_type === 'native' ? 'XLM' : b.asset_code }} | Bal : {{b.balance}}
+        </ion-select-option>
+        <ion-select-option value="manual">Enter Custom Asset</ion-select-option>
+      </ion-select>
+      <div class="text-danger"
+        *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
+        <div *ngIf="form.controls[controlName].errors.required">
+          An asset is required
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngSwitchCase="'manual'">
+      <div [formGroupName]="controlName">
+        <ion-radio-group (ionChange)="setAssetType($event.target.value)" formControlName="asset_type">
+          <ion-list-header>
+            Type
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>XLM</ion-label>
+            <ion-radio value="native">
+            </ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Custom</ion-label>
+            <ion-radio value="custom">
+            </ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <div *ngIf="showCustomFields">
+          <ion-item>
+            <ion-input type="text" name="asset_code" placeholder="Code" formControlName="asset_code"></ion-input>
+            <div class="text-danger" *ngIf="assetCode.invalid && (assetCode.dirty || assetCode.touched)">
+
+              <div *ngIf="assetCode.errors.required">
+                A value is required.
+              </div>
+              <div *ngIf="assetCode.errors.max">
+                <!-- to do show max value error -->
+              </div>
+            </div>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" name="asset_issuer" placeholder="Issuer" formControlName="asset_issuer"></ion-input>
+            <div class="text-danger" *ngIf="assetIssuer.invalid && (assetIssuer.dirty || assetIssuer.touched)">
+
+              <div *ngIf="assetIssuer.errors.required">
+                A value is required.
+              </div>
+              <div *ngIf="assetIssuer.errors.isValidPublicKey">
+                Invalid Public Key
+              </div>
+            </div>
+          </ion-item>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

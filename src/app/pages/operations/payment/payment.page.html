@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form [formGroup]="paymentForm">
+  <ion-item>
+    <ion-label position="floating">Source</ion-label>
+    <ion-input type="text" name="source" formControlName="source"></ion-input>
+    <div class="text-danger" *ngIf="source.invalid && (source.dirty || source.touched)">
+
+      <div *ngIf="source.errors.required">
+        A value is required.
+      </div>
+      <div *ngIf="source.errors.isValidPublicKey">
+        Invalid Public Key
+      </div>
+    </div>
+
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Destination</ion-label>
+    <app-dynamic-input [inputType]="'text'" [form]="paymentForm" [controlName]="'destination'"
+      [placeHolder]="'Public key or Federated address'" [isRecipient]="true"></app-dynamic-input>
+    <!-- <ion-input type="text" name="destination" formControlName="destination"></ion-input> -->
+    <!-- <div class="text-danger" *ngIf="destination.invalid && (destination.dirty || destination.touched)">
+
+      <div *ngIf="destination.errors.required">
+        A value is required.
+      </div>
+      <div *ngIf="destination.errors.isValidRecipient">
+        Invalid Destination
+      </div>
+    </div> -->
+
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Asset</ion-label>
+    <app-asset-picker [form]="paymentForm" [controlName]="'price'"></app-asset-picker>
+    <app-dynamic-input [form]="paymentForm" [controlName]="'buy'" [placeHolder]="'enter'"></app-dynamic-input>
+    <ion-input type="text" name="asset" formControlName="asset"></ion-input>
+    <div class="text-danger" *ngIf="asset.invalid && (asset.dirty || asset.touched)">
+
+      <div *ngIf="asset.errors.required">
+        A value is required.
+      </div>
+
+    </div>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Amount</ion-label>
+    <ion-input type="number" name="amount" formControlName="amount"></ion-input>
+    <div class="text-danger" *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+
+      <div *ngIf="amount.errors.required">
+        A value is required.
+      </div>
+
+    </div>
+  </ion-item>
+
+  <ion-item>
+    <button type="button" [disabled]="paymentForm.invalid" (click)="buildOperation()">Add Operation</button>
+    <button type="button" [disabled]="paymentForm.invalid" (click)="buildOperation()">Sign and Send</button>
+  </ion-item>
+</form>
+</ion-content>
