@@ -46,7 +46,7 @@ export class AppComponent {
       title: 'Ops Payment',
       url: '/operations/payment',
       icon: 'list'
-    }    
+    }
   ];
 
 
