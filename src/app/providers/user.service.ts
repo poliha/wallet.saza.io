@@ -71,16 +71,6 @@ export class UserService {
     });
   }
 
-  getLoginStatus() {
-    return this.getData(STORAGE_KEYS.LOGGED_IN).then((status: any) => {
-      if (status == null) {
-        this.isLoggedIn.next(false);
-      } else {
-        this.isLoggedIn.next(status);
-      }
-    });
-  }
-
   /**
    * Set the active network
    * @param network - network to be saved
@@ -90,6 +80,15 @@ export class UserService {
     return this.setData(STORAGE_KEYS.ACTIVE_NETWORK, STELLAR_NETWORKS[network]);
   }
 
+  getLoginStatus() {
+    return this.getData(STORAGE_KEYS.LOGGED_IN).then((status: any) => {
+      if (status == null) {
+        this.isLoggedIn.next(false);
+      } else {
+        this.isLoggedIn.next(status);
+      }
+    });
+  }
 
   /**
    * Get the value of ID
@@ -114,6 +113,14 @@ export class UserService {
   }
 
   /**
+   * Save a password
+   * @param data - password to be saved
+   */
+  setPassword(data) {
+    return this.setData(STORAGE_KEYS.PASSWORD, data);
+  }
+
+  /**
    * Save the recovery password.
    * @param data - password to be saved
    */
@@ -126,14 +133,6 @@ export class UserService {
   */
   getPasswordRecovery() {
     return this.getData(STORAGE_KEYS.PASSWORDRECOVERY);
-  }
-
-  /**
-   * Save a password
-   * @param data - password to be saved
-   */
-  setPassword(data) {
-    return this.setData(STORAGE_KEYS.PASSWORD, data);
   }
 
   /**
@@ -176,9 +175,6 @@ export class UserService {
       this.userAccounts.next(allAccounts);
     });
   }
-
-
-
 
 
   login(){

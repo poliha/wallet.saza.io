@@ -1,5 +1,5 @@
 
 <ion-content>
-   <ion-button expand="block" (click)="sazaSetup()">Setup Wallet</ion-button>
-   <ion-button expand="block" (click)="login()">Login</ion-button>
+   <ion-button *ngIf="!userHasPassword" expand="block" (click)="sazaSetup()">Setup Wallet</ion-button>
+   <ion-button *ngIf="userHasPassword" expand="block" (click)="login()">Login</ion-button>
 </ion-content>
