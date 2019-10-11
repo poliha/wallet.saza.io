@@ -19,38 +19,58 @@ export class AuthGuardService implements CanActivate, CanDeactivate<CanDeactivat
    }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const authLinks = [
+      'saza-setup',
+      'login'
+    ];
 
     console.log("AG, islogged in: ", this.isLoggedIn)
     if (!this.isLoggedIn) {
+      if (this.urlHasString(state.url, authLinks)) {
+        // if url is an auth link, allow activation
+        return true;
+      }
+
       this.router.navigate(['login']);
       return false;
-    }
 
-    const isSetupComplete = this.userService.isSetupComplete();
-    if (this.isLoggedIn && !isSetupComplete) {
-      if (state.url === '/saza-setup') {
-        // return true to avoid redirect loop when url is saza-setup
-        return true;
-      } else {
-        this.router.navigate(['saza-setup']);
-        return false;
+    } else {
+      // to do: fix this. isSetupComplete now returns a promise; 
+      const isSetupComplete = this.userService.isSetupComplete();
+      if (!isSetupComplete) {
+        if (state.url === '/saza-setup') {
+          // return true to avoid redirect loop when url is saza-setup
+          return true;
+        } else {
+          this.router.navigate(['saza-setup']);
+          return false;
+        }
       }
+
+      return true;
     }
 
+    // console.log("AG, islogged in: ", this.isLoggedIn)
+    // if (!this.isLoggedIn) {
+    //   this.router.navigate(['login']);
+    //   return false;
+    // }
 
-    if (this.isLoggedIn && isSetupComplete) {
-      // if user is already logged in dont navigate to auth links
-      const authLinks = [
-        'saza-setup',
-        'login'
-      ];
-      if (this.urlHasString(state.url, authLinks)) {
-        this.router.navigate(['link-account']);
-        return false;
-      }
-    }
 
-    return true;
+
+    // if (this.isLoggedIn && isSetupComplete) {
+    //   // if user is already logged in dont navigate to auth links
+    //   const authLinks = [
+    //     'saza-setup',
+    //     'login'
+    //   ];
+    //   if (this.urlHasString(state.url, authLinks)) {
+    //     this.router.navigate(['link-account']);
+    //     return false;
+    //   }
+    // }
+
+    // return true;
   }
 
   canDeactivate(component: CanDeactivateComponent, currentRoute: ActivatedRouteSnapshot,
