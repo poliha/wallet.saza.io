@@ -7,16 +7,18 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
+import { UserService } from './providers/providers';
 
 describe('AppComponent', () => {
 
-  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
+  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy, userServiceSpy;
 
   beforeEach(async(() => {
     statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
     splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
     platformReadySpy = Promise.resolve();
     platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
+    userServiceSpy = jasmine.createSpyObj('UserService', ['setActiveNetwork', 'logout']);
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
@@ -25,6 +27,7 @@ describe('AppComponent', () => {
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
+        { provide: UserService, useValue: userServiceSpy},
       ],
       imports: [ RouterTestingModule.withRoutes([])],
     }).compileComponents();
@@ -49,7 +52,7 @@ describe('AppComponent', () => {
     await fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
-    expect(menuItems.length).toEqual(2);
+    expect(menuItems.length).toBeGreaterThan(2);
     expect(menuItems[0].textContent).toContain('Home');
     expect(menuItems[1].textContent).toContain('List');
   });
@@ -59,7 +62,7 @@ describe('AppComponent', () => {
     await fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
-    expect(menuItems.length).toEqual(2);
+    expect(menuItems.length).toBeGreaterThan(2);
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/home');
     expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/list');
   });
