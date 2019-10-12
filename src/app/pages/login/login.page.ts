@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
   get password() { return this.loginForm.get('password'); }
 
   async formSubmit() {
-    // validate password 
+    // validate password
     // redirect to dashboard
     try {
       const passwordHash = await this.userService.getPassword()

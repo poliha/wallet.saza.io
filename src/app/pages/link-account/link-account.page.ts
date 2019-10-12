@@ -16,9 +16,6 @@ export class LinkAccountPage implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe((data) => {
-      console.log(data);
-    });
     this.makeForm();
   }
 

@@ -9,8 +9,8 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <app-generate-password (password)="getPassword($event)"></app-generate-password>
-          <app-copy-button [copyInput]="suggestedPassword" (copyOutput)="itemCopied($event)"></app-copy-button>
+          <app-generate-password (password)="setSuggestedPassword($event)"></app-generate-password>
+          <app-copy-button [copyInput]="suggestedPassword" (copyOutput)="itemCopy($event)"></app-copy-button>
         </ion-item>
 
         <form [formGroup]="passwordForm" (submit)="formSubmit()">
@@ -32,12 +32,16 @@
             <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
 
               <div *ngIf="password.errors.required">
-                value is required.
+                Value is required.
               </div>
 
               <div *ngIf="password.errors.minlength">
                 Minimum length is 8 characters
               </div>
+              <div *ngIf="password.errors.isValidPassword">
+                Only alphanumeric and any of these special characters are allowed "$^+=!*()@%&"
+              </div>
+
             </div>
 
           </ion-item>
@@ -49,14 +53,17 @@
               *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
 
               <div *ngIf="confirmPassword.errors.required">
-                value is required.
+                Value is required.
               </div>
 
               <div *ngIf="confirmPassword.errors.minlength">
                 Minimum length is 8 characters
               </div>
               <div *ngIf="confirmPassword.errors.equalTo">
-                Passphrase mismatch
+                Passeword mismatch
+              </div>
+              <div *ngIf="confirmPassword.errors.isValidPassword">
+                Only alphanumeric and any of these special characters are allowed "$^+=!*()@%&"
               </div>
             </div>
           </ion-item>

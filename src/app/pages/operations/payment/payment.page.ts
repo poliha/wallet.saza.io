@@ -15,13 +15,9 @@ import {
 export class PaymentPage implements OnInit {
   private paymentForm: FormGroup
 
-  constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService, private txService: TxService) { }
+  constructor(private formBuilder: FormBuilder, private txService: TxService) { }
 
   ngOnInit() {
-    this.txService.operations.subscribe((data) => {
-      console.log(data);
-    });
     this.makeForm();
   }
 

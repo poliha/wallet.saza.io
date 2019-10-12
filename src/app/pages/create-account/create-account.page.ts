@@ -15,15 +15,6 @@ export class CreateAccountPage implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe((data) => {
-      console.log(data);
-    });
-    this.userService.activeNetwork.subscribe((data) => {
-      console.log(data);
-    });
-    this.userService.activeAccount.subscribe((data) => {
-      console.log(data);
-    });    
     this.makeForm();
   }
 

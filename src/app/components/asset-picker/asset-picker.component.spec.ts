@@ -2,6 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssetPickerComponent } from './asset-picker.component';
+import { ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 describe('AssetPickerComponent', () => {
   let component: AssetPickerComponent;
@@ -11,6 +13,7 @@ describe('AssetPickerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AssetPickerComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [ReactiveFormsModule, IonicModule]
     })
     .compileComponents();
   }));
@@ -18,6 +21,7 @@ describe('AssetPickerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AssetPickerComponent);
     component = fixture.componentInstance;
+    component.form = new FormGroup({});
     fixture.detectChanges();
   });
 

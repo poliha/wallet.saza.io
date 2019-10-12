@@ -15,13 +15,9 @@ import {
 export class CreateAccountPage implements OnInit {
   private createAccountForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService, private txService: TxService) { }
+  constructor(private formBuilder: FormBuilder, private txService: TxService) { }
 
   ngOnInit() {
-    this.txService.operations.subscribe((data) => {
-      console.log(data);
-    });
     this.makeForm();
   }
 
@@ -38,7 +34,7 @@ export class CreateAccountPage implements OnInit {
   get destination() { return this.createAccountForm.get('destination'); }
   get amount() { return this.createAccountForm.get('amount'); }
 
-  buildOperation(){
+  buildOperation() {
     // build create account operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction

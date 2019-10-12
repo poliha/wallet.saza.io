@@ -125,4 +125,14 @@ export class CustomValidators extends Validators {
 
   }
 
+  static isValidPassword() {
+    return (c: FormControl) => {
+      if (c.value) {
+        const passwordRegex = /^[\w\s#$^+=!*()@%&]{8,}$/gi;
+        return passwordRegex.test(String(c.value).trim()) ? null : { isValidPassword: true };
+      }
+      return null;
+    };
+  }
+
 }

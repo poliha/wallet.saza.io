@@ -27,14 +27,20 @@ export class SazaSetupPage implements OnInit {
       useSuggestion: [''],
       passwordSaved: ['', Validators.compose([CustomValidators.requiredIf('useSuggestion')
       ])],
-      password: ['', Validators.compose([Validators.minLength(8), Validators.required])],
-      confirmPassword: ['', Validators.compose([Validators.minLength(8), Validators.required, CustomValidators.equalTo('password')])],
+      password: ['', Validators.compose([Validators.minLength(8), Validators.required, CustomValidators.isValidPassword()])],
+      confirmPassword: ['', Validators.compose([Validators.minLength(8), Validators.required, CustomValidators.isValidPassword(), CustomValidators.equalTo('password')])],
     });
   }
 
+  /**
+   * adds the suggested password to the form when clicked. Resets the form otherwise.
+   * @param event the checkbox event that was clicked
+   */
   setSuggestion(event) {
     if (event.target.checked) {
       this.passwordForm.patchValue({ password: this.suggestedPassword, confirmPassword: this.suggestedPassword });
+      this.password.disable();
+      this.confirmPassword.disable();
     } else {
       this.passwordForm.reset();
       this.password.enable();
@@ -42,11 +48,19 @@ export class SazaSetupPage implements OnInit {
     }
   }
 
-  itemCopied(item) {
+  /**
+   * Copies a value to the clipboard
+   * @param item value to be copied
+   */
+  itemCopy(item) {
     console.log("item: ", item);
   }
 
-  getPassword(password) {
+  /**
+   * sets the suggested password to the "suggestedPassword" member variable.
+   * @param password password to be set.
+   */
+  setSuggestedPassword(password) {
     this.suggestedPassword = password;
     console.log("suggested PW: ", this.suggestedPassword);
   }
@@ -65,19 +79,22 @@ export class SazaSetupPage implements OnInit {
     // save encrypted password
     // return recovery password to user in plain text
     try {
-      const passwordHash = this.utility.getHash(this.password.value)
+      const trimmedPwd = String(this.password.value).trim()
+      const passwordHash = this.utility.getHash(trimmedPwd)
       const recoveryPassword = this.utility.generatePassword();
-      console.log("hash valid: ", this.utility.validateHash(this.password.value, passwordHash))
+      console.log("hash valid: ", this.utility.validateHash(trimmedPwd, passwordHash))
 
-      const encrpytedPassword = this.utility.encrypt(this.password.value, recoveryPassword)
+      // use the recovery password to encrypt the primary password.
+      const encrpytedPassword = this.utility.encrypt(trimmedPwd, recoveryPassword);
       console.log("PE: ", encrpytedPassword);
       console.log("PH: ", passwordHash);
       console.log("PR: ", recoveryPassword)
+      // save hash of primary password
       this.userService.setPassword(passwordHash);
+      // save encrypted password
       this.userService.setPasswordRecovery(encrpytedPassword);
-     this.presentModal(recoveryPassword);
-
-
+      // display recovery password to user
+      this.presentModal(recoveryPassword);
     } catch (error) {
       // to do handle and show error
       console.log(error);
