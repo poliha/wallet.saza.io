@@ -6,11 +6,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Utility, UserService } from 'src/app/providers/providers';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ModalController, IonicModule } from '@ionic/angular';
+import { By } from '@angular/platform-browser';
+import { element } from '@angular/core/src/render3';
 
-describe('SazaSetupPage', () => {
+fdescribe('SazaSetupPage', () => {
   let component: SazaSetupPage;
   let fixture: ComponentFixture<SazaSetupPage>;
-  let utilitySpy, userServiceSpy, modalSpy, modalCtrlSpy;
+  let utilitySpy, userServiceSpy, modalSpy, modalCtrlSpy, checkboxes, useSuggestion;
 
   beforeEach(async(() => {
     utilitySpy = jasmine.createSpyObj('Utility', ['generatePassword', 'getHash']);
@@ -49,5 +51,38 @@ describe('SazaSetupPage', () => {
     const form = template.querySelectorAll('form');
     expect(form.length).toEqual(1);
   });
-  // to do: write more tests
+
+  describe('When suggested password is used', () => {
+    beforeEach(() => {
+      component.suggestedPassword = 'abcd1234';
+      checkboxes = fixture.nativeElement.querySelectorAll('ion-checkbox');
+      useSuggestion = checkboxes[0];
+      useSuggestion.checked = 'true';
+      useSuggestion.dispatchEvent(new Event('ionChange'));
+      fixture.detectChanges();
+    });
+
+    it('passwordSaved checkbox should be visible', () => {
+      expect(useSuggestion.checked).toBe('true');
+      component.useSuggestion.patchValue(true);
+      fixture.detectChanges();
+      checkboxes = fixture.nativeElement.querySelectorAll('ion-checkbox');
+      expect(checkboxes.length).toEqual(2);
+      expect(checkboxes[1].name).toEqual('passwordSaved');
+    });
+
+    it('both password and confirm password should match', () => {
+      expect(useSuggestion.checked).toBe('true');
+      expect(component.password.value).toEqual('abcd1234');
+      expect(component.confirmPassword.value).toEqual('abcd1234');
+      expect(component.confirmPassword.value).toEqual(component.password.value);
+    });
+
+    it('password and confirm password field should be disabled', () => {
+      expect(useSuggestion.checked).toBe('true');
+      expect(component.password.disabled).toBeTruthy();
+      expect(component.confirmPassword.disabled).toBeTruthy();
+    });
+  });
+
 });

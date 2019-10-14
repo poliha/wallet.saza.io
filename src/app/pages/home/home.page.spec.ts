@@ -11,7 +11,7 @@ describe('HomePage', () => {
   let userServiceSpy;
 
   beforeEach(async(() => {
-    let passwordValue = null;
+    const passwordValue = null;
     userServiceSpy = jasmine.createSpyObj('UserService', ['getPassword']);
     userServiceSpy.getPassword.and.returnValue(Promise.resolve(passwordValue));
     TestBed.configureTestingModule({
@@ -55,7 +55,7 @@ describe('HomePage', () => {
 
   describe('when there is a saved user password', () => {
     it('should be a login button', fakeAsync(() => {
-      userServiceSpy.getPassword.and.returnValue(Promise.resolve("abc"));
+      userServiceSpy.getPassword.and.returnValue(Promise.resolve('abc'));
       component.ngOnInit();
       tick();
       fixture.detectChanges();
@@ -64,5 +64,4 @@ describe('HomePage', () => {
       expect(buttons[0].textContent).toContain('Login', 'The button should be a login button');
     }));
   });
-  
 });
