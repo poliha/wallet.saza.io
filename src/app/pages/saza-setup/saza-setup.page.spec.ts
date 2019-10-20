@@ -9,7 +9,7 @@ import { ModalController, IonicModule } from '@ionic/angular';
 import { By } from '@angular/platform-browser';
 import { element } from '@angular/core/src/render3';
 
-fdescribe('SazaSetupPage', () => {
+describe('SazaSetupPage', () => {
   let component: SazaSetupPage;
   let fixture: ComponentFixture<SazaSetupPage>;
   let utilitySpy, userServiceSpy, modalSpy, modalCtrlSpy, checkboxes, useSuggestion;
