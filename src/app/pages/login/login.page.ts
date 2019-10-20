@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
   async formSubmit() {
     // validate password
     // redirect to dashboard
-    try {
+    // try {
       const passwordHash = await this.userService.getPassword()
       console.log(this.password.value)
       console.log(passwordHash)
@@ -40,10 +40,10 @@ export class LoginPage implements OnInit {
       }
       this.userService.login();
       this.router.navigate(['create-account/']);
-    } catch (error) {
+    // } catch (error) {
       // to do handle and show error
-      console.log(error);
-    }
+      // console.log(error);
+    // }
 
   }
 
