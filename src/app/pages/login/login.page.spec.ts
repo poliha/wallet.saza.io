@@ -1,21 +1,23 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { LoginPage } from './login.page';
-import { Utility, UserService } from 'src/app/providers/providers';
+import { Utility, UserService, INVALID_PASSWORD_ERROR } from 'src/app/providers/providers';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 
 describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
-  let utilitySpy, userServiceSpy;
+  let utilitySpy, userServiceSpy, routerSpy;
 
 
   beforeEach(async(() => {
-    utilitySpy = jasmine.createSpyObj('Utility', ['getHash']);
-    userServiceSpy = jasmine.createSpyObj('UserService', ['getPassword']);
+    utilitySpy = jasmine.createSpyObj('Utility', ['validateHash']);
+    userServiceSpy = jasmine.createSpyObj('UserService', ['getPassword', 'login']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
       declarations: [ LoginPage ],
@@ -23,8 +25,9 @@ describe('LoginPage', () => {
       providers: [
         { provide: Utility, useValue: utilitySpy },
         { provide: UserService, useValue: userServiceSpy },
+        { provide: Router, useValue: routerSpy },
       ],
-      imports: [ReactiveFormsModule, RouterTestingModule, IonicModule]
+      imports: [ReactiveFormsModule, IonicModule]
     })
     .compileComponents();
   }));
@@ -37,5 +40,47 @@ describe('LoginPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have a form', () => {
+    const template = fixture.nativeElement;
+    const form = template.querySelectorAll('form');
+    expect(form.length).toEqual(1);
+  });
+
+  it('should have a password field', () => {
+    const template = fixture.nativeElement;
+    const allInputs = template.querySelectorAll('ion-input');
+    expect(allInputs.length).toEqual(1);
+    expect(allInputs[0].name).toEqual('password');
+  });
+
+  it('should have a login button', () => {
+    const template = fixture.nativeElement;
+    const allButtons = template.querySelectorAll('ion-button');
+    expect(allButtons.length).toEqual(1);
+    expect(allButtons[0].textContent).toContain('Login');
+  });
+
+  describe('When password is not valid', () => {
+    it('should throw an error', fakeAsync(() => {
+      userServiceSpy.getPassword.and.returnValue(Promise.resolve('abc'));
+      utilitySpy.validateHash.and.returnValue(false);
+      component.formSubmit().catch(err => {
+        expect(err.message).toContain(INVALID_PASSWORD_ERROR);
+      });
+    }));
+  });
+
+  describe('When password is valid', () => {
+    it('router should navigate to create-account/', fakeAsync(() => {
+      userServiceSpy.getPassword.and.returnValue(Promise.resolve('abc'));
+      utilitySpy.validateHash.and.returnValue(true);
+      userServiceSpy.login.and.returnValue(Promise.resolve('abc'));
+
+      component.formSubmit();
+      tick();
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['create-account/']);
+    }));
   });
 });

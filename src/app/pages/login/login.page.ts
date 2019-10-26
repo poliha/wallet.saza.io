@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   private loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private utility: Utility,
@@ -31,20 +30,12 @@ export class LoginPage implements OnInit {
   async formSubmit() {
     // validate password
     // redirect to dashboard
-    // try {
-      const passwordHash = await this.userService.getPassword()
-      console.log(this.password.value)
-      console.log(passwordHash)
-      if (!this.utility.validateHash(this.password.value, passwordHash)) {
-        throw new Error(INVALID_PASSWORD_ERROR);
-      }
-      this.userService.login();
-      this.router.navigate(['create-account/']);
-    // } catch (error) {
-      // to do handle and show error
-      // console.log(error);
-    // }
-
+    const passwordHash = await this.userService.getPassword();
+    if (!this.utility.validateHash(this.password.value, passwordHash)) {
+      throw new Error(INVALID_PASSWORD_ERROR);
+    }
+    this.userService.login();
+    this.router.navigate(['create-account/']);
   }
 
 }
