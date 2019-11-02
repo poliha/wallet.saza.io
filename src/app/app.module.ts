@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { Utility, UserService, AuthGuard } from './providers/providers';
+import { Utility, UserService, AuthGuard, NotificationService } from './providers/providers';
 import { IonicStorageModule } from '@ionic/storage';
 import { SazaErrorHandler } from './providers/saza-error-handler.service';
 
@@ -25,7 +25,7 @@ import { SazaErrorHandler } from './providers/saza-error-handler.service';
   providers: [
     StatusBar,
     SplashScreen,
-    Utility, UserService, AuthGuard,
+    Utility, UserService, AuthGuard, NotificationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: ErrorHandler, useClass: SazaErrorHandler}
   ],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, CustomValidators, INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../providers/providers';
+import { Utility, UserService, CustomValidators,
+  INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR, NotificationService } from '../../providers/providers';
 import { SazaAccount } from '../../interfaces/saza';
 
 @Component({
@@ -13,7 +14,7 @@ export class LinkAccountPage implements OnInit {
   pairObj: { public: string, private: string } = { public: '', private: '' };
   keypairGenerated = false;
   constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService) { }
+    private userService: UserService, public notification: NotificationService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -54,7 +55,7 @@ export class LinkAccountPage implements OnInit {
     // create account object 
     // save account object
     // Clear form
-    try {
+    // try {
       if (this.pairObj.public === '' || this.pairObj.private === '') {
         throw new Error('Empty Objects');
       }
@@ -81,11 +82,13 @@ export class LinkAccountPage implements OnInit {
       this.pairObj.public = '';
       this.linkAccountForm.reset();
       console.log("account saved")
+    this.notification.show('Account linked!');
 
-    } catch (error) {
+
+    // } catch (error) {
       // to do handle and show error
-      console.log(error);
-    }
+      // console.log(error);
+    // }
 
   }
 

@@ -7,8 +7,8 @@ import { NotificationService } from './notification.service';
 export class SazaErrorHandler implements ErrorHandler {
   constructor(private notification: NotificationService) { }
 
-  handleError(error: any): void {
+  handleError(error: any) {
     console.error('SEH: ', error);
-    this.notification.show(error);
+    return this.notification.show(error);
   }
 }

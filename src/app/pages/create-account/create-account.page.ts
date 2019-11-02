@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../providers/providers';
+import { Utility, UserService, NotificationService,
+   INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../providers/providers';
 import { SazaAccount } from '../../interfaces/saza';
 @Component({
   selector: 'app-create-account',
@@ -12,7 +13,7 @@ export class CreateAccountPage implements OnInit {
   pairObj: { public: string, private: string } = { public: '', private: '' };
   keypairGenerated = false;
   constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService) { }
+    private userService: UserService, private notification: NotificationService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -22,8 +23,8 @@ export class CreateAccountPage implements OnInit {
     const pair = this.utility.randomKeypair();
     if (!pair) {
       console.log("pair: ", pair);
-      // to do: show error message?
       this.keypairGenerated = false;
+      throw new Error('Unable to generate keypair. Contact admin');
     } else {
       this.pairObj.public = pair.publicKey();
       this.pairObj.private = pair.secret();
@@ -51,18 +52,17 @@ export class CreateAccountPage implements OnInit {
     // create account object 
     // save account object
     // Clear form
-    try {
+    // try {
       if (this.pairObj.public === '' || this.pairObj.private === '') {
-        throw new Error('Empty Objects');
+        throw new Error('Invalid keys');
       }
 
-      const passwordHash = await this.userService.getPassword()
-
+      const passwordHash = await this.userService.getPassword();
       if (!this.utility.validateHash(this.password.value, passwordHash)) {
         throw new Error(INVALID_PASSWORD_ERROR);
       }
 
-      const encrpytedObject = this.utility.encrypt(this.pairObj.private, this.password.value)
+      const encrpytedObject = this.utility.encrypt(this.pairObj.private, this.password.value);
 
       if (!encrpytedObject) {
         throw new Error(ENCRYPTION_FAILED_ERROR);
@@ -78,11 +78,14 @@ export class CreateAccountPage implements OnInit {
       this.pairObj.public = '';
       this.createAccountForm.reset();
       console.log("account saved")
+      this.notification.show('Account saved!');
 
-    } catch (error) {
-      // to do handle and show error
-      console.log(error);
-    }
+    // } catch (error) {
+    //   // to do handle and show error
+    //   console.log(error);
+    //   throw error;
+      
+    // }
 
   }
 

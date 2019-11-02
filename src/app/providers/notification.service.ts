@@ -16,7 +16,7 @@ export class NotificationService {
 
     const toast = await this.toastCtrl.create({
       message: message,
-      duration: 2000
+      duration: 2000,
     });
     toast.present();
   }
