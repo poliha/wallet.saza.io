@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, TxService, CustomValidators, INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../../providers/providers';
+import { Utility, UserService, TxService, CustomValidators } from '../../../providers/providers';
 import { SazaAccount } from '../../../interfaces/saza';
 import {
   Keypair, Asset, Operation, TransactionBuilder, StrKey,
@@ -13,7 +13,7 @@ import {
   styleUrls: ['./payment.page.scss'],
 })
 export class PaymentPage implements OnInit {
-  private paymentForm: FormGroup
+  private paymentForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private txService: TxService) { }
 
@@ -26,7 +26,7 @@ export class PaymentPage implements OnInit {
       source: ['', Validators.compose([Validators.required, CustomValidators.isValidPublicKey()])],
       destination: ['', Validators.compose([Validators.required, CustomValidators.isValidRecipient()])],
       amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
-      asset: ['', Validators.required],
+      asset: ['xlm', Validators.required],
     });
   }
 

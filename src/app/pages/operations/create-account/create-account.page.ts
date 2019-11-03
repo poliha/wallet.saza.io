@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, TxService, CustomValidators, INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR } from '../../../providers/providers';
+import { Utility, UserService, TxService, CustomValidators } from '../../../providers/providers';
 import { SazaAccount } from '../../../interfaces/saza';
 import {
   Keypair, Asset, Operation, TransactionBuilder, StrKey,
