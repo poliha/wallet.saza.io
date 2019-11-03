@@ -46,7 +46,8 @@ const routes: Routes = [
     path: 'operations/payment',
     loadChildren: './pages/operations/payment/payment.module#PaymentPageModule',
     canActivate: [AuthGuard]
-  }
+  },
+  { path: 'sell-offer', loadChildren: './pages/operations/sell-offer/sell-offer.module#SellOfferPageModule' }
 ];
 
 @NgModule({
