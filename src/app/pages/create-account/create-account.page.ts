@@ -25,12 +25,11 @@ export class CreateAccountPage implements OnInit {
       console.log("pair: ", pair);
       this.keypairGenerated = false;
       throw new Error('Unable to generate keypair. Contact admin');
-    } else {
-      this.pairObj.public = pair.publicKey();
-      this.pairObj.private = pair.secret();
-      this.keypairGenerated = true;
-      return;
     }
+
+    this.pairObj.public = pair.publicKey();
+    this.pairObj.private = pair.secret();
+    this.keypairGenerated = true;
   }
 
   makeForm() {
@@ -39,7 +38,6 @@ export class CreateAccountPage implements OnInit {
       password: ['', Validators.compose([Validators.minLength(8), Validators.required])],
     });
   }
-
 
   // Getters for template
   get keysCopied() { return this.createAccountForm.get('keysCopied'); }
@@ -52,7 +50,6 @@ export class CreateAccountPage implements OnInit {
     // create account object 
     // save account object
     // Clear form
-    // try {
       if (this.pairObj.public === '' || this.pairObj.private === '') {
         throw new Error('Invalid keys');
       }
@@ -74,19 +71,10 @@ export class CreateAccountPage implements OnInit {
       };
 
       this.userService.setAccount(sazaAccount);
+      this.notification.show('Account saved!');
       this.pairObj.private = '';
       this.pairObj.public = '';
       this.createAccountForm.reset();
       console.log("account saved")
-      this.notification.show('Account saved!');
-
-    // } catch (error) {
-    //   // to do handle and show error
-    //   console.log(error);
-    //   throw error;
-      
-    // }
-
   }
-
 }

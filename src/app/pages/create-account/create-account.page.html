@@ -5,44 +5,35 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <app-account-picker></app-account-picker>
-  </ion-item>
-  
-<ion-button expand="block" (click)="generateKeypair()">Generate Keys</ion-button>
-
-       <form [formGroup]="createAccountForm" (submit)="formSubmit()">
-          <ion-item>
-            <ion-label>Public Key</ion-label>
-            {{pairObj.public}}
-          </ion-item>
-          <ion-item>
-            <ion-label>Private Key</ion-label>
-            {{pairObj.private}}
-          </ion-item>
-         <ion-item>
-           <ion-label>I have copied keys to a safe place</ion-label>
-           <ion-checkbox name="keysCopied" formControlName="keysCopied"
-             checked="false">
-           </ion-checkbox>
-         </ion-item>
-          <ion-item>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input type="password" name="password" formControlName="password"></ion-input>
-            <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-
-              <div *ngIf="password.errors.required">
-                value is required.
-              </div>
-
-              <div *ngIf="password.errors.minlength">
-                Minimum length is 8 characters
-              </div>
-            </div>
-
-          </ion-item>
-          <ion-item>
-            <button type="submit" [disabled]="createAccountForm.invalid">Save</button>
-          </ion-item>
-         </form>
+  <ion-button expand="block" (click)="generateKeypair()">Generate Keys</ion-button>
+  <form [formGroup]="createAccountForm" (submit)="formSubmit()">
+    <ion-item>
+      <ion-label>Public Key</ion-label>
+      {{pairObj.public}}
+    </ion-item>
+    <ion-item>
+      <ion-label>Private Key</ion-label>
+      {{pairObj.private}}
+    </ion-item>
+    <ion-item>
+      <ion-label>I have copied keys to a safe place</ion-label>
+      <ion-checkbox name="keysCopied" formControlName="keysCopied" checked="false">
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" name="password" formControlName="password"></ion-input>
+      <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+        <div *ngIf="password.errors.required">
+          value is required.
+        </div>
+        <div *ngIf="password.errors.minlength">
+          Minimum length is 8 characters
+        </div>
+      </div>
+    </ion-item>
+    <ion-item>
+      <button type="submit" [disabled]="createAccountForm.invalid">Save</button>
+    </ion-item>
+  </form>
 </ion-content>

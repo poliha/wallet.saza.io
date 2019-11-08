@@ -22,8 +22,8 @@ export class TransactionService {
   }
 
   // to do: deleteOperation
-  addOperation(data: string) {
-    return this.getOperations().then((ops: Array<string>) => {
+  addOperation(data: any) {
+    return this.getOperations().then((ops: Array<any>) => {
       if (ops == null) {
         ops = [];
       }

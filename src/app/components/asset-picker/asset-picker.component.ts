@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { CustomValidators } from '../../providers/providers';
 
 @Component({
   selector: 'app-asset-picker',
@@ -14,23 +13,23 @@ export class AssetPickerComponent implements OnInit {
   @Input() controlName: string;
   @Input() displayType = 'list';
   showCustomFields = false;
-
+  private assetGroup: FormGroup;
   constructor() { }
 
   ngOnInit() {
+    // to do: decide whether to make form based on display type?
+    // Validate required inputs
     this.makeForm();
   }
 
   makeForm() {
     console.log('Making asset form...')
-    let fg = new FormGroup({
-      asset_type: new FormControl('native', Validators.compose([Validators.required])),
-      asset_code: new FormControl(null),
-      asset_issuer: new FormControl(null)
+    this.assetGroup = new FormGroup({
+      asset_type: new FormControl('native', Validators.compose([Validators.required]))
     });
 
     this.form.removeControl(this.controlName);
-    this.form.addControl(this.controlName, fg);
+    this.form.addControl(this.controlName, this.assetGroup);
     console.log('Made asset form...', this.form);
   }
 
@@ -53,6 +52,7 @@ export class AssetPickerComponent implements OnInit {
 
   setAssetType(value) {
     console.log("saV: ", value);
+    if (!value) { return; }
     this.form.controls[this.controlName].patchValue({
       asset_type: value
     });
@@ -68,6 +68,7 @@ export class AssetPickerComponent implements OnInit {
       return;
     }
 
+    // to do check logic now that assetGroup is used.
     if (balance.asset_type === 'native') {
       this.form.controls[this.controlName].patchValue({
         asset_type: balance.asset_type

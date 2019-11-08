@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, INVALID_PASSWORD_ERROR } from '../../providers/providers';
+import { Utility, UserService, INVALID_PASSWORD_ERROR, NotificationService } from '../../providers/providers';
 import { Router } from '@angular/router';
 
 
@@ -13,7 +13,8 @@ export class LoginPage implements OnInit {
   private loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService, private router: Router) { }
+    private userService: UserService, private router: Router,
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -34,8 +35,8 @@ export class LoginPage implements OnInit {
     if (!this.utility.validateHash(this.password.value, passwordHash)) {
       throw new Error(INVALID_PASSWORD_ERROR);
     }
+    this.notification.show('Login success');
     this.userService.login();
     this.router.navigate(['create-account/']);
   }
-
 }

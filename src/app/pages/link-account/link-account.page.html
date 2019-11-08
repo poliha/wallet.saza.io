@@ -5,14 +5,11 @@
 </ion-header>
 
 <ion-content>
-  
-
   <form [formGroup]="linkAccountForm" (submit)="formSubmit()">
     <ion-item>
-      <ion-label position="floating">Private Key</ion-label>
+      <ion-label position="stacked">Private Key</ion-label>
       <ion-input type="text" name="privateKey" formControlName="privateKey" (keyup)="generateKeypair()"></ion-input>
       <div class="text-danger" *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
-
         <div *ngIf="privateKey.errors.required">
           A value is required.
         </div>
@@ -20,7 +17,6 @@
           Invalid Private Key
         </div>
       </div>
-
     </ion-item>
     <ion-item>
       <ion-label>Public Key</ion-label>
@@ -36,19 +32,16 @@
       </ion-checkbox>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Password</ion-label>
+      <ion-label position="stacked">Password</ion-label>
       <ion-input type="password" name="password" formControlName="password"></ion-input>
       <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-
         <div *ngIf="password.errors.required">
           A value is required.
         </div>
-
         <div *ngIf="password.errors.minlength">
           Minimum length is 8 characters
         </div>
       </div>
-
     </ion-item>
     <ion-item>
       <button type="submit" [disabled]="linkAccountForm.invalid">Save</button>

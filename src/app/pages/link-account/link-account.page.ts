@@ -22,16 +22,14 @@ export class LinkAccountPage implements OnInit {
 
   generateKeypair() {
     const pair = this.utility.keypairFromPrivateKey(this.privateKey.value);
-
     if (!pair) {
       console.log("pair: ", pair);
       this.keypairGenerated = false;
-    } else {
-      this.pairObj.public = pair.publicKey();
-      this.pairObj.private = pair.secret();
-      this.keypairGenerated = true;
-      return;
+      throw new Error('Invalid Private Key');
     }
+    this.pairObj.public = pair.publicKey();
+    this.pairObj.private = pair.secret();
+    this.keypairGenerated = true;
   }
 
   makeForm() {
@@ -52,44 +50,33 @@ export class LinkAccountPage implements OnInit {
     // check that pairobj is not empty
     // check that password matches hash
     // encrypt secret key.
-    // create account object 
+    // create account object
     // save account object
     // Clear form
-    // try {
-      if (this.pairObj.public === '' || this.pairObj.private === '') {
-        throw new Error('Empty Objects');
-      }
+    if (this.pairObj.public === '' || this.pairObj.private === '') {
+      throw new Error('Empty Objects');
+    }
 
-      const passwordHash = await this.userService.getPassword()
+    const passwordHash = await this.userService.getPassword();
+    if (!this.utility.validateHash(this.password.value, passwordHash)) {
+      throw new Error(INVALID_PASSWORD_ERROR);
+    }
 
-      if (!this.utility.validateHash(this.password.value, passwordHash)) {
-        throw new Error(INVALID_PASSWORD_ERROR);
-      }
+    const encrpytedObject = this.utility.encrypt(this.pairObj.private, this.password.value)
+    if (!encrpytedObject) {
+      throw new Error(ENCRYPTION_FAILED_ERROR);
+    }
 
-      const encrpytedObject = this.utility.encrypt(this.pairObj.private, this.password.value)
+    const sazaAccount: SazaAccount = {
+      public: this.pairObj.public,
+      private: encrpytedObject
+    };
 
-      if (!encrpytedObject) {
-        throw new Error(ENCRYPTION_FAILED_ERROR);
-      }
-
-      const sazaAccount: SazaAccount = {
-        public: this.pairObj.public,
-        private: encrpytedObject
-      };
-
-      this.userService.setAccount(sazaAccount);
-      this.pairObj.private = '';
-      this.pairObj.public = '';
-      this.linkAccountForm.reset();
-      console.log("account saved")
+    this.userService.setAccount(sazaAccount);
     this.notification.show('Account linked!');
-
-
-    // } catch (error) {
-      // to do handle and show error
-      // console.log(error);
-    // }
-
+    this.pairObj.private = '';
+    this.pairObj.public = '';
+    this.linkAccountForm.reset();
+    console.log("account saved")
   }
-
 }

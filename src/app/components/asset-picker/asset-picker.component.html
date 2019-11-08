@@ -14,7 +14,6 @@
           An asset is required
         </div>
       </div>
-
     </div>
 
     <div *ngSwitchCase="'manual'">
@@ -38,32 +37,14 @@
         </ion-radio-group>
         <div *ngIf="showCustomFields">
           <ion-item>
-            <ion-input type="text" name="asset_code" placeholder="Code" formControlName="asset_code"></ion-input>
-            <div class="text-danger" *ngIf="assetCode.invalid && (assetCode.dirty || assetCode.touched)">
-
-              <div *ngIf="assetCode.errors.required">
-                A value is required.
-              </div>
-              <div *ngIf="assetCode.errors.max">
-                <!-- to do show max value error -->
-              </div>
-            </div>
+            <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_code'"
+              [placeHolder]="'Code'" [maxValue]="'12'"></app-dynamic-input>
           </ion-item>
           <ion-item>
-            <ion-input type="text" name="asset_issuer" placeholder="Issuer" formControlName="asset_issuer"></ion-input>
-            <div class="text-danger" *ngIf="assetIssuer.invalid && (assetIssuer.dirty || assetIssuer.touched)">
-
-              <div *ngIf="assetIssuer.errors.required">
-                A value is required.
-              </div>
-              <div *ngIf="assetIssuer.errors.isValidPublicKey">
-                Invalid Public Key
-              </div>
-            </div>
+            <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_issuer'"
+              [placeHolder]="'Issuer Public key'" [isEd25519PublicKey]="'true'"></app-dynamic-input>
           </ion-item>
         </div>
-
-
       </div>
     </div>
   </div>

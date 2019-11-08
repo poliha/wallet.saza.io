@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, TxService, CustomValidators } from '../../../providers/providers';
-import { SazaAccount } from '../../../interfaces/saza';
-import {
-  Keypair, Asset, Operation, TransactionBuilder, StrKey,
-  FederationServer, StellarTomlResolver, Memo, Account, xdr
-} from 'stellar-sdk';
+import { TxService, CustomValidators, NotificationService } from '../../../providers/providers';
+import { Operation, xdr } from 'stellar-sdk';
 
 @Component({
   selector: 'app-create-account',
@@ -15,7 +11,8 @@ import {
 export class CreateAccountPage implements OnInit {
   private createAccountForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private txService: TxService) { }
+  constructor(private formBuilder: FormBuilder, private txService: TxService,
+    private notification: NotificationService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -34,7 +31,7 @@ export class CreateAccountPage implements OnInit {
   get destination() { return this.createAccountForm.get('destination'); }
   get amount() { return this.createAccountForm.get('amount'); }
 
-  buildOperation() {
+  private buildOperation() {
     // build create account operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
@@ -52,15 +49,27 @@ export class CreateAccountPage implements OnInit {
       console.log('createAccountOps: ', opsObj);
       const createAccountOperation = Operation.createAccount(opsObj);
       const xdrString = createAccountOperation.toXDR().toString('base64');
-      this.txService.addOperation(xdrString);
-
+      this.txService.addOperation({ type: 'create_account', tx: xdrString });
+      this.notification.show('Operation Added');
+      this.createAccountForm.reset();
       console.log('createAccountOps: ', xdrString)
       const buffer = Buffer.from(xdrString, 'base64');
       console.log('cabuffer: ', buffer);
       console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
-      this.createAccountForm.reset();
     } catch (error) {
       console.log('error: ', error)
     }
+  }
+
+  addOperation() {
+    console.log('adding operation');
+    this.buildOperation();
+    // to do navigate to next page
+  }
+
+  signOperation() {
+    console.log('adding operation');
+    this.buildOperation();
+    // to do navigate to next page
   }
 }

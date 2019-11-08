@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { CustomValidators, Utility, UserService } from '../../providers/providers';
+import { CustomValidators, Utility, UserService, NotificationService } from '../../providers/providers';
 import { ModalController } from '@ionic/angular';
 import { RecoveryPasswordModalComponent } from '../../components/recovery-password-modal/recovery-password-modal.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-saza-setup',
@@ -16,7 +17,8 @@ export class SazaSetupPage implements OnInit {
   suggestedPassword = '';
   private passwordForm: FormGroup;
   constructor(private formBuilder: FormBuilder, private utility: Utility, private userService: UserService,
-    public modalController: ModalController, private router: Router) { }
+    public modalController: ModalController, private router: Router,
+    public notification: NotificationService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -25,10 +27,11 @@ export class SazaSetupPage implements OnInit {
   makeForm() {
     this.passwordForm = this.formBuilder.group({
       useSuggestion: [''],
-      passwordSaved: ['', Validators.compose([CustomValidators.requiredIf('useSuggestion')
-      ])],
+      passwordSaved: ['',
+        Validators.compose([CustomValidators.requiredIf('useSuggestion')])],
       password: ['', Validators.compose([Validators.minLength(8), Validators.required, CustomValidators.isValidPassword()])],
-      confirmPassword: ['', Validators.compose([Validators.minLength(8), Validators.required, CustomValidators.isValidPassword(), CustomValidators.equalTo('password')])],
+      confirmPassword: ['', Validators.compose([Validators.minLength(8), Validators.required,
+      CustomValidators.isValidPassword(), CustomValidators.equalTo('password')])],
     });
   }
 
@@ -70,7 +73,7 @@ export class SazaSetupPage implements OnInit {
   get confirmPassword() { return this.passwordForm.get('confirmPassword'); }
   get useSuggestion() { return this.passwordForm.get('useSuggestion'); }
 
-  formSubmit(){
+  formSubmit() {
     // check that passwords match
     // get hash of password
     // generate recovery password
@@ -82,7 +85,6 @@ export class SazaSetupPage implements OnInit {
       const trimmedPwd = String(this.password.value).trim()
       const passwordHash = this.utility.getHash(trimmedPwd)
       const recoveryPassword = this.utility.generatePassword();
-      console.log("hash valid: ", this.utility.validateHash(trimmedPwd, passwordHash))
 
       // use the recovery password to encrypt the primary password.
       const encrpytedPassword = this.utility.encrypt(trimmedPwd, recoveryPassword);
@@ -96,10 +98,9 @@ export class SazaSetupPage implements OnInit {
       // display recovery password to user
       this.presentModal(recoveryPassword);
     } catch (error) {
-      // to do handle and show error
       console.log(error);
+      throw new Error('Saza setup failed.');
     }
-
   }
 
   async presentModal(modalValue) {
@@ -117,7 +118,7 @@ export class SazaSetupPage implements OnInit {
     return await modal.present();
   }
 
-   async canDeactivate(nextUrl: string){
+  async canDeactivate(nextUrl: string) {
     try {
       let status = false;
 
@@ -131,6 +132,7 @@ export class SazaSetupPage implements OnInit {
     } catch (error) {
       // to do handle and show error
       console.log(error);
+      this.notification.show('Hang on ...');
       // this.notificationService.show('Hang on ...', 'Please complete account setup.', 'warning');
     }
   }

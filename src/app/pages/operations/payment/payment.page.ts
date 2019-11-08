@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, TxService, CustomValidators } from '../../../providers/providers';
-import { SazaAccount } from '../../../interfaces/saza';
-import {
-  Keypair, Asset, Operation, TransactionBuilder, StrKey,
-  FederationServer, StellarTomlResolver, Memo, Account, xdr
-} from 'stellar-sdk';
+import { TxService, CustomValidators, Utility } from '../../../providers/providers';
+import { Operation, xdr } from 'stellar-sdk';
 
 @Component({
   selector: 'app-payment',
@@ -15,7 +11,8 @@ import {
 export class PaymentPage implements OnInit {
   private paymentForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private txService: TxService) { }
+  constructor(private formBuilder: FormBuilder, private txService: TxService,
+    private utility: Utility) { }
 
   ngOnInit() {
     this.makeForm();
@@ -23,10 +20,10 @@ export class PaymentPage implements OnInit {
 
   makeForm() {
     this.paymentForm = this.formBuilder.group({
-      source: ['', Validators.compose([Validators.required, CustomValidators.isValidPublicKey()])],
-      destination: ['', Validators.compose([Validators.required, CustomValidators.isValidRecipient()])],
-      amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
-      asset: ['xlm', Validators.required],
+      // source: ['', Validators.compose([Validators.required, CustomValidators.isValidPublicKey()])],
+      // destination: ['', Validators.compose([Validators.required, CustomValidators.isValidRecipient()])],
+      // amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      // asset: ['xlm', Validators.required],
     });
   }
 
@@ -48,7 +45,7 @@ export class PaymentPage implements OnInit {
       const opsObj = {
         destination: this.destination.value,
         amount: String(this.amount.value),
-        asset: Asset.native(), //to do: replace with custom asset
+        asset:  this.utility.generateAsset(this.asset.value), // Asset.native(), //to do: replace with custom asset
         source: this.source.value
       };
 
@@ -61,7 +58,7 @@ export class PaymentPage implements OnInit {
       const buffer = Buffer.from(xdrString, 'base64');
       console.log('cabuffer: ', buffer);
       console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
-      this.paymentForm.reset();
+      this.paymentForm.reset({asset: {asset_type: 'native'}});
     } catch (error) {
       console.log('error: ', error)
     }

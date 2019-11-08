@@ -109,4 +109,20 @@ export class Utility {
     }
   }
 
+  generateAsset(assetObj) {
+    try {
+      if (!assetObj.asset_type) {
+        throw new Error('Invalid asset type');
+      }
+
+      if (assetObj.asset_type === 'native') {
+        return Asset.native();
+      }
+      return new Asset(assetObj.asset_code, assetObj.asset_issuer);
+    } catch (error) {
+      console.error('generateAsset Error: ', error);
+      return false;
+    }
+  }
+
 }

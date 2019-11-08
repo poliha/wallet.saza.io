@@ -20,47 +20,41 @@
               checked="false">
             </ion-checkbox>
           </ion-item>
+
           <ion-item *ngIf="useSuggestion.value === true">
             <ion-label>I have copied password to a safe place</ion-label>
             <ion-checkbox formControlName="passwordSaved" name="passwordSaved" checked="false"></ion-checkbox>
-
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Password</ion-label>
+            <ion-label position="stacked">Password</ion-label>
             <ion-input type="password" name="password" formControlName="password"></ion-input>
             <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-
               <div *ngIf="password.errors.required">
                 Value is required.
               </div>
-
               <div *ngIf="password.errors.minlength">
                 Minimum length is 8 characters
               </div>
               <div *ngIf="password.errors.isValidPassword">
                 Only alphanumeric and any of these special characters are allowed "$^+=!*()@%&"
               </div>
-
             </div>
-
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-label position="stacked">Confirm Password</ion-label>
             <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"></ion-input>
             <div class="text-danger"
               *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
-
               <div *ngIf="confirmPassword.errors.required">
                 Value is required.
               </div>
-
               <div *ngIf="confirmPassword.errors.minlength">
                 Minimum length is 8 characters
               </div>
               <div *ngIf="confirmPassword.errors.equalTo">
-                Passeword mismatch
+                Password mismatch
               </div>
               <div *ngIf="confirmPassword.errors.isValidPassword">
                 Only alphanumeric and "$^+=!*()@%&" characters allowed
@@ -69,12 +63,9 @@
           </ion-item>
 
           <ion-item>
-            <button type="submit" [disabled]="passwordForm.invalid">Save</button>
+            <ion-button type="submit" [disabled]="passwordForm.invalid">Save</ion-button>
           </ion-item>
-
         </form>
-
-
       </ion-col>
     </ion-row>
   </ion-grid>
