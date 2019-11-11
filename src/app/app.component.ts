@@ -46,6 +46,21 @@ export class AppComponent {
       title: 'Ops Payment',
       url: '/operations/payment',
       icon: 'list'
+    },
+    {
+      title: 'Ops Sell Offer',
+      url: '/operations/sell-offer',
+      icon: 'list'
+    },
+    {
+      title: 'Ops Buy Offer',
+      url: '/operations/buy-offer',
+      icon: 'list'
+    },
+    {
+      title: 'Ops Passive Offer',
+      url: '/operations/passive-offer',
+      icon: 'list'
     }
   ];
 

@@ -47,7 +47,19 @@ const routes: Routes = [
     loadChildren: './pages/operations/payment/payment.module#PaymentPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'sell-offer', loadChildren: './pages/operations/sell-offer/sell-offer.module#SellOfferPageModule' }
+  {
+    path: 'operations/sell-offer',
+    loadChildren: './pages/operations/sell-offer/sell-offer.module#SellOfferPageModule',
+    canActivate: [AuthGuard]
+  },
+  { path: 'operations/buy-offer',
+    loadChildren: './pages/operations/buy-offer/buy-offer.module#BuyOfferPageModule',
+    canActivate: [AuthGuard]
+ },
+  { path: 'operations/passive-offer',
+    loadChildren: './pages/operations/passive-offer/passive-offer.module#PassiveOfferPageModule',
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
