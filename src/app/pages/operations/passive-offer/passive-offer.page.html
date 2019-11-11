@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Passive Offer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="offerForm">
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="offerForm" [controlName]="'source'" [placeHolder]="'Public key'"
+        [isEd25519PublicKey]="true"></app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Selling</ion-label>
+      <app-asset-picker [form]="offerForm" [controlName]="'selling'" [displayType]="'manual'"></app-asset-picker>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Buying</ion-label>
+      <app-asset-picker [form]="offerForm" [controlName]="'buying'" [displayType]="'manual'"></app-asset-picker>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Price</ion-label>
+      <app-dynamic-input [form]="offerForm" [controlName]="'price'" [placeHolder]="'Price'">
+      </app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Amount</ion-label>
+      <app-dynamic-input [form]="offerForm" [controlName]="'amount'" [placeHolder]="'Amount'">
+      </app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Add Operation</ion-button>
+      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Sign and Send</ion-button>
+    </ion-item>
+  </form>
+</ion-content>
