@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, TxService, CustomValidators } from '../../../providers/providers';
-import { SazaAccount } from '../../../interfaces/saza';
-import {
-  Keypair, Asset, Operation, TransactionBuilder, StrKey,
-  FederationServer, StellarTomlResolver, Memo, Account, xdr
-} from 'stellar-sdk';
+import { Utility, TxService } from '../../../providers/providers';
+import { Operation, xdr } from 'stellar-sdk';
+import { OfferComponent } from 'src/app/components/offer/offer.component';
 
 
 @Component({
@@ -13,58 +9,50 @@ import {
   templateUrl: './sell-offer.page.html',
   styleUrls: ['./sell-offer.page.scss'],
 })
-export class SellOfferPage implements OnInit {
-  private sellOfferForm: FormGroup;
+export class SellOfferPage extends OfferComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private txService: TxService) { }
-
-  ngOnInit() {
-    this.makeForm();
+  constructor(private txService: TxService, private utility: Utility) {
+    super();
   }
 
-  makeForm() {
-    this.sellOfferForm = this.formBuilder.group({
-      source: ['', Validators.compose([Validators.required, CustomValidators.isValidPublicKey()])],
-      destination: ['', Validators.compose([Validators.required, CustomValidators.isValidRecipient()])],
-      amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
-      asset: ['xlm', Validators.required],
-    });
+  ngOnInit() {
+    super.ngOnInit();
   }
 
   // Getters for template
-  get source() { return this.sellOfferForm.get('source'); }
-  get destination() { return this.sellOfferForm.get('destination'); }
-  get asset() { return this.sellOfferForm.get('asset'); }
-  get amount() { return this.sellOfferForm.get('amount'); }
+  get offerID() { return this.offerForm.get('offerID'); }
+
 
   buildOperation() {
-    // build payment operation
+    // build sell offer operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
     // reset form
     // Show success or error message
 
-    // try {
-    //   // to do check if source account is active
-    //   const opsObj = {
-    //     destination: this.destination.value,
-    //     amount: String(this.amount.value),
-    //     asset: Asset.native(), //to do: replace with custom asset
-    //     source: this.source.value
-    //   };
+    try {
+      // to do check if source account is active
+      const opsObj = {
+        selling: this.utility.generateAsset(this.selling.value),
+          buying: this.utility.generateAsset(this.buying.value),
+        amount: this.amount.value,
+        price: this.price.value,
+        offerId: this.offerID.value,
+        source: this.source.value
+      };
 
-    //   console.log('paymentOps: ', opsObj);
-    //   const paymentOperation = Operation.payment(opsObj);
-    //   const xdrString = paymentOperation.toXDR().toString('base64');
-    //   this.txService.addOperation(xdrString);
+      console.log('manageSellOffer: ', opsObj);
+      const sellOfferOperation = Operation.manageSellOffer(opsObj);
+      const xdrString = sellOfferOperation.toXDR().toString('base64');
+      this.txService.addOperation(xdrString);
 
-    //   console.log('paymentOps: ', xdrString)
-    //   const buffer = Buffer.from(xdrString, 'base64');
-    //   console.log('cabuffer: ', buffer);
-    //   console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
-    //   this.sellOfferForm.reset();
-    // } catch (error) {
-    //   console.log('error: ', error)
-    // }
+      console.log('manageSellOffer: ', xdrString)
+      const buffer = Buffer.from(xdrString, 'base64');
+      console.log('cabuffer: ', buffer);
+      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
+      this.resetForm();
+    } catch (error) {
+      console.log('error: ', error)
+    }
   }
 }

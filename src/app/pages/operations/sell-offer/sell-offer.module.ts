@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
 import { SellOfferPage } from './sell-offer.page';
+import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
+import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
+import { TxService } from 'src/app/providers/providers';
 
 const routes: Routes = [
   {
@@ -18,8 +21,14 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    DynamicInputComponentModule,
+    AssetPickerComponentModule
+  ],
+  providers: [
+    TxService,
   ],
   declarations: [SellOfferPage]
 })
