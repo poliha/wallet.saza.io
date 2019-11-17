@@ -59,6 +59,10 @@ const routes: Routes = [
   { path: 'operations/passive-offer',
     loadChildren: './pages/operations/passive-offer/passive-offer.module#PassiveOfferPageModule',
     canActivate: [AuthGuard]
+  },
+  { path: 'operations/bump-sequence',
+    loadChildren: './pages/operations/bump-sequence/bump-sequence.module#BumpSequencePageModule',
+    canActivate: [AuthGuard]
   }
 ];
 

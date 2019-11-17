@@ -61,6 +61,11 @@ export class AppComponent {
       title: 'Ops Passive Offer',
       url: '/operations/passive-offer',
       icon: 'list'
+    },
+    {
+      title: 'Ops  bump Sequence',
+      url: '/operations/bump-sequence',
+      icon: 'list'
     }
   ];
 
