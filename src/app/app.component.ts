@@ -66,6 +66,11 @@ export class AppComponent {
       title: 'Ops  bump Sequence',
       url: '/operations/bump-sequence',
       icon: 'list'
+    },
+    {
+      title: 'Ops manage data',
+      url: '/operations/manage-data',
+      icon: 'list'
     }
   ];
 

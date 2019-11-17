@@ -63,6 +63,10 @@ const routes: Routes = [
   { path: 'operations/bump-sequence',
     loadChildren: './pages/operations/bump-sequence/bump-sequence.module#BumpSequencePageModule',
     canActivate: [AuthGuard]
+  },
+  { path: 'operations/manage-data',
+    loadChildren: './pages/operations/manage-data/manage-data.module#ManageDataPageModule',
+    canActivate: [AuthGuard]
   }
 ];
 

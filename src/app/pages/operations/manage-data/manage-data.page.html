@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Manage Data</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="manageDataForm">
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'source'"
+        [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'dataName'" [placeHolder]="'Name'" [maxValue]="64">
+      </app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Value</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'dataValue'"
+        [placeHolder]="'Value'" [maxValue]="64">
+      </app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="addOperation()">Add Operation
+      </ion-button>
+      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="signOperation()">Sign and Send
+      </ion-button>
+    </ion-item>
+  </form>
+</ion-content>
