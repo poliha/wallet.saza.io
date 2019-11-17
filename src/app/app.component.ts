@@ -81,6 +81,11 @@ export class AppComponent {
       title: 'Ops allow trust',
       url: '/operations/allow-trust',
       icon: 'list'
+    },
+    {
+      title: 'Ops change trust',
+      url: '/operations/change-trust',
+      icon: 'list'
     }
   ];
 

@@ -41,7 +41,7 @@ export class AccountMergePage implements OnInit {
       console.log('account Merge Ops: ', opsObj);
       const accountMergeOperation = Operation.accountMerge(opsObj);
       const xdrString = accountMergeOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'bump_sequence', tx: xdrString });
+      this.txService.addOperation({ type: 'account_merge', tx: xdrString });
       this.notification.show('Operation Added');
       this.accountMergeForm.reset();
       console.log('account Merge Ops: ', xdrString);

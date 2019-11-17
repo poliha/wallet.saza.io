@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Change Trust</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="changeTrustForm">
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="changeTrustForm" [controlName]="'source'"
+        [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <!-- To do: hide xlm input -->
+      <ion-label position="stacked">Asset</ion-label>
+      <app-asset-picker [form]="changeTrustForm" [controlName]="'asset'" [displayType]="'manual'"></app-asset-picker>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Trust Limit</ion-label>
+      <app-dynamic-input [form]="changeTrustForm" [controlName]="'limit'"
+        [placeHolder]="'Trust Limit'"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button type="button" [disabled]="changeTrustForm.invalid" (click)="addOperation()">Add Operation
+      </ion-button>
+      <ion-button type="button" [disabled]="changeTrustForm.invalid" (click)="signOperation()">Sign and Send
+      </ion-button>
+    </ion-item>
+  </form>
+</ion-content>

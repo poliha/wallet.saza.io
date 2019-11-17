@@ -75,6 +75,10 @@ const routes: Routes = [
   { path: 'operations/allow-trust',
     loadChildren: './pages/operations/allow-trust/allow-trust.module#AllowTrustPageModule',
     canActivate: [AuthGuard]
+  },
+  { path: 'operations/change-trust',
+    loadChildren: './pages/operations/change-trust/change-trust.module#ChangeTrustPageModule',
+    canActivate: [AuthGuard]
   }
 ];
 

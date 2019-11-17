@@ -43,7 +43,7 @@ export class ManageDataPage implements OnInit {
       console.log('manage Data Ops: ', opsObj);
       const manageDataOperation = Operation.manageData(opsObj);
       const xdrString = manageDataOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'bump_sequence', tx: xdrString });
+      this.txService.addOperation({ type: 'manage_data', tx: xdrString });
       this.notification.show('Operation Added');
       this.manageDataForm.reset();
       console.log('manage Data Ops: ', xdrString);

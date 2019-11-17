@@ -48,7 +48,7 @@ export class AllowTrustPage implements OnInit {
       console.log('allow Trust Ops: ', opsObj);
       const allowTrustOperation = Operation.allowTrust(opsObj);
       const xdrString = allowTrustOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'bump_sequence', tx: xdrString });
+      this.txService.addOperation({ type: 'allow_trust', tx: xdrString });
       this.notification.show('Operation Added');
       this.allowTrustForm.reset();
       console.log('allow Trust Ops: ', xdrString);
