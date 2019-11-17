@@ -71,6 +71,10 @@ const routes: Routes = [
   { path: 'operations/account-merge',
     loadChildren: './pages/operations/account-merge/account-merge.module#AccountMergePageModule',
     canActivate: [AuthGuard]
+  },
+  { path: 'operations/allow-trust',
+    loadChildren: './pages/operations/allow-trust/allow-trust.module#AllowTrustPageModule',
+    canActivate: [AuthGuard]
   }
 ];
 

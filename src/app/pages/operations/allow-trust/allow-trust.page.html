@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Allow Trust</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="allowTrustForm">
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="allowTrustForm" [controlName]="'source'"
+        [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Trustor</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="allowTrustForm" [controlName]="'trustor'"
+        [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Asset Code</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="allowTrustForm" [controlName]="'assetCode'"
+        [placeHolder]="'Asset Code'" [maxValue]="12"></app-dynamic-input>
+    </ion-item>
+
+
+<ion-item>
+  <ion-radio-group formControlName="authorize">
+    <ion-list-header>
+      <ion-label>Authorize</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>True</ion-label>
+      <ion-radio slot="start" value="true" checked></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>False</ion-label>
+      <ion-radio slot="start" value="false"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-item>
+
+    <ion-item>
+      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="addOperation()">Add Operation
+      </ion-button>
+      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="signOperation()">Sign and Send
+      </ion-button>
+    </ion-item>
+  </form>
+</ion-content>

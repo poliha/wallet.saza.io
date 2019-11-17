@@ -77,6 +77,11 @@ export class AppComponent {
       url: '/operations/account-merge',
       icon: 'list'
     },
+    {
+      title: 'Ops allow trust',
+      url: '/operations/allow-trust',
+      icon: 'list'
+    }
   ];
 
 
