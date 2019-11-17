@@ -71,7 +71,12 @@ export class AppComponent {
       title: 'Ops manage data',
       url: '/operations/manage-data',
       icon: 'list'
-    }
+    },
+    {
+      title: 'Ops account merge',
+      url: '/operations/account-merge',
+      icon: 'list'
+    },
   ];
 
 

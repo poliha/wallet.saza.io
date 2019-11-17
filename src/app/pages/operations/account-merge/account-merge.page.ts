@@ -4,12 +4,12 @@ import { Operation, xdr } from 'stellar-sdk';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-manage-data',
-  templateUrl: './manage-data.page.html',
-  styleUrls: ['./manage-data.page.scss'],
+  selector: 'app-account-merge',
+  templateUrl: './account-merge.page.html',
+  styleUrls: ['./account-merge.page.scss'],
 })
-export class ManageDataPage implements OnInit {
-  public manageDataForm: FormGroup;
+export class AccountMergePage implements OnInit {
+  public accountMergeForm: FormGroup;
   constructor(private txService: TxService, private notification: NotificationService) { }
 
   ngOnInit() {
@@ -17,16 +17,15 @@ export class ManageDataPage implements OnInit {
   }
 
   makeForm() {
-    this.manageDataForm = new FormGroup({});
+    this.accountMergeForm = new FormGroup({});
   }
 
   // Getters for template
-  get source() { return this.manageDataForm.get('source'); }
-  get dataName() { return this.manageDataForm.get('dataName'); }
-  get dataValue() { return this.manageDataForm.get('dataValue'); }
+  get source() { return this.accountMergeForm.get('source'); }
+  get destination() { return this.accountMergeForm.get('destination'); }
 
   private buildOperation() {
-    // build manage data operation
+    // build account Merge operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
     // reset form
@@ -35,18 +34,17 @@ export class ManageDataPage implements OnInit {
     try {
       // to do check if source account is active
       const opsObj = {
-        name: this.dataName.value,
-        value: this.dataValue.value,
+        destination: this.destination.value,
         source: this.source.value
       };
 
-      console.log('manage Data Ops: ', opsObj);
-      const manageDataOperation = Operation.manageData(opsObj);
-      const xdrString = manageDataOperation.toXDR().toString('base64');
+      console.log('account Merge Ops: ', opsObj);
+      const accountMergeOperation = Operation.accountMerge(opsObj);
+      const xdrString = accountMergeOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'bump_sequence', tx: xdrString });
       this.notification.show('Operation Added');
-      this.manageDataForm.reset();
-      console.log('manage Data Ops: ', xdrString);
+      this.accountMergeForm.reset();
+      console.log('account Merge Ops: ', xdrString);
       const buffer = Buffer.from(xdrString, 'base64');
       console.log('cabuffer: ', buffer);
       console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));

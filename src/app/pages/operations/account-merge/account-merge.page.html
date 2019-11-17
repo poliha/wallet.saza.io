@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Account Merge</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="accountMergeForm">
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="accountMergeForm" [controlName]="'source'"
+        [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Destination</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="accountMergeForm" [controlName]="'destination'"
+        [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="addOperation()">Add Operation
+      </ion-button>
+      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="signOperation()">Sign and Send
+      </ion-button>
+    </ion-item>
+  </form>
+</ion-content>

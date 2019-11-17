@@ -67,6 +67,10 @@ const routes: Routes = [
   { path: 'operations/manage-data',
     loadChildren: './pages/operations/manage-data/manage-data.module#ManageDataPageModule',
     canActivate: [AuthGuard]
+  },
+  { path: 'operations/account-merge',
+    loadChildren: './pages/operations/account-merge/account-merge.module#AccountMergePageModule',
+    canActivate: [AuthGuard]
   }
 ];
 
