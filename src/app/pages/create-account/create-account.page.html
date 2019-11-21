@@ -5,6 +5,9 @@
 </ion-header>
 
 <ion-content>
+
+  <app-account-balance></app-account-balance>
+
   <ion-button expand="block" (click)="generateKeypair()">Generate Keys</ion-button>
   <form [formGroup]="createAccountForm" (submit)="formSubmit()">
     <ion-item>
