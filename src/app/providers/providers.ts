@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
 import { TransactionService as TxService } from './transaction.service';
 import { NotificationService } from './notification.service';
+import { StellarService } from './stellar.service';
 
 export {
   CustomValidators,
@@ -11,7 +12,8 @@ export {
   UserService,
   AuthGuard,
   TxService,
-  NotificationService
+  NotificationService,
+  StellarService,
 };
 
 export const INVALID_PASSWORD_ERROR = `Invalid password.`;
