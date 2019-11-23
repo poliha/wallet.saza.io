@@ -18,6 +18,11 @@ export class AppComponent {
       icon: 'home'
     },
     {
+      title: 'Dashboard',
+      url: '/dashboard',
+      icon: 'dashboard'
+    },
+    {
       title: 'List',
       url: '/list',
       icon: 'list'

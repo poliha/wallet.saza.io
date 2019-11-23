@@ -79,6 +79,11 @@ const routes: Routes = [
   { path: 'operations/change-trust',
     loadChildren: './pages/operations/change-trust/change-trust.module#ChangeTrustPageModule',
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'dashboard',
+    loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
+    canActivate: [AuthGuard]
   }
 ];
 
