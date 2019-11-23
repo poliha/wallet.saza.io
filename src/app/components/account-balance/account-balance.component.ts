@@ -29,7 +29,7 @@ export class AccountBalanceComponent implements OnInit {
     }
   ];
 
-  public activeAccount: SazaAccount;
+  activeAccount: SazaAccount;
 
   constructor(private stellarService: StellarService, private userService: UserService) {
    }
@@ -39,7 +39,6 @@ export class AccountBalanceComponent implements OnInit {
       this.activeAccount = data;
       console.log('active account', this.activeAccount);
       this.loadAccount();
-
     });
   }
 

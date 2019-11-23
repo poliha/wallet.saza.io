@@ -1,0 +1,7 @@
+<h3>Account History</h3>
+<ion-list>
+  <ion-item *ngFor="let a of accountHistory">
+    <ion-label>{{a.created_at}} {{a.type}}</ion-label>
+    {{a.id}}
+  </ion-item>
+</ion-list>
