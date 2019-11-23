@@ -34,6 +34,7 @@ export class UserService {
   public isLoggedIn: BehaviorSubject<any> = new BehaviorSubject(false);
 
   constructor(public storage: Storage) {
+    console.log('User service setup');
     this.getAccounts();
     this.getActiveAccount();
     this.getActiveNetwork();

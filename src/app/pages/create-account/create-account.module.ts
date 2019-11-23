@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CreateAccountPage } from './create-account.page';
-import { UserService } from '../../providers/providers';
 import { AccountBalanceComponentModule } from 'src/app/components/account-balance/account-balance.module';
 
 const routes: Routes = [
@@ -24,9 +23,6 @@ const routes: Routes = [
     AccountBalanceComponentModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    UserService
-  ],
   declarations: [CreateAccountPage]
 })
 export class CreateAccountPageModule {}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StellarService } from 'src/app/providers/providers';
+import { StellarService, UserService } from 'src/app/providers/providers';
+import { SazaAccount } from 'src/app/interfaces/saza';
 
 @Component({
   selector: 'app-account-balance',
@@ -28,15 +29,26 @@ export class AccountBalanceComponent implements OnInit {
     }
   ];
 
-  constructor(private stellarService: StellarService) { }
+  public activeAccount: SazaAccount;
+
+  constructor(private stellarService: StellarService, private userService: UserService) {
+   }
 
   ngOnInit() {
-    this.loadAccount();
+    this.userService.activeAccount.subscribe((data) => {
+      this.activeAccount = data;
+      console.log('active account', this.activeAccount);
+      this.loadAccount();
+
+    });
   }
 
 
   async loadAccount() {
-   const data = await this.stellarService.loadAccount('GAQHWQYBBW272OOXNQMMLCA5WY2XAZPODGB7Q3S5OKKIXVESKO55ZQ7C');
+    if (!this.activeAccount.public) {
+      return;
+    }
+   const data = await this.stellarService.loadAccount(this.activeAccount.public);
     // const data = await this.stellarService.loadAccount('GBEAVWWISRSMNSUOSZUQ36QNAI7UKWSL62DPVWNGXTWAR2Z6YJGCC3UM');
 
    console.log("data: ", data);

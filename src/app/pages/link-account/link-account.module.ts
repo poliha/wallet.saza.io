@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { UserService } from '../../providers/providers';
 
 import { LinkAccountPage } from './link-account.page';
 
@@ -24,9 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    UserService
-  ],
   declarations: [LinkAccountPage]
 })
 export class LinkAccountPageModule {}
