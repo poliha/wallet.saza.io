@@ -19,6 +19,7 @@ export class DynamicInputComponent implements OnInit {
   @Input() isRequired = true;
   @Input() isEd25519PublicKey = false;
   @Input() isRecipient = false;
+  @Input() isHidden = false;
 
   constructor() { }
 

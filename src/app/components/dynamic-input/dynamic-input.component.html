@@ -1,4 +1,6 @@
-<div [formGroup]="form">
+<div [formGroup]="form" [ngClass]="{
+  'ion-hide': isHidden
+}">
   <ion-input type="{{ inputType }}" name="{{controlName}}" formControlName="{{controlName}}"
     placeholder="{{placeHolder}}"></ion-input>
   <div class="text-danger"
