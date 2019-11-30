@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>BuildTx</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="buildTxForm">
+    <ion-item>
+      <ion-label position="stacked">Memo</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="buildTxForm" [controlName]="'memo'" [placeHolder]="'Memo'"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button type="button" [disabled]="buildTxForm.invalid" >Cancel</ion-button>
+      <ion-button type="button" [disabled]="buildTxForm.invalid" (click)="buildTx()">Sign and Send</ion-button>
+    </ion-item>
+  </form>
+</ion-content>

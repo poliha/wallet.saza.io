@@ -84,7 +84,17 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'build-tx',
+    loadChildren: './pages/build-tx/build-tx.module#BuildTxPageModule',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'sign-tx',
+    loadChildren: './pages/sign-tx/sign-tx.module#SignTxPageModule',
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
