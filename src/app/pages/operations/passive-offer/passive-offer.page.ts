@@ -39,7 +39,7 @@ export class PassiveOfferPage extends OfferComponent implements OnInit {
       console.log('managePassiveOffer: ', opsObj);
       const passiveOfferOperation = Operation.createPassiveSellOffer(opsObj);
       const xdrString = passiveOfferOperation.toXDR().toString('base64');
-      this.txService.addOperation(xdrString);
+      this.txService.addOperation({ type: 'create_passive_sell_offer', tx: xdrString });
 
       console.log('managePassiveOffer: ', xdrString)
       const buffer = Buffer.from(xdrString, 'base64');

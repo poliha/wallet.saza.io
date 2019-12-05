@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { BumpSequencePage } from './bump-sequence.page';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { TxService } from 'src/app/providers/providers';
+import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    DynamicInputComponentModule
+    DynamicInputComponentModule,
+    SelectSourceComponentModule
   ],
   declarations: [BumpSequencePage],
   providers: [

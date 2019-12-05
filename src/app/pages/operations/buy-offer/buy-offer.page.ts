@@ -44,7 +44,7 @@ export class BuyOfferPage extends OfferComponent implements OnInit {
       console.log('manageBuyOffer: ', opsObj);
       const buyOfferOperation = Operation.manageBuyOffer(opsObj);
       const xdrString = buyOfferOperation.toXDR().toString('base64');
-      this.txService.addOperation(xdrString);
+      this.txService.addOperation({ type: 'manage_buy_offer', tx: xdrString });
 
       console.log('manageBuyOffer: ', xdrString)
       const buffer = Buffer.from(xdrString, 'base64');

@@ -8,8 +8,7 @@
   <form [formGroup]="allowTrustForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="allowTrustForm" [controlName]="'source'"
-        [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+      <app-select-source [form]="allowTrustForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <ion-item>

@@ -8,8 +8,7 @@
   <form [formGroup]="offerForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="offerForm" [controlName]="'source'" [placeHolder]="'Public key'"
-        [isEd25519PublicKey]="true"></app-dynamic-input>
+      <app-select-source [form]="offerForm" [controlName]="'source'"></app-select-source>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Selling</ion-label>

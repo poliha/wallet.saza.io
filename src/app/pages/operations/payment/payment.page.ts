@@ -19,12 +19,9 @@ export class PaymentPage implements OnInit {
   }
 
   makeForm() {
-    this.paymentForm = this.formBuilder.group({
-      // source: ['', Validators.compose([Validators.required, CustomValidators.isValidPublicKey()])],
-      // destination: ['', Validators.compose([Validators.required, CustomValidators.isValidRecipient()])],
-      // amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
-      // asset: ['xlm', Validators.required],
-    });
+    this.paymentForm = this.formBuilder.group({ });
+
+    console.log('PaymentForm: ', this.paymentForm);
   }
 
   // Getters for template
@@ -52,7 +49,7 @@ export class PaymentPage implements OnInit {
       console.log('paymentOps: ', opsObj);
       const paymentOperation = Operation.payment(opsObj);
       const xdrString = paymentOperation.toXDR().toString('base64');
-      this.txService.addOperation(xdrString);
+      this.txService.addOperation({ type: 'payment', tx: xdrString });
 
       console.log('paymentOps: ', xdrString)
       const buffer = Buffer.from(xdrString, 'base64');

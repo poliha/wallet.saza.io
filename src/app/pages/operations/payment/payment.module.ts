@@ -9,6 +9,7 @@ import { PaymentPage } from './payment.page';
 import { TxService } from 'src/app/providers/providers';
 import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
+import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     IonicModule,
     AssetPickerComponentModule,
     RouterModule.forChild(routes),
-    DynamicInputComponentModule
+    DynamicInputComponentModule,
+    SelectSourceComponentModule,
   ],
   providers: [
     TxService,

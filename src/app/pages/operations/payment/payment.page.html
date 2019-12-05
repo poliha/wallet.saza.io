@@ -8,8 +8,7 @@
   <form [formGroup]="paymentForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="paymentForm" [controlName]="'source'" 
-      [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
+      <app-select-source [form]="paymentForm" [controlName]="'source'"></app-select-source>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Destination</ion-label>
