@@ -39,6 +39,7 @@ export class PaymentPage implements OnInit {
 
     try {
       // to do check if source account is active
+      // to do handle federated address
       const opsObj = {
         destination: this.destination.value,
         amount: String(this.amount.value),

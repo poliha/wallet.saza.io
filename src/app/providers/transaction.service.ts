@@ -11,7 +11,9 @@ const STORAGE_KEYS = {
 export class TransactionService {
 
   public operations: BehaviorSubject<any> = new BehaviorSubject([]);
-  constructor(public storage: Storage) { }
+  constructor(public storage: Storage) {
+    this.getOperations();
+  }
 
   getOperations() {
     return this.getData(STORAGE_KEYS.OPERATIONS).then((ops: any) => {

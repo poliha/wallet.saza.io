@@ -53,4 +53,17 @@ export class StellarService {
       console.log('error: ', error);
     }
   }
+
+  async fees() {
+    // to do initialise server based on network type
+    const server = new Server('https://horizon-testnet.stellar.org');
+
+    try {
+      const feeStats = await server.feeStats();
+      return feeStats;
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { TxService, CustomValidators, Utility } from '../../providers/providers';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TxService, Utility, StellarService } from '../../providers/providers';
 import { Operation, xdr } from 'stellar-sdk';
 
 @Component({
@@ -10,20 +10,44 @@ import { Operation, xdr } from 'stellar-sdk';
 })
 export class BuildTxPage implements OnInit {
   private buildTxForm: FormGroup;
-
+  networkFees = {
+    min_accepted_fee: 100,
+    p99_accepted_fee: 200,
+  };
+  pendingOperations = []
   constructor(private formBuilder: FormBuilder, private txService: TxService,
-    private utility: Utility) { }
+    private utility: Utility, private stellarService: StellarService) { }
 
   ngOnInit() {
+    this.stellarService.fees().then(data => {
+      console.log('Fees: ', data);
+      const { min_accepted_fee, p99_accepted_fee } = data;
+      this.networkFees = {
+        min_accepted_fee,
+        p99_accepted_fee
+      };
+      console.log('NFees: ', this.networkFees);
+
+    })
+    .catch(error => console.log(error));
+    this.txService.operations.subscribe((data) => {
+      this.pendingOperations = data;
+      console.log('pendingOps', this.pendingOperations);
+    });
     this.makeForm();
   }
 
   makeForm() {
-    this.buildTxForm = this.formBuilder.group({});
+    this.buildTxForm = this.formBuilder.group({
+      fee: [0, Validators.required],
+
+    });
   }
 
   // Getters for template
   get memo() { return this.buildTxForm.get('memo'); }
+  get source() { return this.buildTxForm.get('source'); }
+  get fee() { return this.buildTxForm.get('fee'); }
 
 
   buildTransaction() {
@@ -37,6 +61,13 @@ export class BuildTxPage implements OnInit {
     // Show success or error message
 
     try {
+      const txOptions = {
+        fee: '',
+        timebounds: {},
+        memo: {},
+        networkPassphrase: '',
+        operations: this.pendingOperations
+      }
 
     } catch (error) {
       console.log('error: ', error)

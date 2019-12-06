@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
 import { BuildTxPage } from './build-tx.page';
+import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
+import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
+import { TxService, StellarService } from 'src/app/providers/providers';
 
 const routes: Routes = [
   {
@@ -19,7 +22,14 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    DynamicInputComponentModule,
+    SelectSourceComponentModule
+  ],
+  providers: [
+    TxService,
+    StellarService
   ],
   declarations: [BuildTxPage]
 })

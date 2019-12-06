@@ -18,6 +18,11 @@ export class AppComponent {
       icon: 'home'
     },
     {
+      title: 'Build Tx',
+      url: '/build-tx',
+      icon: 'cog'
+    },
+    {
       title: 'Dashboard',
       url: '/dashboard',
       icon: 'dashboard'
