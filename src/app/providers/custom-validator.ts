@@ -1,5 +1,6 @@
-import { FormControl, Validators } from '@angular/forms';
-import { StrKey } from 'stellar-sdk';
+import { FormControl, Validators, FormGroup, ValidationErrors } from '@angular/forms';
+import { StrKey, UnsignedHyper } from 'stellar-sdk';
+import { Buffer } from 'buffer';
 
 export class CustomValidators extends Validators {
   static requiredIf(otherControlName) {
@@ -133,6 +134,37 @@ export class CustomValidators extends Validators {
       }
       return null;
     };
+  }
+
+  static isValidMemo(control: FormGroup): ValidationErrors | null {
+    const memoType = control.get('memoType');
+    const memoValue = control.get('memoValue');
+    let memoError = '';
+    if (memoType.value && memoValue.value) {
+      switch (memoType.value) {
+        case 'MemoText':
+          const memoTextBytes = Buffer.byteLength(memoValue.value, 'utf8');
+          if (memoTextBytes > 28) {
+            memoError = `Memo Text accepts a string of up to 28 bytes. ${memoTextBytes} bytes entered.`;
+          }
+          break;
+        case 'MemoID':
+          if (!memoValue.value.match(/^[0-9]*$/g) || Number(memoValue.value) < 0) {
+            memoError = 'Memo ID accepts a positive integer.';
+          }
+          if (!Number.isNaN(Number(memoValue.value)) && memoValue.value !== UnsignedHyper.fromString(memoValue.value).toString()) {
+            memoError = `Memo ID is an unsigned 64-bit integer and the max valid value is ${UnsignedHyper.MAX_UNSIGNED_VALUE.toString()}`;
+          }
+          break;
+        case 'MemoHash':
+        case 'MemoReturn':
+          if (!memoValue.value.match(/^[0-9a-f]{64}$/gi)) {
+            memoError = `Memo ${String(memoType.value).slice(4)} accepts a 32-byte hash in hexadecimal format (64 characters).`;
+          }
+          break;
+      }
+    }
+    return memoType && memoValue && memoError ? { 'isValidMemo': memoError } : null;
   }
 
 }
