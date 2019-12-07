@@ -1,0 +1,36 @@
+<div [formGroup]="form">
+  <div [formGroupName]="controlName">
+    <ion-segment (ionChange)="memoChanged($event)">
+      <!-- to do consider removing memoNone -->
+      <ion-segment-button value="MemoNone" checked="true">
+        <ion-label>None</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="MemoText">
+        <ion-label>Text</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="MemoID">
+        <ion-label>ID</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="MemoHash">
+        <ion-label>Hash</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="MemoReturn">
+        <ion-label>Return</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+
+    <app-dynamic-input [inputType]="'text'" [form]="memoGroup" [controlName]="'memoType'" [isHidden]="true">
+    </app-dynamic-input>
+
+    <app-dynamic-input [inputType]="'text'" [form]="memoGroup" [controlName]="'memoValue'" [placeHolder]="'Memo Value'">
+    </app-dynamic-input>
+    <div class="text-danger"
+      *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
+
+      <div *ngIf="form.controls[controlName].errors.isValidMemo">
+        {{ form.controls[controlName].errors.isValidMemo }}
+      </div>
+    </div>
+  </div>
+</div>
