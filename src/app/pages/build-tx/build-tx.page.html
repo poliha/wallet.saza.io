@@ -8,28 +8,30 @@
   <form [formGroup]="buildTxForm">
     <ion-item>
       <ion-label position="stacked">Tx Source</ion-label>
-      <!-- To do: source should default to active account -->
-      <app-select-source [form]="buildTxForm" [controlName]="'source'">
+      <app-select-source [form]="buildTxForm" [controlName]="'source'" [selected]="activeAccount.public">
       </app-select-source>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Memo</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="buildTxForm" [controlName]="'memo'" [placeHolder]="'Memo'"></app-dynamic-input>
+      <app-memo [form]="buildTxForm" [controlName]="'memo'"></app-memo>
     </ion-item>
 
   <ion-item>
     <ion-label>Fee</ion-label>
-    <ion-range name="fee" formControlName="fee" [min]="networkFees.min_accepted_fee" [max]="networkFees.p99_accepted_fee"
+    <!-- to do set default fee -->
+    <ion-range name="fee" formControlName="fee" [min]="networkFees.min_accepted_fee"
+      [max]="networkFees.p99_accepted_fee"
       color="secondary" pin="true" steps="10">
       <ion-label slot="start">{{networkFees.min_accepted_fee}}</ion-label>
       <ion-label slot="end">{{networkFees.p99_accepted_fee}}</ion-label>
     </ion-range>
-  </ion-item>>
-
+  </ion-item>
+<!-- to do: show summary of operations? -->
+<!-- to do: add input for timebounds -->
     <ion-item>
       <ion-button type="button" [disabled]="buildTxForm.invalid" >Cancel</ion-button>
-      <ion-button type="button" [disabled]="buildTxForm.invalid" (click)="buildTransaction()">Sign and Send</ion-button>
+      <ion-button type="button" [disabled]="buildTxForm.invalid" (click)="buildTransaction()">Build Transaction</ion-button>
     </ion-item>
   </form>
 </ion-content>

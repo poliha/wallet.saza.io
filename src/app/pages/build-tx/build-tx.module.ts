@@ -9,6 +9,7 @@ import { BuildTxPage } from './build-tx.page';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { TxService, StellarService } from 'src/app/providers/providers';
+import { MemoComponentModule } from 'src/app/components/memo/memo.module';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     DynamicInputComponentModule,
-    SelectSourceComponentModule
+    SelectSourceComponentModule,
+    MemoComponentModule
   ],
   providers: [
     TxService,

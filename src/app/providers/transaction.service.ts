@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 
 const STORAGE_KEYS = {
   'OPERATIONS': 'user.saza.operations',
+  'TRANSACTION': 'user.saza.tx'
 };
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,11 @@ const STORAGE_KEYS = {
 export class TransactionService {
 
   public operations: BehaviorSubject<any> = new BehaviorSubject([]);
+  public tx: BehaviorSubject<string> = new BehaviorSubject('');
+
   constructor(public storage: Storage) {
     this.getOperations();
+    this.getTx();
   }
 
   getOperations() {
@@ -32,6 +36,17 @@ export class TransactionService {
       ops.push(data);
       this.setData(STORAGE_KEYS.OPERATIONS, ops);
       this.operations.next(ops);
+    });
+  }
+
+  setTx(data: string) {
+    return this.setData(STORAGE_KEYS.TRANSACTION, data);
+  }
+
+  getTx() {
+    return this.getData(STORAGE_KEYS.TRANSACTION).then((tx: any) => {
+      this.tx.next(tx);
+      return this.getData(STORAGE_KEYS.TRANSACTION);
     });
   }
 

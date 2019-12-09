@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
-  Network,
+  Network, 
   Keypair, Asset, Operation, TransactionBuilder, StrKey,
-  FederationServer, StellarTomlResolver, Memo, Account, Server
+  FederationServer, StellarTomlResolver, Memo, Account, Server, xdr
 } from 'stellar-sdk';
+import { Buffer } from 'buffer';
+import { TimeoutInfinite } from 'stellar-sdk';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +66,37 @@ export class StellarService {
     } catch (error) {
       console.log('error: ', error);
     }
+  }
+
+  async buildTransaction({fee, memo, operations, source, timebounds}) {
+    // load source account
+    const sourceAccount = await this.loadAccount(source);
+    let newTx =  new TransactionBuilder(sourceAccount, { fee: Number(fee) });
+
+    // add operations
+    operations.forEach(op => {
+      const opBuffer = Buffer.from(op.tx, 'base64');
+      const opXdr = xdr.Operation.fromXDR(opBuffer);
+      newTx = newTx.addOperation(opXdr);
+    });
+
+    // add memo
+    const { memoType, memoValue } = memo;
+    if (memoType && memoValue) {
+      newTx = newTx.addMemo(new Memo(memoType, memoValue));
+    }
+
+    // add network passphrase
+    // to do: set by network type
+    newTx = newTx.setNetworkPassphrase(Network.TESTNET);
+
+    // add timebound
+    newTx = newTx.setTimeout(TimeoutInfinite);
+
+    const builtTx = newTx.build();
+    const txXdr = builtTx.toEnvelope().toXDR().toString('base64');
+
+    return txXdr;
   }
 
 }
