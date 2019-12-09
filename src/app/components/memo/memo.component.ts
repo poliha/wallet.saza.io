@@ -13,34 +13,6 @@ export class MemoComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() controlName: string;
 
-  memoTypes = {
-    MemoNone: {
-      inputType: 'text',
-      maxValue: 0
-    },
-    MemoText: {
-      inputType: 'text',
-      maxValue: 28
-    },
-    MemoID: {
-      inputType: 'number',
-      maxValue: UnsignedHyper.MAX_UNSIGNED_VALUE
-    },
-    MemoHash: {
-      inputType: 'text',
-      maxValue: 64
-    },
-    MemoReturn: {
-      inputType: 'text',
-      maxValue: 64
-    },
-  };
-
-  selectedMemo = {
-    inputType: 'text',
-    maxValue: 0
-  };
-
   memoGroup: FormGroup;
 
   constructor() { }
@@ -50,7 +22,7 @@ export class MemoComponent implements OnInit {
   }
 
   makeForm() {
-    console.log('Making asset form...')
+    console.log('Making memo form...')
     this.memoGroup = new FormGroup({
       memoValue: new FormControl(),
       memoType: new FormControl()
@@ -68,8 +40,6 @@ export class MemoComponent implements OnInit {
 
   memoChanged(event) {
     this.setMemoType(event.target.value);
-    const eventValue = event.target.value;
-    this.selectedMemo = this.memoTypes[eventValue];
   }
 
   setMemoType(value) {

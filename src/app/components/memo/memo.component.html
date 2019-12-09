@@ -1,20 +1,16 @@
 <div [formGroup]="form">
   <div [formGroupName]="controlName">
     <ion-segment (ionChange)="memoChanged($event)">
-      <!-- to do consider removing memoNone -->
-      <ion-segment-button value="MemoNone" checked="true">
-        <ion-label>None</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="MemoText">
+      <ion-segment-button value="text">
         <ion-label>Text</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="MemoID">
+      <ion-segment-button value="id">
         <ion-label>ID</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="MemoHash">
+      <ion-segment-button value="hash">
         <ion-label>Hash</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="MemoReturn">
+      <ion-segment-button value="return">
         <ion-label>Return</ion-label>
       </ion-segment-button>
     </ion-segment>

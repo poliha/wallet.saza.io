@@ -142,13 +142,13 @@ export class CustomValidators extends Validators {
     let memoError = '';
     if (memoType.value && memoValue.value) {
       switch (memoType.value) {
-        case 'MemoText':
+        case 'text':
           const memoTextBytes = Buffer.byteLength(memoValue.value, 'utf8');
           if (memoTextBytes > 28) {
             memoError = `Memo Text accepts a string of up to 28 bytes. ${memoTextBytes} bytes entered.`;
           }
           break;
-        case 'MemoID':
+        case 'id':
           if (!memoValue.value.match(/^[0-9]*$/g) || Number(memoValue.value) < 0) {
             memoError = 'Memo ID accepts a positive integer.';
           }
@@ -156,10 +156,10 @@ export class CustomValidators extends Validators {
             memoError = `Memo ID is an unsigned 64-bit integer and the max valid value is ${UnsignedHyper.MAX_UNSIGNED_VALUE.toString()}`;
           }
           break;
-        case 'MemoHash':
-        case 'MemoReturn':
+        case 'hash':
+        case 'return':
           if (!memoValue.value.match(/^[0-9a-f]{64}$/gi)) {
-            memoError = `Memo ${String(memoType.value).slice(4)} accepts a 32-byte hash in hexadecimal format (64 characters).`;
+            memoError = `Memo ${memoType.value} accepts a 32-byte hash in hexadecimal format (64 characters).`;
           }
           break;
       }
