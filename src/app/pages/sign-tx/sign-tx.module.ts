@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
 import { SignTxPage } from './sign-tx.page';
+import { TxService, StellarService } from 'src/app/providers/providers';
 
 const routes: Routes = [
   {
@@ -19,8 +20,13 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ReactiveFormsModule
   ],
-  declarations: [SignTxPage]
+  declarations: [SignTxPage],
+  providers: [
+    TxService,
+    StellarService,
+  ]
 })
 export class SignTxPageModule {}

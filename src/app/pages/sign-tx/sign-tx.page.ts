@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { TxService, Utility, StellarService, UserService } from '../../providers/providers';
+import { FormBuilder } from '@angular/forms';
+import { Operation, xdr, Transaction } from 'stellar-sdk';
+
+
 
 @Component({
   selector: 'app-sign-tx',
@@ -7,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignTxPage implements OnInit {
 
-  constructor() { }
+  builtTx = '';
+
+  constructor(private formBuilder: FormBuilder, private txService: TxService,
+    private utility: Utility, private stellarService: StellarService, private userService: UserService) { }
 
   ngOnInit() {
+    this.txService.tx.subscribe((data) => {
+      this.builtTx = data;
+      console.log('builtTx: ', this.builtTx);
+      if(this.builtTx){
+        const txObj = new Transaction(this.builtTx);
+        console.log('txObj: ', txObj);
+        const txSources = this.stellarService.txSourceAccounts(this.builtTx);
+        console.log('srcAccounts: ', txSources);
+      }
+    });
+
   }
 
   // Build transaction

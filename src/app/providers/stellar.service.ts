@@ -6,6 +6,7 @@ import {
 } from 'stellar-sdk';
 import { Buffer } from 'buffer';
 import { TimeoutInfinite } from 'stellar-sdk';
+import { Transaction } from 'stellar-sdk';
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,28 @@ export class StellarService {
     const txXdr = builtTx.toEnvelope().toXDR().toString('base64');
 
     return txXdr;
+  }
+
+  /**
+   * returns a Set of the source accounts in a transaction
+   * @param tx base64 encoded string
+   */
+  txSourceAccounts(tx = '') {
+    try {
+      if (!tx) {
+        throw new Error('Invalid transaction string');
+      }
+      const txObj = new Transaction(tx);
+      const publicKeySet = new Set([txObj.source]);
+
+      txObj.operations.forEach(op => {
+        publicKeySet.add(op.source);
+      });
+      return publicKeySet;
+    } catch (error) {
+      console.log('err: ', error);
+      return new Set();
+    }
   }
 
 }

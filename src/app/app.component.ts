@@ -18,6 +18,11 @@ export class AppComponent {
       icon: 'home'
     },
     {
+      title: 'Sign Tx',
+      url: '/sign-tx',
+      icon: 'pencil'
+    },
+    {
       title: 'Build Tx',
       url: '/build-tx',
       icon: 'cog'
