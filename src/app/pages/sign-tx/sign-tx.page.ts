@@ -26,6 +26,10 @@ export class SignTxPage implements OnInit {
         console.log('txObj: ', txObj);
         const txSources = this.stellarService.txSourceAccounts(this.builtTx);
         console.log('srcAccounts: ', txSources);
+        this.stellarService.txSigners(this.builtTx).then(eligibleSigners =>{
+          console.log('el: ', eligibleSigners);
+        }).catch(err => console.log(err));
+
       }
     });
 
