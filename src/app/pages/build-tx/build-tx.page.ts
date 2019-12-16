@@ -50,7 +50,6 @@ export class BuildTxPage implements OnInit {
   makeForm() {
     this.buildTxForm = this.formBuilder.group({
       fee: [this.networkFees.min_accepted_fee, Validators.required],
-
     });
   }
 

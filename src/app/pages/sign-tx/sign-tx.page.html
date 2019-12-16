@@ -5,5 +5,36 @@
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="signTxForm">
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="signTxForm" [controlName]="'password'">
+      </app-dynamic-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label position="stacked">Signers for Custom Public Key</ion-label>
+    </ion-item>
+
+    <div formArrayName="privateKeys" *ngFor="let p of signTxForm.get('privateKeys').controls; let i = index;">
+      <ion-item [formGroupName]="i">
+        <ion-label position="stacked">Private Key {{privateKeyLabels[i]}}</ion-label>
+        <ion-input type="text" name="privateKey" formControlName="privateKey"></ion-input>
+        <div class="text-danger"
+          *ngIf="privateKeys.controls[i].invalid && (privateKeys.controls[i].dirty || privateKeys.controls[i].touched)">
+          <div *ngIf="privateKeys.controls[i].get('privateKey').errors.isValidPrivateKey">
+            Private key is invalid
+          </div>
+        </div>
+      </ion-item>
+    </div>
+
+    <ion-item>
+      <ion-button type="button" (click)="addPrivateKeyInput()">add signer</ion-button>
+
+      <ion-button type="button" [disabled]="signTxForm.invalid">Cancel</ion-button>
+      <ion-button type="button" [disabled]="signTxForm.invalid" (click)="signTransaction()">Sign Transaction
+      </ion-button>
+    </ion-item>
+  </form>
 </ion-content>
