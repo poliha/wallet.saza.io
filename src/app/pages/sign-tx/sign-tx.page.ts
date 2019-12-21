@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, Utility, StellarService, UserService, CustomValidators } from '../../providers/providers';
+import { TxService, Utility, StellarService, UserService, CustomValidators, INVALID_PASSWORD_ERROR } from '../../providers/providers';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Operation, xdr, Transaction } from 'stellar-sdk';
 
@@ -11,28 +11,35 @@ import { Operation, xdr, Transaction } from 'stellar-sdk';
   styleUrls: ['./sign-tx.page.scss'],
 })
 export class SignTxPage implements OnInit {
-
   builtTx = '';
   signTxForm: FormGroup;
   privateKeyInputs: FormArray;
   privateKeyLabels = [];
+  eligibleSigners: Set<any>;
+  userAccounts = [];
+
   constructor(private formBuilder: FormBuilder, private txService: TxService,
     private utility: Utility, private stellarService: StellarService, private userService: UserService) { }
 
   ngOnInit() {
     this.makeForm();
+    this.userService.userAccounts.subscribe(data => this.userAccounts = data);
     this.txService.tx.subscribe((data) => {
       this.builtTx = data;
       console.log('builtTx: ', this.builtTx);
-      if(this.builtTx){
-        const txObj = new Transaction(this.builtTx);
-        console.log('txObj: ', txObj);
-        const txSources = this.stellarService.txSourceAccounts(this.builtTx);
-        console.log('srcAccounts: ', txSources);
-        this.stellarService.txSigners(this.builtTx).then(eligibleSigners =>{
+      if (this.builtTx) {
+        // const txObj = new Transaction(this.builtTx);
+        // console.log('txObj: ', txObj);
+        // const txSources = this.stellarService.txSourceAccounts(this.builtTx);
+        // console.log('srcAccounts: ', txSources);
+        this.stellarService.txSigners(this.builtTx).then(eligibleSigners => {
           console.log('el: ', eligibleSigners);
+          this.eligibleSigners = eligibleSigners;
+          // to do: move this to a private method;
           eligibleSigners.forEach((element: string) => {
-            this.addPrivateKeyInput(element);
+            if (!this.userAccounts.find(acc => acc.public === element)) {
+              this.addPrivateKeyInput(element);
+            }
           });
         }).catch(err => console.log(err));
 
@@ -71,14 +78,25 @@ export class SignTxPage implements OnInit {
   get password() { return this.signTxForm.get('password'); }
   get privateKeys() { return this.signTxForm.get('privateKeys'); }
 
-  // Build transaction
-  // add all operations
-  // add memo
-  // specify fee
-  // specify tx timeout
-  // Display transaction details - ops, hash, fee
-  // determine required sigs
-  // sign tx
-  // send tx
+  async signTransaction() {
+    const password = this.password.value;
+    const privateKeys = this.privateKeys.value;
 
+    const passwordHash = await this.userService.getPassword();
+    if (!this.utility.validateHash(password, passwordHash)) {
+      throw new Error(INVALID_PASSWORD_ERROR);
+    }
+
+    this.userAccounts.filter(acc => {
+      return this.eligibleSigners.has(acc.public);
+    })
+    .forEach(acc => {
+      const decryptedKey = this.utility.decrypt(acc.private, password);
+      privateKeys.push(decryptedKey);
+    });
+
+    const signedTx = this.stellarService.signTx(this.builtTx, ...privateKeys);
+    const submitTx = await this.stellarService.submitTx(signedTx);
+    console.log('submitTx: ', submitTx);
+  }
 }

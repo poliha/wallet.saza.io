@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  Network,
+  Networks,
   Keypair, Asset, Operation, TransactionBuilder, StrKey,
   FederationServer, StellarTomlResolver, Memo, Account, Server, xdr
 } from 'stellar-sdk';
@@ -32,10 +32,7 @@ export class StellarService {
     const server = new Server('https://horizon-testnet.stellar.org');
 
     try {
-      const accountEffects = await server.effects().forAccount('GAQHWQYBBW272OOXNQMMLCA5WY2XAZPODGB7Q3S5OKKIXVESKO55ZQ7C').order('desc').call();
-
-      // to do update stellar sdk so you can use join
-      // const accountEffects = await server.effects().forAccount(accountID).order('desc').join('transactions').call();
+      const accountEffects = await server.effects().forAccount(accountID).order('desc').join('transactions').call();
       return accountEffects;
     } catch (error) {
       console.log('error: ', error);
@@ -47,10 +44,7 @@ export class StellarService {
     const server = new Server('https://horizon-testnet.stellar.org');
 
     try {
-      const accountOperations = await server.operations().forAccount('GAQHWQYBBW272OOXNQMMLCA5WY2XAZPODGB7Q3S5OKKIXVESKO55ZQ7C').order('desc').call();
-
-      // to do update stellar sdk so you can use join
-      // const accountEffects = await server.effects().forAccount('GAQHWQYBBW272OOXNQMMLCA5WY2XAZPODGB7Q3S5OKKIXVESKO55ZQ7C').order('desc').join('transactions').call();
+      const accountOperations = await server.operations().forAccount(accountID).order('desc').join('transactions').call();
       return accountOperations;
     } catch (error) {
       console.log('error: ', error);
@@ -89,7 +83,7 @@ export class StellarService {
 
     // add network passphrase
     // to do: set by network type
-    newTx = newTx.setNetworkPassphrase(Network.TESTNET);
+    newTx = newTx.setNetworkPassphrase(Networks.TESTNET);
 
     // add timebound
     newTx = newTx.setTimeout(TimeoutInfinite);
@@ -222,6 +216,31 @@ export class StellarService {
     }
 
     return eligibleKeys;
+  }
+
+  signTx(tx: string, ...privateKeys: string[]) {
+    const txObj = new Transaction(tx, Networks.TESTNET);
+    console.log('PKs: ', privateKeys);
+    privateKeys.forEach(key => {
+      console.log('key: ', key);
+      txObj.sign(Keypair.fromSecret(key));
+    });
+    console.log('signedTx obj', txObj);
+    return txObj.toXDR();
+  }
+
+  async submitTx(tx: string) {
+    const txObj = new Transaction(tx);
+    // to do initialise server based on network type
+    const server = new Server('https://horizon-testnet.stellar.org');
+
+    try {
+      const txResult = await server.submitTransaction(txObj);
+
+      return txResult;
+    } catch (error) {
+      console.log('error: ', error);
+    }
   }
 
 }
