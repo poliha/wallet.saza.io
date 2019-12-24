@@ -88,6 +88,7 @@ export class UserService {
       } else {
         this.isLoggedIn.next(status);
       }
+      return status;
     });
   }
 

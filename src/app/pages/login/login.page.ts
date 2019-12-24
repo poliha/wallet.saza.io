@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Utility, UserService, INVALID_PASSWORD_ERROR, NotificationService } from '../../providers/providers';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 
 @Component({
@@ -14,10 +15,18 @@ export class LoginPage implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private utility: Utility,
     private userService: UserService, private router: Router,
-    private notification: NotificationService) { }
+    private notification: NotificationService, private menu: MenuController) { }
 
   ngOnInit() {
     this.makeForm();
+  }
+
+  ionViewWillEnter() {
+    this.menu.enable(false);
+  }
+
+  ionViewWillLeave() {
+    this.menu.enable(true);
   }
 
   makeForm() {
@@ -37,6 +46,6 @@ export class LoginPage implements OnInit {
     }
     this.notification.show('Login success');
     this.userService.login();
-    this.router.navigate(['create-account/']);
+    this.router.navigate(['dashboard/']);
   }
 }

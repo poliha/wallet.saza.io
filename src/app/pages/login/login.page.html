@@ -9,17 +9,15 @@
     <ion-item>
       <ion-label position="stacked">Password</ion-label>
       <ion-input type="password" name="password" formControlName="password"></ion-input>
-      <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+      <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
         <div *ngIf="password.errors.required">
           A value is required.
         </div>
         <div *ngIf="password.errors.minlength">
           Minimum length is 8 characters
         </div>
-      </div>
+      </ion-text>
     </ion-item>
-    <ion-item>
-      <ion-button type="submit" [disabled]="loginForm.invalid">Login</ion-button>
-    </ion-item>
+      <ion-button class="ion-margin" expand="block" type="submit" shape="round" [disabled]="loginForm.invalid">Login</ion-button>
   </form>
 </ion-content>

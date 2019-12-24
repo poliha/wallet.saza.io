@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CustomValidators, Utility, UserService, NotificationService } from '../../providers/providers';
-import { ModalController } from '@ionic/angular';
+import { ModalController, MenuController } from '@ionic/angular';
 import { RecoveryPasswordModalComponent } from '../../components/recovery-password-modal/recovery-password-modal.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { not } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-saza-setup',
@@ -16,12 +14,26 @@ import { not } from '@angular/compiler/src/output/output_ast';
 export class SazaSetupPage implements OnInit {
   suggestedPassword = '';
   private passwordForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private utility: Utility, private userService: UserService,
+  constructor(private formBuilder: FormBuilder, private utility: Utility,
+    private userService: UserService, private menu: MenuController,
     public modalController: ModalController, private router: Router,
     public notification: NotificationService) { }
 
   ngOnInit() {
+    this.userService.getPassword().then(pwd => {
+      if (pwd) {
+        this.router.navigate(['/login']);
+      }
+    });
     this.makeForm();
+  }
+
+  ionViewWillEnter() {
+    this.menu.enable(false);
+  }
+
+  ionViewWillLeave() {
+    this.menu.enable(true);
   }
 
   makeForm() {
@@ -82,8 +94,11 @@ export class SazaSetupPage implements OnInit {
     // save encrypted password
     // return recovery password to user in plain text
     try {
-      const trimmedPwd = String(this.password.value).trim()
-      const passwordHash = this.utility.getHash(trimmedPwd)
+      if (this.password.value !== this.confirmPassword.value) {
+        throw new Error('Password mismatch');
+      }
+      const trimmedPwd = String(this.password.value).trim();
+      const passwordHash = this.utility.getHash(trimmedPwd);
       const recoveryPassword = this.utility.generatePassword();
 
       // use the recovery password to encrypt the primary password.
@@ -99,7 +114,8 @@ export class SazaSetupPage implements OnInit {
       this.presentModal(recoveryPassword);
     } catch (error) {
       console.log(error);
-      throw new Error('Saza setup failed.');
+      // to do... make this more descriptive?
+      throw new Error('Saza wallet setup failed.');
     }
   }
 
@@ -119,22 +135,18 @@ export class SazaSetupPage implements OnInit {
   }
 
   async canDeactivate(nextUrl: string) {
-    try {
       let status = false;
-
       if (nextUrl === '/' || nextUrl === '/home') {
-        status = true;
-        return status;
+        return true;
+      } else {
+        status = await this.userService.isSetupComplete();
       }
-      status = await this.userService.isSetupComplete();
-      console.log(status);
+
+      if (!status) {
+        console.log(status);
+        this.notification.show('Please complete wallet setup.');
+      }
       return status;
-    } catch (error) {
-      // to do handle and show error
-      console.log(error);
-      this.notification.show('Hang on ...');
-      // this.notificationService.show('Hang on ...', 'Please complete account setup.', 'warning');
-    }
   }
 
 }

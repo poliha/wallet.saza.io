@@ -11,66 +11,32 @@ export interface CanDeactivateComponent {
 @Injectable()
 export class AuthGuardService implements CanActivate, CanDeactivate<CanDeactivateComponent> {
   private isLoggedIn: boolean;
-  constructor(public userService: UserService, public router: Router) {
-    this.userService.isLoggedIn.subscribe((data) => {
-      console.log(data);
-      this.isLoggedIn = data;
-    });
-   }
+  constructor(public userService: UserService, public router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const authLinks = [
       'saza-setup',
       'login'
     ];
 
-    console.log("AG, islogged in: ", this.isLoggedIn)
-    if (!this.isLoggedIn) {
-      if (this.urlHasString(state.url, authLinks)) {
-        // if url is an auth link, allow activation
-        return true;
-      }
-
-      this.router.navigate(['login']);
+    const isAuthLink = this.urlHasString(state.url, authLinks);
+    this.isLoggedIn = await this.userService.getLoginStatus();
+    console.log("AG, islogged in: ", this.isLoggedIn);
+    if (isAuthLink && this.isLoggedIn) {
+      this.router.navigate(['dashboard']);
       return false;
+    }
 
-    } else {
-      // to do: fix this. isSetupComplete now returns a promise; 
-      const isSetupComplete = this.userService.isSetupComplete();
-      if (!isSetupComplete) {
-        if (state.url === '/saza-setup') {
-          // return true to avoid redirect loop when url is saza-setup
-          return true;
-        } else {
-          this.router.navigate(['saza-setup']);
-          return false;
-        }
-      }
-
+    if (isAuthLink && !this.isLoggedIn) {
       return true;
     }
 
-    // console.log("AG, islogged in: ", this.isLoggedIn)
-    // if (!this.isLoggedIn) {
-    //   this.router.navigate(['login']);
-    //   return false;
-    // }
+    if (!this.isLoggedIn) {
+      this.router.navigate(['login']);
+      return false;
+    }
 
-
-
-    // if (this.isLoggedIn && isSetupComplete) {
-    //   // if user is already logged in dont navigate to auth links
-    //   const authLinks = [
-    //     'saza-setup',
-    //     'login'
-    //   ];
-    //   if (this.urlHasString(state.url, authLinks)) {
-    //     this.router.navigate(['link-account']);
-    //     return false;
-    //   }
-    // }
-
-    // return true;
+    return true;
   }
 
   canDeactivate(component: CanDeactivateComponent, currentRoute: ActivatedRouteSnapshot,
