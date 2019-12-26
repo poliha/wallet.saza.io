@@ -1,22 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>CreateAccount</ion-title>
+    <ion-title>Create Account</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-  <app-account-balance></app-account-balance>
-
-  <ion-button expand="block" (click)="generateKeypair()">Generate Keys</ion-button>
-  <form [formGroup]="createAccountForm" (submit)="formSubmit()">
-    <ion-item>
-      <ion-label>Public Key</ion-label>
-      {{pairObj.public}}
+<ion-content class="ion-padding">
+  <ion-button expand="block" (click)="generateKeypair()" shape="round">Generate Keys</ion-button>
+  <form *ngIf="keypairGenerated" [formGroup]="createAccountForm" (submit)="formSubmit()">
+    <ion-item class="ion-text-wrap">
+      <ion-label>
+        <h4>Public Key <app-copy-button class="ion-padding" [copyInput]="pairObj.public"
+            (copyOutput)="itemCopied($event)">
+          </app-copy-button>
+        </h4>
+        <p>{{pairObj.public}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item class="ion-text-wrap">
+      <ion-label>
+        <h4>Private Key <app-copy-button class="ion-padding" [copyInput]="pairObj.private"
+            (copyOutput)="itemCopied($event)"></app-copy-button>
+        </h4>
+        <p>{{pairObj.private}}</p>
+      </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Private Key</ion-label>
-      {{pairObj.private}}
+      <ion-label position="stacked">Tag</ion-label>
+      <app-dynamic-input [form]="createAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1"></app-dynamic-input>
     </ion-item>
     <ion-item>
       <ion-label>I have copied keys to a safe place</ion-label>
@@ -26,17 +36,19 @@
     <ion-item>
       <ion-label position="stacked">Password</ion-label>
       <ion-input type="password" name="password" formControlName="password"></ion-input>
-      <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-        <div *ngIf="password.errors.required">
+      <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+        <p *ngIf="password.errors.required">
           value is required.
-        </div>
-        <div *ngIf="password.errors.minlength">
+        </p>
+        <p *ngIf="password.errors.minlength">
           Minimum length is 8 characters
-        </div>
-      </div>
+        </p>
+      </ion-text>
     </ion-item>
-    <ion-item>
-      <button type="submit" [disabled]="createAccountForm.invalid">Save</button>
-    </ion-item>
+    <ion-button class="ion-margin" expand="block" shape="round" type="submit"
+      [disabled]="createAccountForm.invalid">
+      <ion-icon slot="end" name="save"></ion-icon>
+      Save
+    </ion-button>
   </form>
 </ion-content>

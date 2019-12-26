@@ -5,6 +5,7 @@ export interface SazaAccount {
     iv: string;
     salt: string;
   };
+  tag: string;
 }
 
 // export const EmptySazaAccount = {

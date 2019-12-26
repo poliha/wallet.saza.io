@@ -125,4 +125,11 @@ export class Utility {
     }
   }
 
+  validateAccountTag(userAccounts = [], tag = '') {
+    const tagExists = (account) => account.tag === tag;
+    if (!tag || userAccounts.some(tagExists)) {
+      return `account-${userAccounts.length + 1}`;
+    }
+    return tag;
+  }
 }

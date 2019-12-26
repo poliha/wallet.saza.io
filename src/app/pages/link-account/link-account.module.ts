@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LinkAccountPage } from './link-account.page';
+import { CopyButtonComponentModule } from 'src/app/components/copy-button/copy-button.module';
+import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 
 const routes: Routes = [
   {
@@ -20,7 +22,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CopyButtonComponentModule,
+    DynamicInputComponentModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [LinkAccountPage]

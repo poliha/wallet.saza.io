@@ -163,7 +163,7 @@ export class UserService {
         allAccounts = accounts.map(a => {
           if (a.public === data.public) {
             accountFound = true;
-            a = data;
+            a = {...data};
           }
           return a;
         });

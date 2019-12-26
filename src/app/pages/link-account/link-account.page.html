@@ -1,30 +1,45 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>LinkAccount</ion-title>
+    <ion-title>Link Account</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="linkAccountForm" (submit)="formSubmit()">
     <ion-item>
       <ion-label position="stacked">Private Key</ion-label>
       <ion-input type="text" name="privateKey" formControlName="privateKey" (keyup)="generateKeypair()"></ion-input>
-      <div class="text-danger" *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
+      <ion-text color="danger" *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
         <div *ngIf="privateKey.errors.required">
           A value is required.
         </div>
         <div *ngIf="privateKey.errors.isValidPrivateKey">
           Invalid Private Key
         </div>
-      </div>
+      </ion-text>
+    </ion-item>
+    <div *ngIf="keypairGenerated">
+    <ion-item class="ion-text-wrap">
+      <ion-label>
+        <h4>Public Key <app-copy-button class="ion-padding" [copyInput]="pairObj.public"
+            (copyOutput)="itemCopied($event)">
+          </app-copy-button>
+        </h4>
+        <p>{{pairObj.public}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item class="ion-text-wrap">
+      <ion-label>
+        <h4>Private Key <app-copy-button class="ion-padding" [copyInput]="pairObj.private"
+            (copyOutput)="itemCopied($event)"></app-copy-button>
+        </h4>
+        <p>{{pairObj.private}}</p>
+      </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Public Key</ion-label>
-      {{pairObj.public}}
-    </ion-item>
-    <ion-item>
-      <ion-label>Private Key</ion-label>
-      {{pairObj.private}}
+      <ion-label position="stacked">Tag</ion-label>
+      <app-dynamic-input [form]="linkAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1">
+      </app-dynamic-input>
     </ion-item>
     <ion-item>
       <ion-label>I have copied keys to a safe place</ion-label>
@@ -43,8 +58,10 @@
         </div>
       </div>
     </ion-item>
-    <ion-item>
-      <button type="submit" [disabled]="linkAccountForm.invalid">Save</button>
-    </ion-item>
+    </div>
+    <ion-button class="ion-margin" expand="block" shape="round" type="submit" [disabled]="linkAccountForm.invalid">
+      <ion-icon slot="end" name="save"></ion-icon>
+      Save
+    </ion-button>
   </form>
 </ion-content>

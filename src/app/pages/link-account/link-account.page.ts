@@ -11,12 +11,14 @@ import { SazaAccount } from '../../interfaces/saza';
 })
 export class LinkAccountPage implements OnInit {
   private linkAccountForm: FormGroup;
+  userAccounts = [];
   pairObj: { public: string, private: string } = { public: '', private: '' };
   keypairGenerated = false;
   constructor(private formBuilder: FormBuilder, private utility: Utility,
     private userService: UserService, public notification: NotificationService) { }
 
   ngOnInit() {
+    this.userService.userAccounts.subscribe(data => this.userAccounts = data);
     this.makeForm();
   }
 
@@ -37,14 +39,19 @@ export class LinkAccountPage implements OnInit {
       privateKey: ['', Validators.compose([Validators.required, CustomValidators.isValidPrivateKey()])],
       keysCopied: ['', Validators.requiredTrue],
       password: ['', Validators.compose([Validators.minLength(8), Validators.required])],
+      tag: [''],
     });
   }
 
+  itemCopied(item) {
+    console.log('item: ', item);
+  }
 
   // Getters for template
   get privateKey() { return this.linkAccountForm.get('privateKey'); }
   get keysCopied() { return this.linkAccountForm.get('keysCopied'); }
   get password() { return this.linkAccountForm.get('password'); }
+  get tag() { return this.linkAccountForm.get('tag'); }
 
   async formSubmit() {
     // check that pairobj is not empty
@@ -69,13 +76,15 @@ export class LinkAccountPage implements OnInit {
 
     const sazaAccount: SazaAccount = {
       public: this.pairObj.public,
-      private: encrpytedObject
+      private: encrpytedObject,
+      tag: this.utility.validateAccountTag(this.userAccounts, this.tag.value),
     };
 
     this.userService.setAccount(sazaAccount);
     this.notification.show('Account linked!');
     this.pairObj.private = '';
     this.pairObj.public = '';
+    this.keypairGenerated = false;
     this.linkAccountForm.reset();
     console.log("account saved")
   }

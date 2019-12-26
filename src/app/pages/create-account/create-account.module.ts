@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CreateAccountPage } from './create-account.page';
-import { AccountBalanceComponentModule } from 'src/app/components/account-balance/account-balance.module';
+import { CopyButtonComponentModule } from 'src/app/components/copy-button/copy-button.module';
+import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    AccountBalanceComponentModule,
+    CopyButtonComponentModule,
+    DynamicInputComponentModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [CreateAccountPage]
