@@ -18,31 +18,23 @@
 
     <div *ngSwitchCase="'manual'">
       <div [formGroupName]="controlName">
-        <ion-radio-group (ionChange)="setAssetType($event.target.value)" formControlName="asset_type">
-          <ion-list-header>
-            Type
-          </ion-list-header>
-
-          <ion-item>
+        <ion-segment (ionChange)="setAssetType($event.target.value)" formControlName="asset_type">
+          <ion-segment-button value="native">
             <ion-label>XLM</ion-label>
-            <ion-radio value="native">
-            </ion-radio>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Custom</ion-label>
-            <ion-radio value="custom">
-            </ion-radio>
-          </ion-item>
-        </ion-radio-group>
+          </ion-segment-button>
+          <ion-segment-button value="custom">
+            <ion-label>custom</ion-label>
+          </ion-segment-button>
+        </ion-segment>
         <div *ngIf="showCustomFields">
           <ion-item>
             <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_code'"
-              [placeHolder]="'Code'" [maxValue]="'12'"></app-dynamic-input>
+              [placeHolder]="'Code'" [maxValue]="'12'" [isRequired]="false"></app-dynamic-input>
           </ion-item>
           <ion-item>
             <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_issuer'"
-              [placeHolder]="'Issuer Public key'" [isEd25519PublicKey]="'true'"></app-dynamic-input>
+              [placeHolder]="'Issuer Public key'" [isEd25519PublicKey]="'true'" [isRequired]="false">
+            </app-dynamic-input>
           </ion-item>
         </div>
       </div>

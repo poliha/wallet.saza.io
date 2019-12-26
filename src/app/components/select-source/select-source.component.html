@@ -1,15 +1,17 @@
-<ion-item>
+<div>
   <ion-select placeholder="Source Account" (ionChange)="accountChanged($event)">
+    <ion-select-option [value]="0">Select Account</ion-select-option>
     <ion-select-option *ngFor="let a of userAccounts" [value]="a.public"
-      selected="{{a.public === selected ? true : false}}">{{a.public}}
+      [selected]="a.public === selected ? true : false">{{a.public}}
     </ion-select-option>
     <ion-select-option value="custom">Custom public key</ion-select-option>
   </ion-select>
-</ion-item>
-<ion-item *ngIf="showCustomInput">
-  <app-dynamic-input (ionChange)="customInputChanged($event)" [inputType]="'text'" [form]="customInputForm"
-    [controlName]="'customPublicKey'" [placeHolder]="'Custom Public key'" [defaultValue]="selected"
-    [isEd25519PublicKey]="'true'"></app-dynamic-input>
-</ion-item>
-<app-dynamic-input [inputType]="'text'" [form]="form" [controlName]="controlName" [isHidden]="true"
-  [isEd25519PublicKey]="'true'" [defaultValue]="selected"></app-dynamic-input>
+
+  <div *ngIf="showCustomInput">
+    <app-dynamic-input (ionChange)="customInputChanged($event)" [inputType]="'text'" [form]="customInputForm"
+      [controlName]="'customPublicKey'" [placeHolder]="'Custom Public key'" [defaultValue]="selected"
+      [isEd25519PublicKey]="'true'"></app-dynamic-input>
+  </div>
+  <app-dynamic-input [inputType]="'text'" [form]="form" [controlName]="controlName" [isHidden]="true"
+    [isEd25519PublicKey]="'true'" [defaultValue]="selected" [isRequired]="false"></app-dynamic-input>
+</div>

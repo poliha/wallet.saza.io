@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="offerForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
@@ -12,11 +12,15 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Selling</ion-label>
-      <app-asset-picker [form]="offerForm" [controlName]="'selling'" [displayType]="'manual'"></app-asset-picker>
+      <div>
+        <app-asset-picker [form]="offerForm" [controlName]="'selling'" [displayType]="'manual'"></app-asset-picker>
+      </div>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Buying</ion-label>
-      <app-asset-picker [form]="offerForm" [controlName]="'buying'" [displayType]="'manual'"></app-asset-picker>
+      <div>
+        <app-asset-picker [form]="offerForm" [controlName]="'buying'" [displayType]="'manual'"></app-asset-picker>
+      </div>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Price</ion-label>
@@ -30,12 +34,12 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Offer ID</ion-label>
-      <app-dynamic-input [form]="offerForm" [controlName]="'offerID'" [placeHolder]="'Offer ID'">
+      <app-dynamic-input [form]="offerForm" [controlName]="'offerID'" [placeHolder]="'Offer ID'" [isRequired]="false">
       </app-dynamic-input>
     </ion-item>
-    <ion-item>
-      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Add Operation</ion-button>
-      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Sign and Send</ion-button>
-    </ion-item>
+    <div class="ion-margin ion-text-center">
+      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Save</ion-button>
+      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Send</ion-button>
+    </div>
   </form>
 </ion-content>

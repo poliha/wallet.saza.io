@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TxService, NotificationService } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
+import { Operation } from 'stellar-sdk';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,7 @@ export class AccountMergePage implements OnInit {
 
   makeForm() {
     this.accountMergeForm = new FormGroup({});
+    console.log('form: ', this.accountMergeForm);
   }
 
   // Getters for template
@@ -43,11 +44,9 @@ export class AccountMergePage implements OnInit {
       const xdrString = accountMergeOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'account_merge', tx: xdrString });
       this.notification.show('Operation Added');
-      this.accountMergeForm.reset();
       console.log('account Merge Ops: ', xdrString);
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
+      console.log('form: ', this.accountMergeForm);
+      this.accountMergeForm.reset({source: this.source.value}, {emitEvent: true});
     } catch (error) {
       console.log('error: ', error);
     }

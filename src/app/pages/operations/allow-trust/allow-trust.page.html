@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="allowTrustForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
@@ -23,30 +23,31 @@
         [placeHolder]="'Asset Code'" [maxValue]="12"></app-dynamic-input>
     </ion-item>
 
-
-<ion-item>
-  <ion-radio-group formControlName="authorize">
-    <ion-list-header>
+    <ion-item>
       <ion-label>Authorize</ion-label>
-    </ion-list-header>
-
-    <ion-item>
-      <ion-label>True</ion-label>
-      <ion-radio slot="start" value="true" checked></ion-radio>
+      <div>
+        <ion-segment formControlName="authorize">
+          <ion-segment-button value="true">
+            <ion-label>Yes</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="false">
+            <ion-label>No</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <ion-text color="danger" *ngIf="authorize.invalid && (authorize.dirty || authorize.touched)">
+        <p *ngIf="authorize.errors.required">
+          value is required.
+        </p>
+      </ion-text>
     </ion-item>
 
-    <ion-item>
-      <ion-label>False</ion-label>
-      <ion-radio slot="start" value="false"></ion-radio>
-    </ion-item>
-  </ion-radio-group>
-</ion-item>
-
-    <ion-item>
-      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="addOperation()">Add Operation
+    <div class="ion-margin ion-text-center">
+      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="addOperation()">
+        Save
       </ion-button>
-      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="signOperation()">Sign and Send
+      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="signOperation()">Send
       </ion-button>
-    </ion-item>
+    </div>
   </form>
 </ion-content>

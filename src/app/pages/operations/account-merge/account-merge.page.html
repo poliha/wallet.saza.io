@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="accountMergeForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
@@ -17,11 +17,11 @@
         [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
     </ion-item>
 
-    <ion-item>
-      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="addOperation()">Add Operation
+    <div class="ion-margin ion-text-center">
+      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="addOperation()">Save
       </ion-button>
-      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="signOperation()">Sign and Send
+      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="signOperation()">Send
       </ion-button>
-    </ion-item>
+    </div>
   </form>
 </ion-content>

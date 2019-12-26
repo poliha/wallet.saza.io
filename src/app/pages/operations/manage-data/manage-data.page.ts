@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TxService, NotificationService } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
+import { Operation } from 'stellar-sdk';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -45,11 +45,8 @@ export class ManageDataPage implements OnInit {
       const xdrString = manageDataOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'manage_data', tx: xdrString });
       this.notification.show('Operation Added');
-      this.manageDataForm.reset();
-      console.log('manage Data Ops: ', xdrString);
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
+      this.manageDataForm.reset({ source: this.source.value });
+      console.log('manage Data Ops: ', xdrString);;
     } catch (error) {
       console.log('error: ', error);
     }

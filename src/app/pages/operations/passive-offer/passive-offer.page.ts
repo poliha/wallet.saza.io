@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Utility, TxService } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
+import { Operation } from 'stellar-sdk';
 import { OfferComponent } from 'src/app/components/offer/offer.component';
 
 
@@ -41,10 +41,7 @@ export class PassiveOfferPage extends OfferComponent implements OnInit {
       const xdrString = passiveOfferOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'create_passive_sell_offer', tx: xdrString });
 
-      console.log('managePassiveOffer: ', xdrString)
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
+      console.log('managePassiveOffer: ', xdrString);
       this.resetForm();
     } catch (error) {
       console.log('error: ', error)

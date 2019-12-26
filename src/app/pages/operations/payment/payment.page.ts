@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { TxService, CustomValidators, Utility } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
+import { FormGroup } from '@angular/forms';
+import { TxService, Utility } from '../../../providers/providers';
+import { Operation } from 'stellar-sdk';
 
 @Component({
   selector: 'app-payment',
@@ -11,17 +11,14 @@ import { Operation, xdr } from 'stellar-sdk';
 export class PaymentPage implements OnInit {
   private paymentForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private txService: TxService,
-    private utility: Utility) { }
+  constructor(private txService: TxService, private utility: Utility) { }
 
   ngOnInit() {
     this.makeForm();
   }
 
   makeForm() {
-    this.paymentForm = this.formBuilder.group({ });
-
-    console.log('PaymentForm: ', this.paymentForm);
+    this.paymentForm = new FormGroup({});
   }
 
   // Getters for template
@@ -53,10 +50,10 @@ export class PaymentPage implements OnInit {
       this.txService.addOperation({ type: 'payment', tx: xdrString });
 
       console.log('paymentOps: ', xdrString)
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
-      this.paymentForm.reset({asset: {asset_type: 'native'}});
+      this.paymentForm.reset({
+        source: this.source.value,
+        asset: {asset_type: 'native'}
+      });
     } catch (error) {
       console.log('error: ', error)
     }

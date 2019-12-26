@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -28,6 +28,10 @@ export class OfferComponent implements OnInit {
   get price() { return this.offerForm.get('price'); }
 
   resetForm() {
-    this.offerForm.reset({ selling: { asset_type: 'native' }, buying: { asset_type: 'native' } });
+    this.offerForm.reset({
+      source: this.source.value,
+      selling: { asset_type: 'native' },
+      buying: { asset_type: 'native' },
+    });
   }
 }

@@ -30,6 +30,7 @@ export class AssetPickerComponent implements OnInit {
 
     this.form.removeControl(this.controlName);
     this.form.addControl(this.controlName, this.assetGroup);
+    this.form.get(this.controlName).updateValueAndValidity();
     console.log('Made asset form...', this.form);
   }
 

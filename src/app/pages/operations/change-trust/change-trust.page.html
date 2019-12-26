@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="changeTrustForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
@@ -23,11 +23,11 @@
         [placeHolder]="'Trust Limit'"></app-dynamic-input>
     </ion-item>
 
-    <ion-item>
-      <ion-button type="button" [disabled]="changeTrustForm.invalid" (click)="addOperation()">Add Operation
+    <div class="ion-margin ion-text-center">
+      <ion-button type="button" [disabled]="changeTrustForm.invalid" (click)="addOperation()">Save
       </ion-button>
-      <ion-button type="button" [disabled]="changeTrustForm.invalid" (click)="signOperation()">Sign and Send
+      <ion-button type="button" [disabled]="changeTrustForm.invalid" (click)="signOperation()">Send
       </ion-button>
-    </ion-item>
+    </div>
   </form>
 </ion-content>

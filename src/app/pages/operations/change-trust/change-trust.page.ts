@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TxService, NotificationService, Utility } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Operation } from 'stellar-sdk';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-change-trust',
@@ -17,7 +17,7 @@ export class ChangeTrustPage implements OnInit {
   }
 
   makeForm() {
-    this.changeTrustForm = new FormGroup({ });
+    this.changeTrustForm = new FormGroup({});
   }
 
   // Getters for template
@@ -46,11 +46,8 @@ export class ChangeTrustPage implements OnInit {
       const xdrString = changeTrustOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'change_trust', tx: xdrString });
       this.notification.show('Operation Added');
-      this.changeTrustForm.reset();
+      this.changeTrustForm.reset({ source: this.source.value });
       console.log('change Trust Ops: ', xdrString);
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
     } catch (error) {
       console.log('error: ', error);
     }

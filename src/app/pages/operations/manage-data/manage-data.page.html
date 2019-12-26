@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="manageDataForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
@@ -22,11 +22,11 @@
       </app-dynamic-input>
     </ion-item>
 
-    <ion-item>
-      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="addOperation()">Add Operation
+    <div class="ion-margin ion-text-center">
+      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="addOperation()">Save
       </ion-button>
-      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="signOperation()">Sign and Send
+      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="signOperation()">Send
       </ion-button>
-    </ion-item>
+    </div>
   </form>
 </ion-content>

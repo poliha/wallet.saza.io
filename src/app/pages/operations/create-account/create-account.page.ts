@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { TxService, CustomValidators, NotificationService } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
+import { FormGroup } from '@angular/forms';
+import { TxService, NotificationService } from '../../../providers/providers';
+import { Operation } from 'stellar-sdk';
 
 @Component({
   selector: 'app-create-account',
@@ -11,7 +11,7 @@ import { Operation, xdr } from 'stellar-sdk';
 export class CreateAccountPage implements OnInit {
   private createAccountForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private txService: TxService,
+  constructor(private txService: TxService,
     private notification: NotificationService) { }
 
   ngOnInit() {
@@ -19,11 +19,7 @@ export class CreateAccountPage implements OnInit {
   }
 
   makeForm() {
-    this.createAccountForm = this.formBuilder.group({
-      source: ['', Validators.compose([Validators.required, CustomValidators.isValidPublicKey()])],
-      destination: ['', Validators.compose([Validators.required, CustomValidators.isValidRecipient()])],
-      amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
-    });
+    this.createAccountForm = new FormGroup({});
   }
 
   // Getters for template
@@ -45,31 +41,25 @@ export class CreateAccountPage implements OnInit {
         startingBalance: String(this.amount.value),
         source: this.source.value
       };
-
-      console.log('createAccountOps: ', opsObj);
       const createAccountOperation = Operation.createAccount(opsObj);
       const xdrString = createAccountOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'create_account', tx: xdrString });
       this.notification.show('Operation Added');
-      this.createAccountForm.reset();
-      console.log('createAccountOps: ', xdrString)
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
+      this.createAccountForm.reset({ source: this.source.value });
     } catch (error) {
-      console.log('error: ', error)
+      console.log('error: ', error);
     }
   }
 
   addOperation() {
     console.log('adding operation');
     this.buildOperation();
-    // to do navigate to next page
+    // to do navigate to dashboard
   }
 
   signOperation() {
     console.log('adding operation');
     this.buildOperation();
-    // to do navigate to next page
+    // to do navigate to build
   }
 }

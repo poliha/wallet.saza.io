@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Utility, TxService } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
+import { Operation } from 'stellar-sdk';
 import { OfferComponent } from 'src/app/components/offer/offer.component';
 
 
@@ -34,12 +34,13 @@ export class SellOfferPage extends OfferComponent implements OnInit {
       // to do check if source account is active
       const opsObj = {
         selling: this.utility.generateAsset(this.selling.value),
-          buying: this.utility.generateAsset(this.buying.value),
+        buying: this.utility.generateAsset(this.buying.value),
         amount: this.amount.value,
         price: this.price.value,
-        offerId: this.offerID.value,
+        offerId: this.offerID.value || '0',
         source: this.source.value
       };
+
 
       console.log('manageSellOffer: ', opsObj);
       const sellOfferOperation = Operation.manageSellOffer(opsObj);
@@ -47,9 +48,6 @@ export class SellOfferPage extends OfferComponent implements OnInit {
       this.txService.addOperation({ type: 'manage_sell_offer', tx: xdrString });
 
       console.log('manageSellOffer: ', xdrString)
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
       this.resetForm();
     } catch (error) {
       console.log('error: ', error)

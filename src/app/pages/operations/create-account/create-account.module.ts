@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { CreateAccountPage } from './create-account.page';
 import { TxService } from '../../../providers/providers';
+import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
+import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 
 const routes: Routes = [
   {
@@ -21,7 +23,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    DynamicInputComponentModule,
+    SelectSourceComponentModule,
   ],
   providers: [TxService],
   declarations: [CreateAccountPage]

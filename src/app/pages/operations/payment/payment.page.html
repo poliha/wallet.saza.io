@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <!-- to do automatically create the receiving account if it is not active and the payment is in XLM -->
   <form [formGroup]="paymentForm">
     <ion-item>
@@ -26,9 +26,9 @@
       </app-dynamic-input>
     </ion-item>
 
-    <ion-item>
-      <ion-button type="button" [disabled]="paymentForm.invalid" (click)="buildOperation()">Add Operation</ion-button>
-      <ion-button type="button" [disabled]="paymentForm.invalid" (click)="buildOperation()">Sign and Send</ion-button>
-    </ion-item>
+    <div class="ion-margin ion-text-center">
+      <ion-button type="button" [disabled]="paymentForm.invalid" (click)="buildOperation()">Save</ion-button>
+      <ion-button type="button" [disabled]="paymentForm.invalid" (click)="buildOperation()">Send</ion-button>
+    </div>
   </form>
 </ion-content>

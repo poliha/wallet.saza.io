@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TxService, NotificationService } from '../../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
+import { Operation } from 'stellar-sdk';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -18,7 +18,7 @@ export class AllowTrustPage implements OnInit {
 
   makeForm() {
     this.allowTrustForm = new FormGroup({
-      authorize: new FormControl('', Validators.required)
+      authorize: new FormControl('true', Validators.required)
     });
   }
 
@@ -50,11 +50,10 @@ export class AllowTrustPage implements OnInit {
       const xdrString = allowTrustOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'allow_trust', tx: xdrString });
       this.notification.show('Operation Added');
-      this.allowTrustForm.reset();
+      this.allowTrustForm.reset({
+        source: this.source.value,
+      });
       console.log('allow Trust Ops: ', xdrString);
-      const buffer = Buffer.from(xdrString, 'base64');
-      console.log('cabuffer: ', buffer);
-      console.log('cabufferOP: ', xdr.Operation.fromXDR(buffer));
     } catch (error) {
       console.log('error: ', error);
     }

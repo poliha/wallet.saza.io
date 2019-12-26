@@ -38,6 +38,8 @@ export class SelectSourceComponent implements OnInit {
   accountChanged(event) {
     const eventValue = event.target.value;
     console.log("a: ", eventValue);
+    this.customInputForm.reset();
+    this.form.controls[this.controlName].reset();
     this.toggleCustomInput(eventValue);
     this.setControlNameValue(eventValue);
   }
