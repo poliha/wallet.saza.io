@@ -10,6 +10,7 @@ import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dy
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { TxService, StellarService } from 'src/app/providers/providers';
 import { MemoComponentModule } from 'src/app/components/memo/memo.module';
+import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     DynamicInputComponentModule,
     SelectSourceComponentModule,
-    MemoComponentModule
+    MemoComponentModule,
+    HeaderComponentModule,
   ],
   providers: [
     TxService,

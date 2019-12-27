@@ -10,6 +10,7 @@ import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dy
 import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
 import { TxService } from 'src/app/providers/providers';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
+import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     DynamicInputComponentModule,
     AssetPickerComponentModule,
-    SelectSourceComponentModule
+    SelectSourceComponentModule,
+    HeaderComponentModule,
   ],
   declarations: [PassiveOfferPage],
   providers: [

@@ -1,11 +1,6 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Payment</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
 <ion-content class="ion-padding">
-  <!-- to do automatically create the receiving account if it is not active and the payment is in XLM -->
   <form [formGroup]="paymentForm">
     <ion-item>
       <ion-label position="stacked">Source</ion-label>

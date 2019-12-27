@@ -10,6 +10,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class AllowTrustPage implements OnInit {
   public allowTrustForm: FormGroup;
+  pageTitle = 'Allow Trust';
+  helpUrl = '';
   constructor(private txService: TxService, private notification: NotificationService) { }
 
   ngOnInit() {

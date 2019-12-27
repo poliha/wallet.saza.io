@@ -10,6 +10,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class BumpSequencePage implements OnInit {
   public bumpSequenceForm: FormGroup;
+  pageTitle = 'Bump Sequence';
+  helpUrl = '';
   constructor(private txService: TxService, private notification: NotificationService) {
   }
 

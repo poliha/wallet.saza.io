@@ -10,7 +10,8 @@ import { OfferComponent } from 'src/app/components/offer/offer.component';
   styleUrls: ['./sell-offer.page.scss'],
 })
 export class SellOfferPage extends OfferComponent implements OnInit {
-
+  pageTitle = 'Sell Offer';
+  helpUrl = '';
   constructor(private txService: TxService, private utility: Utility) {
     super();
   }
@@ -47,10 +48,10 @@ export class SellOfferPage extends OfferComponent implements OnInit {
       const xdrString = sellOfferOperation.toXDR().toString('base64');
       this.txService.addOperation({ type: 'manage_sell_offer', tx: xdrString });
 
-      console.log('manageSellOffer: ', xdrString)
+      console.log('manageSellOffer: ', xdrString);
       this.resetForm();
     } catch (error) {
-      console.log('error: ', error)
+      console.log('error: ', error);
     }
   }
 }

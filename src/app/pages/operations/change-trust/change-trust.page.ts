@@ -10,6 +10,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class ChangeTrustPage implements OnInit {
   public changeTrustForm: FormGroup;
+  pageTitle = 'Change Trust';
+  helpUrl = '';
   constructor(private txService: TxService, private notification: NotificationService, private utility: Utility) { }
 
   ngOnInit() {

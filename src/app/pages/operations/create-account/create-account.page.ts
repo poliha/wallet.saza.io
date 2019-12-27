@@ -10,7 +10,8 @@ import { Operation } from 'stellar-sdk';
 })
 export class CreateAccountPage implements OnInit {
   private createAccountForm: FormGroup;
-
+  pageTitle = 'Create Account';
+  helpUrl = '';
   constructor(private txService: TxService,
     private notification: NotificationService) { }
 

@@ -15,6 +15,8 @@ export class CreateAccountPage implements OnInit {
   userAccounts = [];
   pairObj: { public: string, private: string } = { public: '', private: '' };
   keypairGenerated = false;
+  pageTitle = 'Create Account';
+  helpUrl = '';
   constructor(private formBuilder: FormBuilder, private utility: Utility,
     private userService: UserService, private notification: NotificationService) { }
 

@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { LinkAccountPage } from './link-account.page';
 import { CopyButtonComponentModule } from 'src/app/components/copy-button/copy-button.module';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
+import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CopyButtonComponentModule,
     DynamicInputComponentModule,
+    HeaderComponentModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [LinkAccountPage]

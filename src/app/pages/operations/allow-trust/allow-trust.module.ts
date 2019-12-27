@@ -9,6 +9,7 @@ import { AllowTrustPage } from './allow-trust.page';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { TxService } from 'src/app/providers/providers';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
+import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     DynamicInputComponentModule,
-    SelectSourceComponentModule
+    SelectSourceComponentModule,
+    HeaderComponentModule,
   ],
   declarations: [AllowTrustPage],
   providers: [

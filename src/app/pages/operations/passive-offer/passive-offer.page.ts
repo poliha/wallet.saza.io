@@ -10,7 +10,8 @@ import { OfferComponent } from 'src/app/components/offer/offer.component';
   styleUrls: ['./passive-offer.page.scss'],
 })
 export class PassiveOfferPage extends OfferComponent implements OnInit {
-
+  pageTitle = 'Passive Offer';
+  helpUrl = 'helpUrl';
   constructor(private txService: TxService, private utility: Utility) {
     super();
   }
@@ -44,7 +45,7 @@ export class PassiveOfferPage extends OfferComponent implements OnInit {
       console.log('managePassiveOffer: ', xdrString);
       this.resetForm();
     } catch (error) {
-      console.log('error: ', error)
+      console.log('error: ', error);
     }
   }
 }

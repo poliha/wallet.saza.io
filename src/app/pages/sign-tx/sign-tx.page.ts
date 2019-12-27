@@ -17,7 +17,8 @@ export class SignTxPage implements OnInit {
   privateKeyLabels = [];
   eligibleSigners: Set<any>;
   userAccounts = [];
-
+  pageTitle = 'Sign Transaction';
+  helpUrl = '';
   constructor(private formBuilder: FormBuilder, private txService: TxService,
     private utility: Utility, private stellarService: StellarService, private userService: UserService) { }
 

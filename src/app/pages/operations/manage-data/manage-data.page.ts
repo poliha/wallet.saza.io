@@ -10,6 +10,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class ManageDataPage implements OnInit {
   public manageDataForm: FormGroup;
+  pageTitle = 'Manage Data';
+  helpUrl = '';
   constructor(private txService: TxService, private notification: NotificationService) { }
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class ManageDataPage implements OnInit {
       this.txService.addOperation({ type: 'manage_data', tx: xdrString });
       this.notification.show('Operation Added');
       this.manageDataForm.reset({ source: this.source.value });
-      console.log('manage Data Ops: ', xdrString);;
+      console.log('manage Data Ops: ', xdrString);
     } catch (error) {
       console.log('error: ', error);
     }

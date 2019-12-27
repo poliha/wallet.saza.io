@@ -17,7 +17,8 @@ export class BuildTxPage implements OnInit {
   };
   pendingOperations = [];
   activeAccount: string;
-
+  pageTitle = 'Build Transaction';
+  helpUrl = '';
   constructor(private formBuilder: FormBuilder, private txService: TxService,
     private utility: Utility, private stellarService: StellarService, private userService: UserService) { }
 

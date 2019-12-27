@@ -14,6 +14,8 @@ export class LinkAccountPage implements OnInit {
   userAccounts = [];
   pairObj: { public: string, private: string } = { public: '', private: '' };
   keypairGenerated = false;
+  pageTitle = 'Link Titile';
+  helpUrl = '';
   constructor(private formBuilder: FormBuilder, private utility: Utility,
     private userService: UserService, public notification: NotificationService) { }
 

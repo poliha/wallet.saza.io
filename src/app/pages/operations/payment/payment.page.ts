@@ -10,7 +10,8 @@ import { Operation } from 'stellar-sdk';
 })
 export class PaymentPage implements OnInit {
   private paymentForm: FormGroup;
-
+  pageTitle = 'Payment';
+  helpUrl = '';
   constructor(private txService: TxService, private utility: Utility,
     private stellarService: StellarService, private notification: NotificationService) { }
 
@@ -80,7 +81,7 @@ export class PaymentPage implements OnInit {
         const paymentOperation = Operation.payment(opsObj);
         const xdrString = paymentOperation.toXDR().toString('base64');
         this.txService.addOperation({ type: 'payment', tx: xdrString });
-        console.log('paymentOps: ', xdrString)
+        console.log('paymentOps: ', xdrString);
       }
 
       this.paymentForm.reset({

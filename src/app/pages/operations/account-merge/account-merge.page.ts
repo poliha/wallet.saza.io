@@ -10,6 +10,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class AccountMergePage implements OnInit {
   public accountMergeForm: FormGroup;
+  pageTitle = 'Account Merge';
+  helpUrl = '';
   constructor(private txService: TxService, private notification: NotificationService) { }
 
   ngOnInit() {

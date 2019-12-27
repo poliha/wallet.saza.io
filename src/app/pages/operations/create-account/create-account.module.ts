@@ -9,6 +9,7 @@ import { CreateAccountPage } from './create-account.page';
 import { TxService } from '../../../providers/providers';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
+import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     DynamicInputComponentModule,
     SelectSourceComponentModule,
+    HeaderComponentModule,
   ],
   providers: [TxService],
   declarations: [CreateAccountPage]
