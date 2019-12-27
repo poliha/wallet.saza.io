@@ -24,6 +24,7 @@ export class StellarService {
       return accountDetail;
     } catch (error) {
       console.log('error: ', error);
+      return false;
     }
   }
 
@@ -241,6 +242,21 @@ export class StellarService {
     } catch (error) {
       console.log('error: ', error);
     }
+  }
+
+  async resolveFederatedAddress(address: string) {
+    try {
+      const result = await FederationServer.resolve(address);
+      return result;
+    } catch (error) {
+      console.log('error: ', error);
+      throw error;
+    }
+  }
+
+  async isAccountActive(accountID: string) {
+    const result = await this.loadAccount(accountID);
+    return Boolean(result);
   }
 
 }
