@@ -5,10 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AccountPickerComponent } from './account-picker.component';
+import { TruncatePublicKey } from 'src/app/pipes/truncate-public-key';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule,IonicModule,],
-  declarations: [AccountPickerComponent],
+  imports: [ CommonModule, FormsModule, IonicModule, ],
+  declarations: [
+    AccountPickerComponent,
+    TruncatePublicKey,
+  ],
   exports: [AccountPickerComponent]
 })
 export class AccountPickerComponentModule {}
