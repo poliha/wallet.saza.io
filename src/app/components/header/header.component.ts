@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { UserService } from 'src/app/providers/providers';
 
 @Component({
   selector: 'app-header',
@@ -6,11 +7,18 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
   @Input() title: string;
   @Input() helpUrl: string;
-  constructor() { }
+  @Input() subTitle: string;
 
-  ngOnInit() {}
+  isTestNetwork: boolean;
+
+  constructor(private userService: UserService) { }
+
+  ngOnInit() {
+    this.userService.activeNetwork.subscribe(data => {
+      this.isTestNetwork = data.type === 'testnet' ? true : false;
+    });
+  }
 
 }
