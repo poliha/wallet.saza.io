@@ -16,10 +16,12 @@ const STORAGE_KEYS = {
 
 const STELLAR_NETWORKS = {
   'pubnet': {
+    'type': 'pubnet',
     'passphrase': `Public Global Stellar Network ; September 2015`,
     'horizon': `https://horizon.stellar.org/`
   },
   'testnet': {
+    'type': 'testnet',
     'passphrase': `Test SDF Network ; September 2015`,
     'horizon': `https://horizon-testnet.stellar.org/`
   },
@@ -147,7 +149,7 @@ export class UserService {
       }
       this.userAccounts.next(accounts);
       // to do: refactor this
-      return this.getData(STORAGE_KEYS.ACCOUNTS)
+      return this.getData(STORAGE_KEYS.ACCOUNTS);
     });
   }
 
@@ -179,19 +181,19 @@ export class UserService {
   }
 
 
-  login(){
+  login() {
     this.isLoggedIn.next(true);
     return this.setData(STORAGE_KEYS.LOGGED_IN, true);
   }
 
-  logout(){
+  logout() {
     this.isLoggedIn.next(false);
     return this.setData(STORAGE_KEYS.LOGGED_IN, false);
   }
 
   async isSetupComplete() {
     // to do: complete method
-    const values = await Promise.all([this.getPassword(), this.getPasswordRecovery()])
+    const values = await Promise.all([this.getPassword(), this.getPasswordRecovery()]);
 
     if (values.length === 2) {
       if (values[0] == null || values[1] == null) {

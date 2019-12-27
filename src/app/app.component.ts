@@ -115,6 +115,7 @@ export class AppComponent {
     },
   ];
 
+  public activeNetwork: any;
 
   constructor(
     private platform: Platform,
@@ -130,18 +131,19 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.userService.activeNetwork.subscribe(data => {
+        this.activeNetwork = data;
+      });
     });
   }
 
-  logout(){
+  logout() {
     this.userService.logout();
     this.router.navigate(['/']);
   }
-  setNetwork(event){
-    if (event.target.checked) {
-      this.userService.setActiveNetwork('testnet');
-    } else {
-      this.userService.setActiveNetwork('pubnet');
-    }
+
+  setNetwork(event) {
+    const network = event.target.value;
+    this.userService.setActiveNetwork(network);
   }
 }

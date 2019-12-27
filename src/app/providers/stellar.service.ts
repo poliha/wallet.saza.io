@@ -7,20 +7,28 @@ import {
 import { Buffer } from 'buffer';
 import { TimeoutInfinite } from 'stellar-sdk';
 import { Transaction } from 'stellar-sdk';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StellarService {
+  activeNetwork: any;
+  server: any;
+  constructor(private userService: UserService) {
+    this.initializeService();
+  }
 
-  constructor() { }
+  initializeService() {
+    this.userService.activeNetwork.subscribe(data => {
+      this.activeNetwork = data;
+      this.server = new Server(this.activeNetwork.horizon);
+    });
+  }
 
   async loadAccount(accountID) {
-    // to do initialise server based on network type
-    const server = new Server('https://horizon-testnet.stellar.org');
-
     try {
-      const accountDetail = await server.loadAccount(accountID);
+      const accountDetail = await this.server.loadAccount(accountID);
       return accountDetail;
     } catch (error) {
       console.log('error: ', error);
@@ -29,11 +37,8 @@ export class StellarService {
   }
 
   async loadEffects(accountID) {
-    // to do initialise server based on network type
-    const server = new Server('https://horizon-testnet.stellar.org');
-
     try {
-      const accountEffects = await server.effects().forAccount(accountID).order('desc').join('transactions').call();
+      const accountEffects = await this.server.effects().forAccount(accountID).order('desc').join('transactions').call();
       return accountEffects;
     } catch (error) {
       console.log('error: ', error);
@@ -41,11 +46,8 @@ export class StellarService {
   }
 
   async loadOperations(accountID) {
-    // to do initialise server based on network type
-    const server = new Server('https://horizon-testnet.stellar.org');
-
     try {
-      const accountOperations = await server.operations().forAccount(accountID).order('desc').join('transactions').call();
+      const accountOperations = await this.server.operations().forAccount(accountID).order('desc').join('transactions').call();
       return accountOperations;
     } catch (error) {
       console.log('error: ', error);
@@ -53,11 +55,8 @@ export class StellarService {
   }
 
   async fees() {
-    // to do initialise server based on network type
-    const server = new Server('https://horizon-testnet.stellar.org');
-
     try {
-      const feeStats = await server.feeStats();
+      const feeStats = await this.server.feeStats();
       return feeStats;
     } catch (error) {
       console.log('error: ', error);
@@ -82,9 +81,7 @@ export class StellarService {
       newTx = newTx.addMemo(new Memo(memoType, memoValue));
     }
 
-    // add network passphrase
-    // to do: set by network type
-    newTx = newTx.setNetworkPassphrase(Networks.TESTNET);
+    newTx = newTx.setNetworkPassphrase(this.activeNetwork.passphrase);
 
     // add timebound
     newTx = newTx.setTimeout(TimeoutInfinite);
@@ -231,13 +228,9 @@ export class StellarService {
   }
 
   async submitTx(tx: string) {
-    const txObj = new Transaction(tx);
-    // to do initialise server based on network type
-    const server = new Server('https://horizon-testnet.stellar.org');
-
     try {
-      const txResult = await server.submitTransaction(txObj);
-
+      const txObj = new Transaction(tx);
+      const txResult = await this.server.submitTransaction(txObj);
       return txResult;
     } catch (error) {
       console.log('error: ', error);

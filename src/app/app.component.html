@@ -34,8 +34,19 @@
             </ion-label>
           </ion-item>
           <ion-item>
-            <ion-label>Testnet</ion-label>
-            <ion-toggle (ionChange)="setNetwork($event)"></ion-toggle>
+            <ion-label>Choose Network</ion-label>
+          </ion-item>
+          <ion-item>
+            <div *ngIf="activeNetwork">
+              <ion-segment (ionChange)="setNetwork($event)">
+                <ion-segment-button value="pubnet" [checked]="activeNetwork.type === 'pubnet' ? 'true' : 'false'">
+                  <ion-label>Pubnet</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="testnet" [checked]="activeNetwork.type === 'testnet' ? 'true' : 'false'">
+                  <ion-label>Testnet</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+            </div>
           </ion-item>
         </ion-list>
       </ion-content>
