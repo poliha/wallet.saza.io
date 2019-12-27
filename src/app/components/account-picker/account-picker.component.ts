@@ -8,30 +8,29 @@ import { SazaAccount } from '../../interfaces/saza';
 })
 export class AccountPickerComponent implements OnInit {
 
-  public userAccounts: SazaAccount[];
-
   constructor(private userService: UserService) { }
+
+  public userAccounts: SazaAccount[];
+  public activeAccount: string;
+
+
+  compareWith = (o1, o2) => {
+    return o1 && o2 ? o1.public === o2.public : o1 === o2;
+  }
 
   ngOnInit() {
     this.userService.userAccounts.subscribe((data) => {
       this.userAccounts = data;
       console.log('accountPicker', this.userAccounts);
-
+    });
+    this.userService.activeAccount.subscribe((data) => {
+      this.activeAccount = data;
+      console.log('active account', this.activeAccount);
     });
   }
-
-  compareWithFn = (o1, o2) =>{
-    return o1 && o2 ? o1.public === o2.public : o1 === o2;
-  };
-
-  compareWith = this.compareWithFn;
 
   accountChanged(event){
     console.log("a: ", event.target.value)
     this.userService.setActiveAccount(event.target.value);
   }
-
-  
-
-
 }

@@ -16,7 +16,7 @@ export class BuildTxPage implements OnInit {
     p99_accepted_fee: 200,
   };
   pendingOperations = [];
-  activeAccount: SazaAccount;
+  activeAccount: string;
 
   constructor(private formBuilder: FormBuilder, private txService: TxService,
     private utility: Utility, private stellarService: StellarService, private userService: UserService) { }

@@ -29,7 +29,7 @@ const STELLAR_NETWORKS = {
 export class UserService {
 
   public userAccounts: BehaviorSubject<SazaAccount[]> = new BehaviorSubject<SazaAccount[]>([]);
-  public activeAccount: BehaviorSubject<SazaAccount> = new BehaviorSubject<SazaAccount>(null);
+  public activeAccount: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(STELLAR_NETWORKS.pubnet);
   public isLoggedIn: BehaviorSubject<any> = new BehaviorSubject(false);
 
@@ -45,7 +45,7 @@ export class UserService {
    * Get the value of the active account
    */
   getActiveAccount() {
-    return this.getData(STORAGE_KEYS.ACTIVE_ACCOUNT).then((account: SazaAccount) => {
+    return this.getData(STORAGE_KEYS.ACTIVE_ACCOUNT).then((account: string) => {
       this.setActiveAccount(account);
     });
   }

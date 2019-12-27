@@ -1,11 +1,11 @@
-  <ion-item>
+  <div>
     <ion-label class="ion-text-wrap">
       <ion-text color="primary">
         <h3>{{balance.balance}}</h3>
       </ion-text>
-      <p>{{balance.asset_code}}</p>
-      <ion-text color="secondary">
-        <p>{{balance.asset_type}}</p>
+      <p>{{balance.asset_type === 'native' ? 'XLM' : balance.asset_code}}</p>
+      <ion-text color="secondary" *ngIf="balance.asset_issuer" class="ion-text-wrap">
+        <small>{{balance.asset_issuer}}</small>
       </ion-text>
     </ion-label>
-  </ion-item>
+  </div>

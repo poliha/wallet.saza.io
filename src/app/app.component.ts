@@ -13,95 +13,106 @@ import { Router } from '@angular/router';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'Sign Tx',
-      url: '/sign-tx',
-      icon: 'pencil'
-    },
-    {
-      title: 'Build Tx',
-      url: '/build-tx',
-      icon: 'cog'
-    },
-    {
-      title: 'Dashboard',
+      title: 'My Accounts',
       url: '/dashboard',
       icon: 'dashboard'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Common Task',
+      url: '',
+      icon: 'list',
+      subPages: [
+        {
+          title: 'Create Account',
+          url: '/create-account',
+          icon: 'list'
+        },
+        {
+          title: 'Link Account',
+          url: '/link-account',
+          icon: 'list'
+        },
+        {
+          title: 'Payment',
+          url: '/operations/payment',
+          icon: 'list'
+        },
+        {
+          title: 'Account Merge',
+          url: '/operations/account-merge',
+          icon: 'list'
+        },
+      ]
     },
     {
-      title: 'Saza Setup',
-      url: '/saza-setup',
-      icon: 'list'
+      title: 'All Operations',
+      url: '',
+      icon: 'list',
+      subPages: [
+        {
+          title: 'Create Account',
+          url: '/operations/create-account',
+          icon: 'list'
+        },
+        {
+          title: 'Payment',
+          url: '/operations/payment',
+          icon: 'list'
+        },
+        {
+          title: 'Sell Offer',
+          url: '/operations/sell-offer',
+          icon: 'list'
+        },
+        {
+          title: 'Buy Offer',
+          url: '/operations/buy-offer',
+          icon: 'list'
+        },
+        {
+          title: 'Passive Offer',
+          url: '/operations/passive-offer',
+          icon: 'list'
+        },
+        {
+          title: 'Bump Sequence',
+          url: '/operations/bump-sequence',
+          icon: 'list'
+        },
+        {
+          title: 'Manage Data',
+          url: '/operations/manage-data',
+          icon: 'list'
+        },
+        {
+          title: 'Account Merge',
+          url: '/operations/account-merge',
+          icon: 'list'
+        },
+        {
+          title: 'Allow Trust',
+          url: '/operations/allow-trust',
+          icon: 'list'
+        },
+        {
+          title: 'Change Trust',
+          url: '/operations/change-trust',
+          icon: 'list'
+        }
+      ],
     },
     {
-      title: 'Create Account',
-      url: '/create-account',
-      icon: 'list'
+      title: 'Management',
+      url: '',
+      icon: 'list',
+      subPages: [
+        {
+          title: 'Settings',
+          url: '',
+          icon: 'cog'
+        },
+      ]
     },
-    {
-      title: 'Link Account',
-      url: '/link-account',
-      icon: 'list'
-    },
-    {
-      title: 'Ops Create Account',
-      url: '/operations/create-account',
-      icon: 'list'
-    },
-    {
-      title: 'Ops Payment',
-      url: '/operations/payment',
-      icon: 'list'
-    },
-    {
-      title: 'Ops Sell Offer',
-      url: '/operations/sell-offer',
-      icon: 'list'
-    },
-    {
-      title: 'Ops Buy Offer',
-      url: '/operations/buy-offer',
-      icon: 'list'
-    },
-    {
-      title: 'Ops Passive Offer',
-      url: '/operations/passive-offer',
-      icon: 'list'
-    },
-    {
-      title: 'Ops  bump Sequence',
-      url: '/operations/bump-sequence',
-      icon: 'list'
-    },
-    {
-      title: 'Ops manage data',
-      url: '/operations/manage-data',
-      icon: 'list'
-    },
-    {
-      title: 'Ops account merge',
-      url: '/operations/account-merge',
-      icon: 'list'
-    },
-    {
-      title: 'Ops allow trust',
-      url: '/operations/allow-trust',
-      icon: 'list'
-    },
-    {
-      title: 'Ops change trust',
-      url: '/operations/change-trust',
-      icon: 'list'
-    }
   ];
 
 

@@ -1,6 +1,8 @@
-  <ion-item>
-    <ion-label>Select Account</ion-label>
-<ion-select placeholder="" (ionChange)="accountChanged($event)" [compareWith]="compareWith">
-      <ion-select-option *ngFor="let a of userAccounts" [value]="a">{{a.public}}</ion-select-option>
+  <div>
+    <ion-select placeholder="Choose Wallet" (ionChange)="accountChanged($event)">
+      <ion-select-option *ngFor="let a of userAccounts" [value]="a.public" 
+      [selected]="a.public === activeAccount ? true : false">
+        {{a.public}}
+      </ion-select-option>
     </ion-select>
-  </ion-item>
+  </div>

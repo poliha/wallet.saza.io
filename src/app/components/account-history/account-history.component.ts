@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { StellarService, UserService } from 'src/app/providers/providers';
-import { SazaAccount } from 'src/app/interfaces/saza';
 
 @Component({
   selector: 'app-account-history',
@@ -9,7 +8,7 @@ import { SazaAccount } from 'src/app/interfaces/saza';
 })
 export class AccountHistoryComponent implements OnInit {
   accountHistory = [];
-  activeAccount: SazaAccount;
+  activeAccount: string;
 
   constructor(private stellarService: StellarService, private userService: UserService) { }
 
@@ -22,13 +21,15 @@ export class AccountHistoryComponent implements OnInit {
   }
 
   async loadHistory(){
-    if (!this.activeAccount.public) {
+    if (!this.activeAccount) {
       return;
     }
-    const data = await this.stellarService.loadOperations(this.activeAccount.public);
-
+    const data = await this.stellarService.loadOperations(this.activeAccount);
     console.log("data: ", data);
-    console.log("loadAcct");
+    if (!data) {
+      this.accountHistory = [];
+      return;
+    }
     this.accountHistory = data.records;
   }
 
