@@ -41,7 +41,8 @@ export class LoginPage implements OnInit {
     // validate password
     // redirect to dashboard
     const passwordHash = await this.userService.getPassword();
-    if (!this.utility.validateHash(this.password.value, passwordHash)) {
+    const trimmedPwd = String(this.password.value).trim();
+    if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
       throw new Error(INVALID_PASSWORD_ERROR);
     }
     this.notification.show('Login success');

@@ -65,13 +65,13 @@ export class CreateAccountPage implements OnInit {
     if (this.pairObj.public === '' || this.pairObj.private === '') {
       throw new Error('Invalid keys');
     }
-
+    const trimmedPwd = String(this.password.value).trim();
     const passwordHash = await this.userService.getPassword();
-    if (!this.utility.validateHash(this.password.value, passwordHash)) {
+    if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
       throw new Error(INVALID_PASSWORD_ERROR);
     }
 
-    const encrpytedObject = this.utility.encrypt(this.pairObj.private, this.password.value);
+    const encrpytedObject = this.utility.encrypt(this.pairObj.private, trimmedPwd);
 
     if (!encrpytedObject) {
       throw new Error(ENCRYPTION_FAILED_ERROR);

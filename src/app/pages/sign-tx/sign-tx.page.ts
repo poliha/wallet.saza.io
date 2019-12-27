@@ -80,11 +80,11 @@ export class SignTxPage implements OnInit {
   get privateKeys() { return this.signTxForm.get('privateKeys'); }
 
   async signTransaction() {
-    const password = this.password.value;
+    const trimmedPwd = String(this.password.value).trim();
     const privateKeys = this.privateKeys.value;
 
     const passwordHash = await this.userService.getPassword();
-    if (!this.utility.validateHash(password, passwordHash)) {
+    if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
       throw new Error(INVALID_PASSWORD_ERROR);
     }
 
@@ -92,7 +92,7 @@ export class SignTxPage implements OnInit {
       return this.eligibleSigners.has(acc.public);
     })
     .forEach(acc => {
-      const decryptedKey = this.utility.decrypt(acc.private, password);
+      const decryptedKey = this.utility.decrypt(acc.private, trimmedPwd);
       privateKeys.push(decryptedKey);
     });
 
