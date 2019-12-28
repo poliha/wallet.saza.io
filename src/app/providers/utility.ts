@@ -118,7 +118,7 @@ export class Utility {
       if (assetObj.asset_type === 'native') {
         return Asset.native();
       }
-      return new Asset(assetObj.asset_code, assetObj.asset_issuer);
+      return new Asset(String(assetObj.asset_code).trim(), assetObj.asset_issuer);
     } catch (error) {
       console.error('generateAsset Error: ', error);
       return false;

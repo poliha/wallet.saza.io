@@ -1,7 +1,10 @@
-<h3>Account History</h3>
 <ion-list>
-  <ion-item *ngFor="let a of accountHistory">
-    <ion-label>{{a.created_at}} {{a.type}}</ion-label>
-    {{a.id}}
+  <ion-item *ngFor="let a of accountHistory" detail>
+    <ion-label>
+      <small>{{a.created_at | date:'medium' }}</small>
+      <p class="ion-text-capitalize">{{ a.type.split('_').join(' ') }}</p>
+      <p>Source: {{ a.source_account | truncatePublicKey }}</p>
+    </ion-label>
+    <ion-text slot="end" color="primary">{{a.amount}}</ion-text>
   </ion-item>
 </ion-list>

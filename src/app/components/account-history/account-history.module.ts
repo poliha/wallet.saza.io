@@ -6,9 +6,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { AccountHistoryComponent } from './account-history.component';
 import { StellarService } from 'src/app/providers/providers';
+import { TruncatePublicKeyPipeModule } from 'src/app/pipes/truncate-public-key.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule,IonicModule,],
+  imports: [ CommonModule, FormsModule, IonicModule, TruncatePublicKeyPipeModule ],
   declarations: [AccountHistoryComponent],
   exports: [AccountHistoryComponent],
   providers: [

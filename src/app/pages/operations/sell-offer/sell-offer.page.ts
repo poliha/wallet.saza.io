@@ -11,6 +11,7 @@ import { OfferComponent } from 'src/app/components/offer/offer.component';
 })
 export class SellOfferPage extends OfferComponent implements OnInit {
   pageTitle = 'Sell Offer';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(private txService: TxService, private utility: Utility) {
     super();
