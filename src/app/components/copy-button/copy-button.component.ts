@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
@@ -6,10 +6,14 @@ import { ClipboardService } from 'ngx-clipboard';
   templateUrl: './copy-button.component.html',
   styleUrls: ['./copy-button.component.scss'],
 })
-export class CopyButtonComponent implements OnInit {
+export class CopyButtonComponent implements OnInit, OnDestroy {
 
   @Input() copyInput = '';
   @Output() copyOutput: EventEmitter<any> = new EventEmitter();
+
+  copyText = 'Copy';
+  fillType = 'outline';
+  copyTimeout;
   constructor(private clipboardService: ClipboardService) { }
 
   ngOnInit() {}
@@ -17,8 +21,23 @@ export class CopyButtonComponent implements OnInit {
   copy() {
     this.clipboardService.copyFromContent(this.copyInput);
     this.copyOutput.emit(this.copyInput);
-    console.log("cin: ", this.copyInput)
-    console.log("cout: ", this.copyOutput)
+    this.toggleCopyText();
+    this.copyTimeout = setTimeout(() => {
+     this.toggleCopyText();
+    }, 2000);
   }
 
+  toggleCopyText() {
+    if (this.copyText === 'Copy') {
+      this.copyText = 'Copied!';
+      this.fillType = 'solid';
+    } else {
+      this.copyText = 'Copy';
+      this.fillType = 'outline';
+    }
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this.copyTimeout);
+  }
 }
