@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, NotificationService } from '../../../providers/providers';
-import { Operation } from 'stellar-sdk';
+import { TxService, NotificationService, StellarService } from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -12,7 +11,8 @@ export class ManageDataPage implements OnInit {
   public manageDataForm: FormGroup;
   pageTitle = 'Manage Data';
   helpUrl = '';
-  constructor(private txService: TxService, private notification: NotificationService) { }
+  constructor(private txService: TxService, private notification: NotificationService,
+    private stellarService: StellarService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -27,7 +27,7 @@ export class ManageDataPage implements OnInit {
   get dataName() { return this.manageDataForm.get('dataName'); }
   get dataValue() { return this.manageDataForm.get('dataValue'); }
 
-  private buildOperation() {
+  private async buildOperation() {
     // build manage data operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
@@ -35,17 +35,16 @@ export class ManageDataPage implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source account is active
-      const opsObj = {
+      const opData = {
         name: this.dataName.value,
         value: this.dataValue.value,
-        source: this.source.value
+        source: this.source.value,
+        opType: this.stellarService.operationType.MANAGE_DATA
       };
 
-      console.log('manage Data Ops: ', opsObj);
-      const manageDataOperation = Operation.manageData(opsObj);
-      const xdrString = manageDataOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'manage_data', tx: xdrString });
+      console.log('manage Data Ops: ', opData);
+      const xdrString = await this.stellarService.buildOperation(opData)
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       this.manageDataForm.reset({ source: this.source.value });
       console.log('manage Data Ops: ', xdrString);

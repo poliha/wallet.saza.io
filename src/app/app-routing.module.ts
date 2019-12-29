@@ -14,10 +14,6 @@ const routes: Routes = [
     loadChildren: './pages/home/home.module#HomePageModule'
   },
   {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  },
-  {
     path: 'saza-setup',
     loadChildren: './pages/saza-setup/saza-setup.module#SazaSetupPageModule',
     canActivate: [AuthGuard]

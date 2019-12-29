@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, NotificationService, Utility } from '../../../providers/providers';
-import { Operation } from 'stellar-sdk';
+import { TxService, NotificationService, Utility, StellarService } from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -12,7 +11,8 @@ export class ChangeTrustPage implements OnInit {
   public changeTrustForm: FormGroup;
   pageTitle = 'Change Trust';
   helpUrl = '';
-  constructor(private txService: TxService, private notification: NotificationService, private utility: Utility) { }
+  constructor(private txService: TxService, private notification: NotificationService,
+    private utility: Utility, private stellarService: StellarService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -28,7 +28,7 @@ export class ChangeTrustPage implements OnInit {
   get limit() { return this.changeTrustForm.get('limit'); }
 
 
-  private buildOperation() {
+  private async buildOperation() {
     // build change Trust operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
@@ -36,17 +36,16 @@ export class ChangeTrustPage implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source account is active
-      const opsObj = {
+      const opData = {
         limit: String(this.limit.value),
         asset: this.utility.generateAsset(this.asset.value),
-        source: this.source.value
+        source: this.source.value,
+        opType: this.stellarService.operationType.CHANGE_TRUST
       };
 
-      console.log('change Trust Ops: ', opsObj);
-      const changeTrustOperation = Operation.changeTrust(opsObj);
-      const xdrString = changeTrustOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'change_trust', tx: xdrString });
+      console.log('change Trust Ops: ', opData);
+      const xdrString = await this.stellarService.buildOperation(opData)
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       this.changeTrustForm.reset({ source: this.source.value });
       console.log('change Trust Ops: ', xdrString);

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Utility, TxService } from '../../../providers/providers';
-import { Operation } from 'stellar-sdk';
+import { Utility, TxService, StellarService } from '../../../providers/providers';
 import { OfferComponent } from 'src/app/components/offer/offer.component';
 
 
@@ -13,7 +12,8 @@ export class SellOfferPage extends OfferComponent implements OnInit {
   pageTitle = 'Sell Offer';
   subTitle = 'Operation';
   helpUrl = '';
-  constructor(private txService: TxService, private utility: Utility) {
+  constructor(private txService: TxService, private utility: Utility,
+    private stellarService: StellarService) {
     super();
   }
 
@@ -25,7 +25,7 @@ export class SellOfferPage extends OfferComponent implements OnInit {
   get offerID() { return this.offerForm.get('offerID'); }
 
 
-  buildOperation() {
+  async buildOperation() {
     // build sell offer operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
@@ -33,21 +33,20 @@ export class SellOfferPage extends OfferComponent implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source account is active
-      const opsObj = {
+      const opData = {
         selling: this.utility.generateAsset(this.selling.value),
         buying: this.utility.generateAsset(this.buying.value),
         amount: this.amount.value,
         price: this.price.value,
         offerId: this.offerID.value || '0',
-        source: this.source.value
+        source: this.source.value,
+        opType: this.stellarService.operationType.MANAGE_SELL_OFFER
       };
 
 
-      console.log('manageSellOffer: ', opsObj);
-      const sellOfferOperation = Operation.manageSellOffer(opsObj);
-      const xdrString = sellOfferOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'manage_sell_offer', tx: xdrString });
+      console.log('manageSellOffer: ', opData);
+      const xdrString = await this.stellarService.buildOperation(opData)
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
 
       console.log('manageSellOffer: ', xdrString);
       this.resetForm();

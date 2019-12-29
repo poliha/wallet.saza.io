@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TxService, NotificationService } from '../../../providers/providers';
-import { Operation } from 'stellar-sdk';
+import { TxService, NotificationService, StellarService } from '../../../providers/providers';
 
 @Component({
   selector: 'app-create-account',
@@ -12,7 +11,7 @@ export class CreateAccountPage implements OnInit {
   private createAccountForm: FormGroup;
   pageTitle = 'Create Account';
   helpUrl = '';
-  constructor(private txService: TxService,
+  constructor(private txService: TxService, private stellarService: StellarService,
     private notification: NotificationService) { }
 
   ngOnInit() {
@@ -28,7 +27,7 @@ export class CreateAccountPage implements OnInit {
   get destination() { return this.createAccountForm.get('destination'); }
   get amount() { return this.createAccountForm.get('amount'); }
 
-  private buildOperation() {
+   private async buildOperation() {
     // build create account operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
@@ -36,15 +35,16 @@ export class CreateAccountPage implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source account is active
-      const opsObj = {
+      const opData = {
         destination: this.destination.value,
         startingBalance: String(this.amount.value),
-        source: this.source.value
+        source: this.source.value,
+        opType: this.stellarService.operationType.CREATE_ACCOUNT
       };
-      const createAccountOperation = Operation.createAccount(opsObj);
-      const xdrString = createAccountOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'create_account', tx: xdrString });
+
+      const xdrString = await this.stellarService.buildOperation(opData);
+      console.log('XDR: ', xdrString);
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       this.createAccountForm.reset({ source: this.source.value });
     } catch (error) {

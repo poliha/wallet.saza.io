@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, NotificationService } from '../../../providers/providers';
-import { Operation } from 'stellar-sdk';
+import { TxService, NotificationService, StellarService } from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -12,7 +11,8 @@ export class AccountMergePage implements OnInit {
   public accountMergeForm: FormGroup;
   pageTitle = 'Account Merge';
   helpUrl = '';
-  constructor(private txService: TxService, private notification: NotificationService) { }
+  constructor(private txService: TxService, private notification: NotificationService, 
+    private stellarService: StellarService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -27,7 +27,7 @@ export class AccountMergePage implements OnInit {
   get source() { return this.accountMergeForm.get('source'); }
   get destination() { return this.accountMergeForm.get('destination'); }
 
-  private buildOperation() {
+  private async buildOperation() {
     // build account Merge operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
@@ -35,20 +35,18 @@ export class AccountMergePage implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source account is active
-      const opsObj = {
+      const opData = {
         destination: this.destination.value,
-        source: this.source.value
+        source: this.source.value,
+        opType: this.stellarService.operationType.ACCOUNT_MERGE
       };
 
-      console.log('account Merge Ops: ', opsObj);
-      const accountMergeOperation = Operation.accountMerge(opsObj);
-      const xdrString = accountMergeOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'account_merge', tx: xdrString });
+      console.log('account Merge Ops: ', opData);
+      const xdrString = await this.stellarService.buildOperation(opData)
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       console.log('account Merge Ops: ', xdrString);
-      console.log('form: ', this.accountMergeForm);
-      this.accountMergeForm.reset({source: this.source.value}, {emitEvent: true});
+      this.accountMergeForm.reset({source: this.source.value});
     } catch (error) {
       console.log('error: ', error);
     }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, NotificationService } from '../../../providers/providers';
-import { Operation } from 'stellar-sdk';
+import { TxService, NotificationService, StellarService } from '../../../providers/providers';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -12,7 +11,8 @@ export class AllowTrustPage implements OnInit {
   public allowTrustForm: FormGroup;
   pageTitle = 'Allow Trust';
   helpUrl = '';
-  constructor(private txService: TxService, private notification: NotificationService) { }
+  constructor(private txService: TxService, private notification: NotificationService,
+    private stellarService: StellarService) { }
 
   ngOnInit() {
     this.makeForm();
@@ -31,7 +31,7 @@ export class AllowTrustPage implements OnInit {
   get authorize() { return this.allowTrustForm.get('authorize'); }
 
 
-  private buildOperation() {
+  private async buildOperation() {
     // build allow Trust operation
     // convert xdr.Operation to base64 string
     // save xdr string to be used later in building the transaction
@@ -39,18 +39,17 @@ export class AllowTrustPage implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source account is active
-      const opsObj = {
+      const opData = {
         trustor: this.trustor.value,
         assetCode: this.assetCode.value,
         authorize: this.authorize.value === 'true' ? true : false,
-        source: this.source.value
+        source: this.source.value,
+        opType: this.stellarService.operationType.ALLOW_TRUST
       };
 
-      console.log('allow Trust Ops: ', opsObj);
-      const allowTrustOperation = Operation.allowTrust(opsObj);
-      const xdrString = allowTrustOperation.toXDR().toString('base64');
-      this.txService.addOperation({ type: 'allow_trust', tx: xdrString });
+      console.log('allow Trust Ops: ', opData);
+      const xdrString = await this.stellarService.buildOperation(opData);
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       this.allowTrustForm.reset({
         source: this.source.value,

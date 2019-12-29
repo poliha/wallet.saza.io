@@ -15,6 +15,24 @@ import { UserService } from './user.service';
 export class StellarService {
   activeNetwork: any;
   server: any;
+
+  operationType = Object.freeze({
+    CREATE_ACCOUNT: 'create_account',
+    PAYMENT: 'payment',
+    PATH_PAYMENT_STRICT_SEND: 'path_payment_strict_send',
+    PATH_PAYMENT_STRICT_RECEIVE: 'path_payment_strict_receive',
+    MANAGE_BUY_OFFER: 'manage_buy_offer',
+    MANAGE_SELL_OFFER: 'manage_sell_offer',
+    CREATE_PASSIVE_SELL_OFFER: 'create_passive_sell_offer',
+    SET_OPTIONS: 'set_options',
+    CHANGE_TRUST: 'change_trust',
+    ALLOW_TRUST: 'allow_trust',
+    ACCOUNT_MERGE: 'account_merge',
+    MANAGE_DATA: 'manage_data',
+    BUMP_SEQUENCE: 'bump_sequence',
+  });
+
+
   constructor(private userService: UserService) {
     this.initializeService();
   }
@@ -250,6 +268,71 @@ export class StellarService {
   async isAccountActive(accountID: string) {
     const result = await this.loadAccount(accountID);
     return Boolean(result);
+  }
+
+  async buildOperation(operationData) {
+    // to do export constant of optype names ans use that instead
+    // if opsObj.source, check if source is active, raise error if not
+    // switch type - 14 conditions
+    // build operation based on type. 
+    try {
+      const { opType, ...opData } = operationData;
+      if (opData.source) {
+        const isSourceActive = await this.isAccountActive(opData.source);
+        if (!isSourceActive) {
+          throw new Error('Source account is not active.');
+        }
+      }
+
+      let newOp;
+      switch (opType) {
+        case this.operationType.CREATE_ACCOUNT:
+          newOp = Operation.createAccount(opData);
+          break;
+        case this.operationType.PAYMENT:
+          newOp = Operation.payment(opData);
+          break;
+        case this.operationType.PATH_PAYMENT_STRICT_SEND:
+          newOp = Operation.pathPaymentStrictSend(opData);
+          break;
+        case this.operationType.PATH_PAYMENT_STRICT_RECEIVE:
+          newOp = Operation.pathPaymentStrictReceive(opData);
+          break;
+        case this.operationType.MANAGE_BUY_OFFER:
+          newOp = Operation.manageBuyOffer(opData);
+          break;
+        case this.operationType.MANAGE_SELL_OFFER:
+          newOp = Operation.manageSellOffer(opData);
+          break;
+        case this.operationType.CREATE_PASSIVE_SELL_OFFER:
+          newOp = Operation.createPassiveSellOffer(opData);
+          break;
+        case this.operationType.SET_OPTIONS:
+          newOp = Operation.setOptions(opData);
+          break;
+        case this.operationType.CHANGE_TRUST:
+          newOp = Operation.changeTrust(opData);
+          break;
+        case this.operationType.ALLOW_TRUST:
+          newOp = Operation.allowTrust(opData);
+          break;
+        case this.operationType.ACCOUNT_MERGE:
+          newOp = Operation.accountMerge(opData);
+          break;
+        case this.operationType.MANAGE_DATA:
+          newOp = Operation.manageData(opData);
+          break;
+        case this.operationType.BUMP_SEQUENCE:
+          newOp = Operation.bumpSequence(opData);
+          break;
+        default:
+          throw new Error('invalid operation type');
+      }
+      return newOp.toXDR().toString('base64');
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
 }

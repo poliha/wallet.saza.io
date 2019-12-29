@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TxService, Utility, StellarService, NotificationService } from '../../../providers/providers';
-import { Operation } from 'stellar-sdk';
 
 @Component({
   selector: 'app-payment',
@@ -37,8 +36,6 @@ export class PaymentPage implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source account is active
-
       let destination = this.destination.value;
       if (destination.includes('*')) {
         // get account id for federated address
@@ -47,9 +44,9 @@ export class PaymentPage implements OnInit {
         await this.txService.setMemo({ memo_type, memo });
       }
 
-      const isDestActive = this.stellarService.isAccountActive(destination);
+      const isDestActive = await this.stellarService.isAccountActive(destination);
 
-      let opsObj = {};
+      let opData;
 
       if (!isDestActive) {
         // make a create-account operation
@@ -58,31 +55,26 @@ export class PaymentPage implements OnInit {
           this.notification.show('Can not send custom asset to inactive destination. Send XLM to create the destination account.');
           return;
         }
-        opsObj = {
+        opData = {
           destination,
-          starting_balance: String(this.amount.value),
-          source: this.source.value
+          startingBalance: String(this.amount.value),
+          source: this.source.value,
+          opType: this.stellarService.operationType.CREATE_ACCOUNT
         };
-        console.log('paymentOps: ', opsObj);
-
-        const paymentOperation = Operation.createAccount(opsObj);
-        const xdrString = paymentOperation.toXDR().toString('base64');
-        this.txService.addOperation({ type: 'create_account', tx: xdrString });
-        console.log('paymentOps: ', xdrString);
       } else {
-        opsObj = {
+        opData = {
           destination,
           amount: String(this.amount.value),
           asset: this.utility.generateAsset(this.asset.value),
-          source: this.source.value
+          source: this.source.value,
+          opType: this.stellarService.operationType.PAYMENT
         };
-        console.log('paymentOps: ', opsObj);
-
-        const paymentOperation = Operation.payment(opsObj);
-        const xdrString = paymentOperation.toXDR().toString('base64');
-        this.txService.addOperation({ type: 'payment', tx: xdrString });
-        console.log('paymentOps: ', xdrString);
       }
+
+      const xdrString = await this.stellarService.buildOperation(opData);
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
+      console.log('paymentOps: ', opData);
+      console.log('paymentOps: ', xdrString);
 
       this.paymentForm.reset({
         source: this.source.value,
