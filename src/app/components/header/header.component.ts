@@ -10,6 +10,7 @@ export class HeaderComponent implements OnInit {
   @Input() title: string;
   @Input() helpUrl: string;
   @Input() subTitle: string;
+  @Input() accountPicker = false;
 
   isTestNetwork: boolean;
 

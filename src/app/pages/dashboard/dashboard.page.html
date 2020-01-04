@@ -1,30 +1,45 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <!-- <ion-title>Dashboard</ion-title> -->
-    <app-account-picker></app-account-picker>
-  </ion-toolbar>
-</ion-header>
+<app-header [accountPicker]="showAccountPicker"></app-header>
 
 <ion-content>
-  <!-- <app-account-picker></app-account-picker> -->
-  <div>
+  <div *ngIf="!numberOfAccounts">
+    <h3 class="ion-text-center ion-margin">Add a Stellar Account</h3>
     <ion-item-divider color="light" sticky>
       <ion-label>
-        Account Balance
+        New Stellar Account
       </ion-label>
     </ion-item-divider>
-    <app-account-balance></app-account-balance>
-  </div>
-  <div class="ion-margin-top">
+    <div class="ion-padding">
+      <ion-button class="ion-margin" expand="block" shape="round" (click)="createAccount()">
+        Create Account</ion-button>
+    </div>
+
     <ion-item-divider color="light" sticky>
       <ion-label>
-        Operations
+          Link Existing Account
       </ion-label>
     </ion-item-divider>
-    <app-account-history></app-account-history>
+    <div class="ion-padding">
+      <ion-button class="ion-margin" expand="block" shape="round" (click)="linkAccount()">
+        Link Account</ion-button>
+    </div>
   </div>
 
+  <div *ngIf="numberOfAccounts">
+    <div>
+      <ion-item-divider color="light" sticky>
+        <ion-label>
+          Account Balance
+        </ion-label>
+      </ion-item-divider>
+      <app-account-balance></app-account-balance>
+    </div>
+    <div class="ion-margin-top">
+      <ion-item-divider color="light" sticky>
+        <ion-label>
+          Operations
+        </ion-label>
+      </ion-item-divider>
+      <app-account-history></app-account-history>
+    </div>
+  </div>
 </ion-content>

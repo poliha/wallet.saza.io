@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { DashboardPage } from './dashboard.page';
 import { AccountBalanceComponentModule } from 'src/app/components/account-balance/account-balance.module';
-import { AccountPickerComponentModule } from 'src/app/components/account-picker/account-picker.module';
 import { AccountHistoryComponentModule } from 'src/app/components/account-history/account-history.module';
+import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
@@ -24,8 +24,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     AccountBalanceComponentModule,
-    AccountPickerComponentModule,
     AccountHistoryComponentModule,
+    HeaderComponentModule,
   ],
   declarations: [DashboardPage]
 })
