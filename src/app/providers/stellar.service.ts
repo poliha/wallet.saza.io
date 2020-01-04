@@ -335,4 +335,20 @@ export class StellarService {
     }
   }
 
+  /**
+   * Given an array of operations in base64 xdr format, this method converts it to an array of
+   *  Stellar operation objects which are reqular javascript object and hence easier to read.
+   * @param opList an array of operations
+   */
+  getOperationObject(opList: any[]) {
+    if (!Array.isArray(opList) || !opList.length) {
+      return [];
+    }
+    return opList.map(op => {
+      const opBuffer = Buffer.from(op.tx, 'base64');
+      const opXdr = xdr.Operation.fromXDR(opBuffer);
+      return Operation.fromXDRObject(opXdr);
+    });
+  }
+
 }

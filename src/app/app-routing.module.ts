@@ -91,6 +91,11 @@ const routes: Routes = [
     loadChildren: './pages/sign-tx/sign-tx.module#SignTxPageModule',
     canActivate: [AuthGuard]
   },
+  {
+    path: 'operations-queue',
+    loadChildren: './pages/operations-queue/operations-queue.module#OperationsQueuePageModule',
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
