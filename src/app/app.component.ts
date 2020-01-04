@@ -18,7 +18,7 @@ export class AppComponent {
       icon: 'dashboard'
     },
     {
-      title: 'Common Task',
+      title: 'Common Tasks',
       url: '',
       icon: 'list',
       subPages: [

@@ -1,4 +1,9 @@
-<div>
+<div *ngIf="!accountBalance.length">
+  <h3 class="ion-text-center">
+    No Account Balance
+  </h3>
+</div>
+<div *ngIf="accountBalance.length">
   <ion-item *ngFor="let b of accountBalance">
     <app-balance-item [balance]="b"></app-balance-item>
   </ion-item>

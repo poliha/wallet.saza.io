@@ -1,4 +1,9 @@
-<ion-list>
+<div *ngIf="!accountHistory.length">
+  <h3 class="ion-text-center" color="secondary">
+    No Account History
+  </h3>
+</div>
+<ion-list *ngIf="accountHistory.length">
   <ion-item *ngFor="let a of accountHistory" detail>
     <ion-label>
       <small>{{a.created_at | date:'medium' }}</small>
