@@ -7,7 +7,8 @@
     </h3>
   </div>
   <ion-list *ngIf="operations.length">
-    <ion-item *ngFor="let op of operations" detail>
+    <ion-item *ngFor="let op of operations; index as i" [routerDirection]="'root'"
+      [routerLink]="'/operations-queue/'+ i" detail>
       <ion-label>
         <p>{{ op.type | splitOpName | titlecase }}</p>
         <small>{{ op.source | truncatePublicKey }}</small>

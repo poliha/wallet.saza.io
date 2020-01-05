@@ -11,6 +11,8 @@ export class HeaderComponent implements OnInit {
   @Input() helpUrl: string;
   @Input() subTitle: string;
   @Input() accountPicker = false;
+  @Input() showMenuButton = true;
+  @Input() showBackButton = false;
 
   isTestNetwork: boolean;
 

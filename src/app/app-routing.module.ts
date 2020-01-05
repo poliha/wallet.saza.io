@@ -96,6 +96,11 @@ const routes: Routes = [
     loadChildren: './pages/operations-queue/operations-queue.module#OperationsQueuePageModule',
     canActivate: [AuthGuard]
   },
+  {
+    path: 'operations-queue/:id',
+    loadChildren: './pages/operations-queue-detail/operations-queue-detail.module#OperationsQueueDetailPageModule',
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

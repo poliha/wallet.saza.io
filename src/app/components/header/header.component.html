@@ -6,7 +6,8 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button *ngIf="showMenuButton"></ion-menu-button>
+      <ion-back-button *ngIf="showBackButton"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="title">{{title}}</ion-title>
     <ion-title *ngIf="subTitle" size="small" color="primary" class="ion-text-uppercase">{{subTitle}}</ion-title>

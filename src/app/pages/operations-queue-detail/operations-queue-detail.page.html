@@ -1,0 +1,14 @@
+<app-header [showMenuButton]="showMenuButton" [showBackButton]="showBackButton" [title]="pageTitle"
+  [subTitle]="subTitle"></app-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of operationDetail | keyvalue: compareFn">
+      <ion-label>
+        <p>{{ item.key | splitOpName | titlecase }}</p>
+        <small class="ion-text-wrap">{{ item.value }}</small>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
