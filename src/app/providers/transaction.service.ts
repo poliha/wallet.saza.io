@@ -23,8 +23,7 @@ export class TransactionService {
   getOperations() {
     return this.getData(STORAGE_KEYS.OPERATIONS).then((ops: any) => {
       this.operations.next(ops);
-      // to do: refactor this
-      return this.getData(STORAGE_KEYS.OPERATIONS);
+      return ops;
     });
   }
 
@@ -40,6 +39,16 @@ export class TransactionService {
     });
   }
 
+  deleteOperation(id) {
+    const opId = parseInt(id, 10);
+    if (!Number.isInteger(opId)) { return; }
+    return this.getOperations().then((ops: Array<any>) => {
+      ops.splice(opId, 1);
+      this.setData(STORAGE_KEYS.OPERATIONS, ops);
+      this.operations.next(ops);
+    });
+  }
+
   setTx(data: string) {
     return this.setData(STORAGE_KEYS.TRANSACTION, data);
   }
@@ -47,8 +56,12 @@ export class TransactionService {
   getTx() {
     return this.getData(STORAGE_KEYS.TRANSACTION).then((tx: any) => {
       this.tx.next(tx);
-      return this.getData(STORAGE_KEYS.TRANSACTION);
+      return tx;
     });
+  }
+
+  deleteTx() {
+    return this.storage.remove(STORAGE_KEYS.TRANSACTION);
   }
 
   setMemo(data: any) {
@@ -57,6 +70,10 @@ export class TransactionService {
 
   getMemo() {
     return this.getData(STORAGE_KEYS.MEMO);
+  }
+
+  deleteMemo() {
+    return this.storage.remove(STORAGE_KEYS.MEMO);
   }
 
   /**
