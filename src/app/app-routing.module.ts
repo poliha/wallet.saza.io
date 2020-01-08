@@ -101,6 +101,11 @@ const routes: Routes = [
     loadChildren: './pages/operations-queue-detail/operations-queue-detail.module#OperationsQueueDetailPageModule',
     canActivate: [AuthGuard]
   },
+  {
+    path: 'account-history-detail',
+    loadChildren: './pages/account-history-detail/account-history-detail.module#AccountHistoryDetailPageModule',
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

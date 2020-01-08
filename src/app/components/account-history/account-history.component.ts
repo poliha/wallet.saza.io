@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StellarService, UserService } from 'src/app/providers/providers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-history',
@@ -10,7 +11,8 @@ export class AccountHistoryComponent implements OnInit {
   accountHistory = [];
   activeAccount: string;
 
-  constructor(private stellarService: StellarService, private userService: UserService) { }
+  constructor(private stellarService: StellarService, private userService: UserService,
+    private router: Router) { }
 
   ngOnInit() {
     this.userService.activeAccount.subscribe((data) => {
@@ -31,6 +33,14 @@ export class AccountHistoryComponent implements OnInit {
       return;
     }
     this.accountHistory = data.records;
+  }
+
+  async viewHistoryDetail(data) {
+    // save in storage
+    // navigate to  account-history-detail page
+    console.log(data);
+    await this.userService.setAccountHistory(JSON.stringify(data));
+    this.router.navigate(['account-history-detail/']);
   }
 
 }

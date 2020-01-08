@@ -12,6 +12,7 @@ const STORAGE_KEYS = {
   'ACTIVE_ACCOUNT': 'user.saza.account.active',
   'ACTIVE_NETWORK': 'user.saza.network.active',
   'LOGGED_IN': 'user.saza.loggedin',
+  'ACCOUNT_HISTORY': 'user.saza.accountHistory'
 };
 
 const STELLAR_NETWORKS = {
@@ -205,6 +206,13 @@ export class UserService {
     return false;
   }
 
+  setAccountHistory(data){
+    return this.setData(STORAGE_KEYS.ACCOUNT_HISTORY, data);
+  }
+
+  getAccountHistory() {
+    return this.getData(STORAGE_KEYS.ACCOUNT_HISTORY);
+  }
 
   /**
    * Get the data from storage identified by key.

@@ -4,7 +4,7 @@
   </h3>
 </div>
 <ion-list *ngIf="accountHistory.length">
-  <ion-item *ngFor="let a of accountHistory" detail>
+  <ion-item *ngFor="let a of accountHistory" (click)="viewHistoryDetail(a)" detail>
     <ion-label>
       <small>{{a.created_at | date:'medium' }}</small>
       <p class="ion-text-capitalize">{{ a.type | splitOpName }}</p>
