@@ -28,6 +28,7 @@
       <ion-label position="stacked">Offer ID</ion-label>
       <app-dynamic-input [form]="offerForm" [controlName]="'offerID'" [placeHolder]="'Offer ID'" [isRequired]="false">
       </app-dynamic-input>
+      <ion-note>Leave blank to create new offer</ion-note>
     </ion-item>
     <div class="ion-margin ion-text-center">
       <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Save</ion-button>

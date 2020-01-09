@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AccountHistoryComponent implements OnInit {
   accountHistory = [];
   activeAccount: string;
+  nextPage;
 
   constructor(private stellarService: StellarService, private userService: UserService,
     private router: Router) { }
@@ -22,7 +23,7 @@ export class AccountHistoryComponent implements OnInit {
     });
   }
 
-  async loadHistory(){
+  async loadHistory() {
     if (!this.activeAccount) {
       return;
     }
@@ -32,7 +33,9 @@ export class AccountHistoryComponent implements OnInit {
       this.accountHistory = [];
       return;
     }
-    this.accountHistory = data.records;
+    const { next, records } = data;
+    this.accountHistory = records;
+    this.nextPage = next;
   }
 
   async viewHistoryDetail(data) {
@@ -43,4 +46,14 @@ export class AccountHistoryComponent implements OnInit {
     this.router.navigate(['account-history-detail/']);
   }
 
+  async loadMore() {
+    const resp = await this.nextPage();
+    if (!resp) {
+      return;
+    }
+    console.log('more: ', resp);
+    const { next, records } = resp;
+    this.accountHistory.push(...records);
+    this.nextPage = next;
+  }
 }
