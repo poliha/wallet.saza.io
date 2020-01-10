@@ -1,0 +1,12 @@
+<app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let s of settings" [routerDirection]="'root'"
+      [routerLink]="[s.url]" detail>
+      <ion-label>
+        {{ s.title }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

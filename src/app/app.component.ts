@@ -108,7 +108,7 @@ export class AppComponent {
       subPages: [
         {
           title: 'Settings',
-          url: '',
+          url: '/settings',
           icon: 'cog'
         },
       ]
