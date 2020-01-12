@@ -9,7 +9,7 @@ export class SettingsPage implements OnInit {
   settings = [
     {
       title: 'Manage Accounts',
-      url: '/dashboard',
+      url: '/manage-accounts',
     },
     {
       title: 'Change Password',
