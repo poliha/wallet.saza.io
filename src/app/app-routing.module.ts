@@ -116,6 +116,11 @@ const routes: Routes = [
     loadChildren: './pages/manage-accounts/manage-accounts.module#ManageAccountsPageModule',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'manage-accounts/:id',
+    loadChildren: './pages/manage-accounts-detail/manage-accounts-detail.module#ManageAccountsDetailPageModule',
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

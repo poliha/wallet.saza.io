@@ -1,0 +1,68 @@
+<app-header [title]="pageTitle"></app-header>
+
+<ion-content>
+  <ion-list *ngIf="accountDetail">
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Account Tag
+      </ion-label>
+    </ion-item-divider>
+
+    <form [formGroup]="updateTagForm" (submit)="saveAccountTag()">
+      <ion-item>
+        <ion-input #accountTagInput type="text" value="{{accountDetail.tag}}" name="accountTag"
+          formControlName="accountTag" minlength="1">
+        </ion-input>
+        <ion-button *ngIf="!showSubmitButton" class="ion-float-end" fill="none" shape="round" (click)="enableTagInput()"
+          size="small">
+          <ion-icon slot="end" name="create"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="showSubmitButton" class="ion-float-end" fill="none" shape="round" type="submit" size="small">
+          <ion-icon slot="end" name="save"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </form>
+
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Public Key
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-input #publicKey type="text" [value]="accountDetail.public" disabled>
+      </ion-input>
+      <app-copy-button class="ion-padding" [buttonSize]="'small'" [copyInput]="accountDetail.public"
+        (copyOutput)="itemCopied($event)">
+      </app-copy-button>
+    </ion-item>
+
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Private Key
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item>
+      <ion-input #privateKey type="password" [value]="accountDetail.private.text">
+      </ion-input>
+      <ion-button class="ion-float-end" fill="none" shape="round" (click)="showPrivateKey()" size="small">
+        <ion-icon slot="end" name="{{showPrivateKeyIcon}}"></ion-icon>
+      </ion-button>
+      <app-copy-button class="ion-padding" [buttonSize]="'small'" [copyInput]="decryptedPrivateKey"
+        (copyOutput)="itemCopied($event)">
+      </app-copy-button>
+    </ion-item>
+
+    <ion-item-divider color="danger" sticky>
+      <ion-label>
+        Caution
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-button class="ion-margin" shape="round" expand="block" color="danger" (click)="confirmDelete()">
+        <ion-icon slot="end" name="trash"></ion-icon>
+        Delete Account
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

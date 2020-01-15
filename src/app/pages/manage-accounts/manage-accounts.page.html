@@ -2,26 +2,26 @@
 
 <ion-content>
   <div *ngIf="!userAccounts.length">
-        <h3 class="ion-text-center ion-margin">Add a Stellar Account</h3>
-        <ion-item-divider color="light" sticky>
-          <ion-label>
-            New Stellar Account
-          </ion-label>
-        </ion-item-divider>
-        <div class="ion-padding">
-          <ion-button class="ion-margin" expand="block" shape="round" (click)="createAccount()">
-            Create Account</ion-button>
-        </div>
+    <h3 class="ion-text-center ion-margin">Add a Stellar Account</h3>
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        New Stellar Account
+      </ion-label>
+    </ion-item-divider>
+    <div class="ion-padding">
+      <ion-button class="ion-margin" expand="block" shape="round" (click)="createAccount()">
+        Create Account</ion-button>
+    </div>
 
-        <ion-item-divider color="light" sticky>
-          <ion-label>
-            Link Existing Account
-          </ion-label>
-        </ion-item-divider>
-        <div class="ion-padding">
-          <ion-button class="ion-margin" expand="block" shape="round" (click)="linkAccount()">
-            Link Account</ion-button>
-        </div>
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Link Existing Account
+      </ion-label>
+    </ion-item-divider>
+    <div class="ion-padding">
+      <ion-button class="ion-margin" expand="block" shape="round" (click)="linkAccount()">
+        Link Account</ion-button>
+    </div>
   </div>
   <ion-list *ngIf="userAccounts.length">
     <ion-item *ngFor="let u of userAccounts; index as i" [routerDirection]="'root'"
