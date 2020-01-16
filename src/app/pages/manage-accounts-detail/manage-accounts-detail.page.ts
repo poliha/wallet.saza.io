@@ -44,7 +44,7 @@ export class ManageAccountsDetailPage implements OnInit {
     this.accountID = this.route.snapshot.paramMap.get('id');
     this.userService.getPassword().then(pwd => (this.passwordHash = pwd));
     this.getPassword();
-    this.userService.userAccounts.subscribe(data => {
+    this.userService.getAccounts().then(data => {
       if (!data) {
         return;
       }
@@ -178,10 +178,24 @@ export class ManageAccountsDetailPage implements OnInit {
     await alert.present();
   }
 
-  deleteAccount() {
-    // remove pending operations with account as source
+  async deleteAccount() {
     // remove from user accounts list
-    // if account is the active account, set a new active account.
+    const userAccounts = await this.userService.deleteAccountByPublicKey(
+      this.accountDetail.public,
+    );
+
+    const activeAccount = await this.userService.getActiveAccount();
+    // if the deleted account was the active account, reset it.
+    if (
+      activeAccount === this.accountDetail.public &&
+      userAccounts.length > 0
+    ) {
+      await this.userService.setActiveAccount(userAccounts[0].public);
+    }
+
+    // to do remove pending operations with account as source
+
+    return this.router.navigate(['manage-accounts/']);
   }
 
   saveAccountTag() {

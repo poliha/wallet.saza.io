@@ -3,37 +3,41 @@ import { Storage } from '@ionic/storage';
 import { SazaAccount } from '../interfaces/saza';
 import { BehaviorSubject } from 'rxjs';
 
-
 const STORAGE_KEYS = {
-  'ACCOUNTS': 'user.saza.account',
-  'ID': 'user.saza.id',
-  'PASSWORD': 'user.saza.pwd',
-  'PASSWORDRECOVERY': 'user.saza.pwd.recovery',
-  'ACTIVE_ACCOUNT': 'user.saza.account.active',
-  'ACTIVE_NETWORK': 'user.saza.network.active',
-  'LOGGED_IN': 'user.saza.loggedin',
-  'ACCOUNT_HISTORY': 'user.saza.accountHistory'
+  ACCOUNTS: 'user.saza.account',
+  ID: 'user.saza.id',
+  PASSWORD: 'user.saza.pwd',
+  PASSWORDRECOVERY: 'user.saza.pwd.recovery',
+  ACTIVE_ACCOUNT: 'user.saza.account.active',
+  ACTIVE_NETWORK: 'user.saza.network.active',
+  LOGGED_IN: 'user.saza.loggedin',
+  ACCOUNT_HISTORY: 'user.saza.accountHistory',
 };
 
 const STELLAR_NETWORKS = {
-  'pubnet': {
-    'type': 'pubnet',
-    'passphrase': `Public Global Stellar Network ; September 2015`,
-    'horizon': `https://horizon.stellar.org/`
+  pubnet: {
+    type: 'pubnet',
+    passphrase: `Public Global Stellar Network ; September 2015`,
+    horizon: `https://horizon.stellar.org/`,
   },
-  'testnet': {
-    'type': 'testnet',
-    'passphrase': `Test SDF Network ; September 2015`,
-    'horizon': `https://horizon-testnet.stellar.org/`
+  testnet: {
+    type: 'testnet',
+    passphrase: `Test SDF Network ; September 2015`,
+    horizon: `https://horizon-testnet.stellar.org/`,
   },
 };
 
 @Injectable()
 export class UserService {
-
-  public userAccounts: BehaviorSubject<SazaAccount[]> = new BehaviorSubject<SazaAccount[]>([]);
-  public activeAccount: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(STELLAR_NETWORKS.pubnet);
+  public userAccounts: BehaviorSubject<SazaAccount[]> = new BehaviorSubject<
+    SazaAccount[]
+  >([]);
+  public activeAccount: BehaviorSubject<string> = new BehaviorSubject<string>(
+    '',
+  );
+  public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(
+    STELLAR_NETWORKS.pubnet,
+  );
   public isLoggedIn: BehaviorSubject<any> = new BehaviorSubject(false);
 
   constructor(public storage: Storage) {
@@ -49,7 +53,8 @@ export class UserService {
    */
   getActiveAccount() {
     return this.getData(STORAGE_KEYS.ACTIVE_ACCOUNT).then((account: string) => {
-      this.setActiveAccount(account);
+      this.activeAccount.next(account);
+      return account;
     });
   }
 
@@ -57,7 +62,7 @@ export class UserService {
    * Set the active account
    * @param account - account to be saved
    */
-  setActiveAccount(account) {
+  setActiveAccount(account: string) {
     this.activeAccount.next(account);
     return this.setData(STORAGE_KEYS.ACTIVE_ACCOUNT, account);
   }
@@ -134,8 +139,8 @@ export class UserService {
   }
 
   /**
-  * Get the saved recovery password
-  */
+   * Get the saved recovery password
+   */
   getPasswordRecovery() {
     return this.getData(STORAGE_KEYS.PASSWORDRECOVERY);
   }
@@ -144,14 +149,15 @@ export class UserService {
    * Get stored accounts
    */
   getAccounts() {
-    return this.getData(STORAGE_KEYS.ACCOUNTS).then((accounts: Array<SazaAccount>) => {
-      if (accounts == null) {
-        accounts = [];
-      }
-      this.userAccounts.next(accounts);
-      // to do: refactor this
-      return this.getData(STORAGE_KEYS.ACCOUNTS);
-    });
+    return this.getData(STORAGE_KEYS.ACCOUNTS).then(
+      (accounts: Array<SazaAccount>) => {
+        if (accounts == null) {
+          accounts = [];
+        }
+        this.userAccounts.next(accounts);
+        return accounts;
+      },
+    );
   }
 
   /**
@@ -166,7 +172,7 @@ export class UserService {
         allAccounts = accounts.map(a => {
           if (a.public === data.public) {
             accountFound = true;
-            a = {...data};
+            a = { ...data };
           }
           return a;
         });
@@ -181,6 +187,30 @@ export class UserService {
     });
   }
 
+  deleteAccount(id) {
+    const accountId = parseInt(id, 10);
+    if (!Number.isInteger(accountId)) {
+      return;
+    }
+    return this.getAccounts().then((accounts: Array<SazaAccount>) => {
+      accounts.splice(accountId, 1);
+      this.setData(STORAGE_KEYS.ACCOUNTS, accounts);
+      this.userAccounts.next(accounts);
+      return accounts;
+    });
+  }
+
+  deleteAccountByPublicKey(publicKey) {
+    if (!publicKey) {
+      return;
+    }
+    return this.getAccounts().then((accounts: Array<SazaAccount>) => {
+      const filteredAccounts = accounts.filter(a => a.public !== publicKey);
+      this.setData(STORAGE_KEYS.ACCOUNTS, filteredAccounts);
+      this.userAccounts.next(filteredAccounts);
+      return filteredAccounts;
+    });
+  }
 
   login() {
     this.isLoggedIn.next(true);
@@ -194,7 +224,10 @@ export class UserService {
 
   async isSetupComplete() {
     // to do: complete method
-    const values = await Promise.all([this.getPassword(), this.getPasswordRecovery()]);
+    const values = await Promise.all([
+      this.getPassword(),
+      this.getPasswordRecovery(),
+    ]);
 
     if (values.length === 2) {
       if (values[0] == null || values[1] == null) {
@@ -206,7 +239,7 @@ export class UserService {
     return false;
   }
 
-  setAccountHistory(data){
+  setAccountHistory(data) {
     return this.setData(STORAGE_KEYS.ACCOUNT_HISTORY, data);
   }
 
@@ -230,5 +263,4 @@ export class UserService {
   setData(key, value) {
     return this.storage.set(key, value);
   }
-
 }

@@ -3,15 +3,14 @@ import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs';
 
 const STORAGE_KEYS = {
-  'OPERATIONS': 'user.saza.operations',
-  'TRANSACTION': 'user.saza.tx',
-  'MEMO': 'user.saza.tx-memo',
+  OPERATIONS: 'user.saza.operations',
+  TRANSACTION: 'user.saza.tx',
+  MEMO: 'user.saza.tx-memo',
 };
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransactionService {
-
   public operations: BehaviorSubject<any> = new BehaviorSubject([]);
   public tx: BehaviorSubject<string> = new BehaviorSubject('');
 
@@ -41,7 +40,9 @@ export class TransactionService {
 
   deleteOperation(id) {
     const opId = parseInt(id, 10);
-    if (!Number.isInteger(opId)) { return; }
+    if (!Number.isInteger(opId)) {
+      return;
+    }
     return this.getOperations().then((ops: Array<any>) => {
       ops.splice(opId, 1);
       this.setData(STORAGE_KEYS.OPERATIONS, ops);
@@ -77,9 +78,9 @@ export class TransactionService {
   }
 
   /**
- * Get the data from storage identified by key.
- * @param key - Identifier of stored value
- */
+   * Get the data from storage identified by key.
+   * @param key - Identifier of stored value
+   */
   getData(key) {
     return this.storage.get(key);
   }
@@ -92,5 +93,4 @@ export class TransactionService {
   setData(key, value) {
     return this.storage.set(key, value);
   }
-
 }
