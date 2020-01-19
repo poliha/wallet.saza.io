@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { UnsignedHyper } from 'stellar-sdk';
 import { CustomValidators } from '../../providers/providers';
@@ -21,7 +21,7 @@ export class DynamicInputComponent implements OnInit {
   @Input() isRecipient = false;
   @Input() isHidden = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     let validators = [];
@@ -39,8 +39,7 @@ export class DynamicInputComponent implements OnInit {
       }
     }
 
-    if (this.inputType === 'text') {
-
+    if (this.inputType === 'text' || this.inputType === 'password') {
       if (this.minValue) {
         validators.push(Validators.minLength(this.minValue));
       }
@@ -56,11 +55,11 @@ export class DynamicInputComponent implements OnInit {
       if (this.isRecipient) {
         validators.push(CustomValidators.isValidRecipient());
       }
-
     }
 
-    this.form.addControl(this.controlName,
-      new FormControl(this.defaultValue, Validators.compose(validators)));
+    this.form.addControl(
+      this.controlName,
+      new FormControl(this.defaultValue, Validators.compose(validators)),
+    );
   }
-
 }

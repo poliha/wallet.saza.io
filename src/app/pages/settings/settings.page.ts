@@ -13,19 +13,13 @@ export class SettingsPage implements OnInit {
     },
     {
       title: 'Change Password',
-      url: '/dashboard',
-    },
-    {
-      title: 'Logout',
-      url: '/dashboard',
+      url: '/change-password',
     },
   ];
   pageTitle = 'Settings';
   helpUrl = '';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
