@@ -3,15 +3,15 @@
 <ion-content class="ion-padding">
   <form [formGroup]="bumpSequenceForm">
     <ion-item>
-      <ion-label position="stacked">Source</ion-label>
-      <app-select-source [form]="bumpSequenceForm" [controlName]="'source'"></app-select-source>
-    </ion-item>
-    <ion-item>
       <ion-label position="stacked">BumpTo</ion-label>
       <app-dynamic-input [form]="bumpSequenceForm" [controlName]="'bumpTo'" [placeHolder]="'Sequence Number'">
       </app-dynamic-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-select-source [form]="bumpSequenceForm" [controlName]="'source'"></app-select-source>
+    </ion-item>
 
     <div class="ion-margin ion-text-center">
       <ion-button type="button" [disabled]="bumpSequenceForm.invalid" (click)="addOperation()">Save

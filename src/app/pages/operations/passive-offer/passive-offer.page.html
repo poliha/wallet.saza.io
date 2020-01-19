@@ -3,10 +3,6 @@
 <ion-content class="ion-padding">
   <form [formGroup]="offerForm">
     <ion-item>
-      <ion-label position="stacked">Source</ion-label>
-      <app-select-source [form]="offerForm" [controlName]="'source'"></app-select-source>
-    </ion-item>
-    <ion-item>
       <ion-label position="stacked">Selling</ion-label>
       <app-asset-picker [form]="offerForm" [controlName]="'selling'" [displayType]="'manual'"></app-asset-picker>
     </ion-item>
@@ -23,6 +19,10 @@
       <ion-label position="stacked">Amount</ion-label>
       <app-dynamic-input [form]="offerForm" [controlName]="'amount'" [placeHolder]="'Amount'">
       </app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-select-source [form]="offerForm" [controlName]="'source'"></app-select-source>
     </ion-item>
     <div class="ion-margin ion-text-center">
       <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Save</ion-button>

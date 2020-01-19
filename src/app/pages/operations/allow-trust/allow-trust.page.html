@@ -3,11 +3,6 @@
 <ion-content class="ion-padding">
   <form [formGroup]="allowTrustForm">
     <ion-item>
-      <ion-label position="stacked">Source</ion-label>
-      <app-select-source [form]="allowTrustForm" [controlName]="'source'"></app-select-source>
-    </ion-item>
-
-    <ion-item>
       <ion-label position="stacked">Trustor</ion-label>
       <app-dynamic-input [inputType]="'text'" [form]="allowTrustForm" [controlName]="'trustor'"
         [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
@@ -36,6 +31,11 @@
           value is required.
         </p>
       </ion-text>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-select-source [form]="allowTrustForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">

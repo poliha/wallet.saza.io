@@ -3,10 +3,6 @@
 <ion-content class="ion-padding">
   <form [formGroup]="paymentForm">
     <ion-item>
-      <ion-label position="stacked">Source</ion-label>
-      <app-select-source [form]="paymentForm" [controlName]="'source'"></app-select-source>
-    </ion-item>
-    <ion-item>
       <ion-label position="stacked">Destination</ion-label>
       <app-dynamic-input [inputType]="'text'" [form]="paymentForm" [controlName]="'destination'"
         [placeHolder]="'Public key or Federated address'" [isRecipient]="true"></app-dynamic-input>
@@ -19,6 +15,10 @@
       <ion-label position="stacked">Amount</ion-label>
       <app-dynamic-input [form]="paymentForm" [controlName]="'amount'" [placeHolder]="'Amount to send'">
       </app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-select-source [form]="paymentForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">

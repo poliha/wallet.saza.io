@@ -3,12 +3,9 @@
 <ion-content class="ion-padding">
   <form [formGroup]="manageDataForm">
     <ion-item>
-      <ion-label position="stacked">Source</ion-label>
-      <app-select-source [form]="manageDataForm" [controlName]="'source'"></app-select-source>
-    </ion-item>
-    <ion-item>
       <ion-label position="stacked">Name</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'dataName'" [placeHolder]="'Name'" [maxValue]="64">
+      <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'dataName'" [placeHolder]="'Name'"
+        [maxValue]="64">
       </app-dynamic-input>
     </ion-item>
     <ion-item>
@@ -16,6 +13,10 @@
       <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'dataValue'"
         [placeHolder]="'Value'" [maxValue]="64">
       </app-dynamic-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-select-source [form]="manageDataForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">
