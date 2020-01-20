@@ -20,7 +20,9 @@ export class DynamicInputComponent implements OnInit {
   @Input() isEd25519PublicKey = false;
   @Input() isRecipient = false;
   @Input() isHidden = false;
+  @Input() value;
 
+  // idea: extend ionic's IonInput component
   constructor() {}
 
   ngOnInit() {

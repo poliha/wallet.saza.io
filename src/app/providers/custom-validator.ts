@@ -1,15 +1,18 @@
-import { FormControl, Validators, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  ValidationErrors,
+} from '@angular/forms';
 import { StrKey, UnsignedHyper } from 'stellar-sdk';
 import { Buffer } from 'buffer';
 
 export class CustomValidators extends Validators {
   static requiredIf(otherControlName) {
-
     let mainControlValue;
     let otherControlValue;
 
     return (c: FormControl) => {
-
       if (!c.parent) {
         return null;
       }
@@ -21,30 +24,33 @@ export class CustomValidators extends Validators {
       mainControlValue = c.value;
       otherControlValue = c.parent.get(otherControlName).value;
 
-      const subscription = c.parent.get(otherControlName).valueChanges.subscribe(() => {
-        c.updateValueAndValidity();
-      });
+      const subscription = c.parent
+        .get(otherControlName)
+        .valueChanges.subscribe(() => {
+          c.updateValueAndValidity();
+        });
 
-      if ((mainControlValue == null || mainControlValue === undefined || mainControlValue === '') && otherControlValue) {
+      if (
+        (mainControlValue == null ||
+          mainControlValue === undefined ||
+          mainControlValue === '') &&
+        otherControlValue
+      ) {
         return {
-          requiredIf: true
+          requiredIf: true,
         };
       }
 
       subscription.unsubscribe();
       return null;
-
     };
-
   }
 
   static equalTo(otherControlName) {
-
     let mainControlValue;
     let otherControlValue;
 
     return (c: FormControl) => {
-
       if (!c.parent) {
         return null;
       }
@@ -52,21 +58,21 @@ export class CustomValidators extends Validators {
       mainControlValue = c.value;
       otherControlValue = c.parent.get(otherControlName).value;
 
-      const subscription = c.parent.get(otherControlName).valueChanges.subscribe(() => {
-        c.updateValueAndValidity();
-      });
+      const subscription = c.parent
+        .get(otherControlName)
+        .valueChanges.subscribe(() => {
+          c.updateValueAndValidity();
+        });
 
       if (mainControlValue !== otherControlValue) {
         return {
-          equalTo: true
+          equalTo: true,
         };
       }
 
       subscription.unsubscribe();
       return null;
-
     };
-
   }
 
   static isTrue() {
@@ -94,7 +100,9 @@ export class CustomValidators extends Validators {
   static isValidPublicKey() {
     return (c: FormControl) => {
       if (c.value) {
-        return StrKey.isValidEd25519PublicKey(c.value) ? null : { isValidPublicKey: true };
+        return StrKey.isValidEd25519PublicKey(c.value)
+          ? null
+          : { isValidPublicKey: true };
       }
       return null;
     };
@@ -103,34 +111,35 @@ export class CustomValidators extends Validators {
   static isValidPrivateKey() {
     return (c: FormControl) => {
       if (c.value) {
-        return StrKey.isValidEd25519SecretSeed(c.value) ? null : { isValidPrivateKey: true };
+        return StrKey.isValidEd25519SecretSeed(c.value)
+          ? null
+          : { isValidPrivateKey: true };
       }
       return null;
     };
   }
 
   static isValidRecipient() {
-
     return (c: FormControl) => {
       const isEmail = this.email(c);
       const isPublicKey = StrKey.isValidEd25519PublicKey(c.value);
-      const federationRegex = /^(?!:\/\/)([a-zA-Z0-9-@_.]+\*)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
+      const federationRegex = /^(?!:\/\/)([a-zA-Z0-9-@_.+]+\*)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
       const isFederatedAddress = federationRegex.test(c.value);
 
       if (!isEmail || isPublicKey || isFederatedAddress) {
         return null;
       }
       return { isValidRecipient: true };
-
     };
-
   }
 
   static isValidPassword() {
     return (c: FormControl) => {
       if (c.value) {
         const passwordRegex = /^[\w\s#$^+=!*()@%&]{8,}$/gi;
-        return passwordRegex.test(String(c.value).trim()) ? null : { isValidPassword: true };
+        return passwordRegex.test(String(c.value).trim())
+          ? null
+          : { isValidPassword: true };
       }
       return null;
     };
@@ -149,10 +158,17 @@ export class CustomValidators extends Validators {
           }
           break;
         case 'id':
-          if (!memoValue.value.match(/^[0-9]*$/g) || Number(memoValue.value) < 0) {
+          if (
+            !memoValue.value.match(/^[0-9]*$/g) ||
+            Number(memoValue.value) < 0
+          ) {
             memoError = 'Memo ID accepts a positive integer.';
           }
-          if (!Number.isNaN(Number(memoValue.value)) && memoValue.value !== UnsignedHyper.fromString(memoValue.value).toString()) {
+          if (
+            !Number.isNaN(Number(memoValue.value)) &&
+            memoValue.value !==
+              UnsignedHyper.fromString(memoValue.value).toString()
+          ) {
             memoError = `Memo ID is an unsigned 64-bit integer and the max valid value is ${UnsignedHyper.MAX_UNSIGNED_VALUE.toString()}`;
           }
           break;
@@ -164,7 +180,8 @@ export class CustomValidators extends Validators {
           break;
       }
     }
-    return memoType && memoValue && memoError ? { 'isValidMemo': memoError } : null;
+    return memoType && memoValue && memoError
+      ? { isValidMemo: memoError }
+      : null;
   }
-
 }

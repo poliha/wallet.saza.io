@@ -1,6 +1,6 @@
 <div [formGroup]="form">
   <div [formGroupName]="controlName">
-    <ion-segment (ionChange)="memoChanged($event)">
+    <ion-segment (ionChange)="memoChanged($event)" [value]="memo_type">
       <ion-segment-button value="text">
         <ion-label>Text</ion-label>
       </ion-segment-button>
@@ -19,7 +19,8 @@
     <app-dynamic-input [inputType]="'text'" [form]="memoGroup" [controlName]="'memoType'" [isHidden]="true">
     </app-dynamic-input>
 
-    <app-dynamic-input [inputType]="'text'" [form]="memoGroup" [controlName]="'memoValue'" [placeHolder]="'Memo Value'">
+    <app-dynamic-input [inputType]="'text'" [form]="memoGroup" [controlName]="'memoValue'" [placeHolder]="'Memo Value'"
+      [value]="memo_value">
     </app-dynamic-input>
     <div class="text-danger"
       *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">

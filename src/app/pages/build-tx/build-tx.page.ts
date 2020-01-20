@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TxService, Utility, StellarService, UserService } from '../../providers/providers';
+import {
+  TxService,
+  Utility,
+  StellarService,
+  UserService,
+} from '../../providers/providers';
 import { Operation, xdr } from 'stellar-sdk';
 import { SazaAccount } from 'src/app/interfaces/saza';
 
@@ -19,31 +24,51 @@ export class BuildTxPage implements OnInit {
   activeAccount: string;
   pageTitle = 'Build Transaction';
   helpUrl = '';
-  constructor(private formBuilder: FormBuilder, private txService: TxService,
-    private utility: Utility, private stellarService: StellarService, private userService: UserService) { }
+  savedMemo = {
+    memo: '',
+    memo_type: '',
+  };
+  constructor(
+    private formBuilder: FormBuilder,
+    private txService: TxService,
+    private utility: Utility,
+    private stellarService: StellarService,
+    private userService: UserService,
+  ) {}
 
   ngOnInit() {
-    this.stellarService.fees().then(data => {
-      console.log('Fees: ', data);
-      const { min_accepted_fee, p99_accepted_fee } = data;
-      this.networkFees = {
-        min_accepted_fee,
-        p99_accepted_fee
-      };
-      console.log('NFees: ', this.networkFees);
+    this.stellarService
+      .fees()
+      .then(data => {
+        console.log('Fees: ', data);
+        const { min_accepted_fee, p99_accepted_fee } = data;
+        this.networkFees = {
+          min_accepted_fee,
+          p99_accepted_fee,
+        };
+        console.log('NFees: ', this.networkFees);
+      })
+      .catch(error => console.log(error));
 
-    })
-    .catch(error => console.log(error));
-
-    this.txService.operations.subscribe((data) => {
+    this.txService.operations.subscribe(data => {
       this.pendingOperations = data;
       console.log('pendingOps', this.pendingOperations);
     });
 
-    this.userService.activeAccount.subscribe((data) => {
+    this.userService.activeAccount.subscribe(data => {
       this.activeAccount = data;
       console.log('active', this.activeAccount);
     });
+
+    this.txService
+      .getMemo()
+      .then(data => {
+        console.log('memeo: ', data);
+        if (data) {
+          this.savedMemo = data;
+        }
+      })
+      .catch(error => console.log(error));
 
     this.makeForm();
   }
@@ -55,10 +80,15 @@ export class BuildTxPage implements OnInit {
   }
 
   // Getters for template
-  get memo() { return this.buildTxForm.get('memo'); }
-  get source() { return this.buildTxForm.get('source'); }
-  get fee() { return this.buildTxForm.get('fee'); }
-
+  get memo() {
+    return this.buildTxForm.get('memo');
+  }
+  get source() {
+    return this.buildTxForm.get('source');
+  }
+  get fee() {
+    return this.buildTxForm.get('fee');
+  }
 
   async buildTransaction() {
     // load source account details from horizon
@@ -76,7 +106,7 @@ export class BuildTxPage implements OnInit {
         timebounds: {},
         memo: this.memo.value,
         operations: this.pendingOperations,
-        source: this.source.value
+        source: this.source.value,
       };
 
       console.log('txOptions: ', txOptions);
@@ -86,9 +116,8 @@ export class BuildTxPage implements OnInit {
       this.txService.setTx(newTx);
 
       // to do redirect to signing page
-
     } catch (error) {
-      console.log('error: ', error)
+      console.log('error: ', error);
     }
   }
 }

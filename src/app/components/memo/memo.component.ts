@@ -12,21 +12,26 @@ import { CustomValidators } from 'src/app/providers/providers';
 export class MemoComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() controlName: string;
+  @Input() memo_type = 'id';
+  @Input() memo_value = '';
 
   memoGroup: FormGroup;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.makeForm();
   }
 
   makeForm() {
-    console.log('Making memo form...')
-    this.memoGroup = new FormGroup({
-      memoValue: new FormControl(),
-      memoType: new FormControl()
-    }, { validators: CustomValidators.isValidMemo });
+    console.log('Making memo form...');
+    this.memoGroup = new FormGroup(
+      {
+        memoValue: new FormControl(),
+        memoType: new FormControl(),
+      },
+      { validators: CustomValidators.isValidMemo },
+    );
 
     this.form.removeControl(this.controlName);
     this.form.addControl(this.controlName, this.memoGroup);
@@ -34,18 +39,24 @@ export class MemoComponent implements OnInit {
   }
 
   // getters
-  get memo() { return this.form.get(this.controlName); }
-  get memoType() { return this.form.get(`${this.controlName}.memoType`); }
-  get memoValue() { return this.form.get(`${this.controlName}.memoValue`); }
+  get memo() {
+    return this.form.get(this.controlName);
+  }
+  get memoType() {
+    return this.form.get(`${this.controlName}.memoType`);
+  }
+  get memoValue() {
+    return this.form.get(`${this.controlName}.memoValue`);
+  }
 
   memoChanged(event) {
     this.setMemoType(event.target.value);
   }
 
   setMemoType(value) {
-    if (!value) { return; }
+    if (!value) {
+      return;
+    }
     this.memoType.patchValue(value);
   }
-
-
 }

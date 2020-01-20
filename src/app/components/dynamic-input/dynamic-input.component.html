@@ -2,7 +2,7 @@
   'ion-hide': isHidden
 }">
   <ion-input type="{{ inputType }}" name="{{controlName}}" formControlName="{{controlName}}"
-    placeholder="{{placeHolder}}"></ion-input>
+    placeholder="{{placeHolder}}" [value]="value"></ion-input>
   <div class="text-danger"
     *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
 
