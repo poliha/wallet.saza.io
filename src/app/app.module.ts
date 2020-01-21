@@ -8,10 +8,16 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { Utility, UserService, AuthGuard, NotificationService } from './providers/providers';
+import {
+  Utility,
+  UserService,
+  AuthGuard,
+  NotificationService,
+} from './providers/providers';
 import { IonicStorageModule } from '@ionic/storage';
 import { SazaErrorHandler } from './providers/saza-error-handler.service';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,15 +26,20 @@ import { SazaErrorHandler } from './providers/saza-error-handler.service';
     BrowserModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    Utility, UserService, AuthGuard, NotificationService,
+    Utility,
+    UserService,
+    AuthGuard,
+    NotificationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: ErrorHandler, useClass: SazaErrorHandler}
+    { provide: ErrorHandler, useClass: SazaErrorHandler },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
