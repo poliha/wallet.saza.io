@@ -27,7 +27,7 @@ export class MemoComponent implements OnInit {
     console.log('Making memo form...');
     this.memoGroup = new FormGroup(
       {
-        memoValue: new FormControl(),
+        memoValue: new FormControl(this.memo_value),
         memoType: new FormControl(),
       },
       { validators: CustomValidators.isValidMemo },

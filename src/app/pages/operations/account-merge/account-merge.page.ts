@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, NotificationService, StellarService } from '../../../providers/providers';
+import {
+  TxService,
+  NotificationService,
+  StellarService,
+} from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-merge',
@@ -11,8 +16,12 @@ export class AccountMergePage implements OnInit {
   public accountMergeForm: FormGroup;
   pageTitle = 'Account Merge';
   helpUrl = '';
-  constructor(private txService: TxService, private notification: NotificationService, 
-    private stellarService: StellarService) { }
+  constructor(
+    private txService: TxService,
+    private notification: NotificationService,
+    private stellarService: StellarService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.makeForm();
@@ -24,8 +33,12 @@ export class AccountMergePage implements OnInit {
   }
 
   // Getters for template
-  get source() { return this.accountMergeForm.get('source'); }
-  get destination() { return this.accountMergeForm.get('destination'); }
+  get source() {
+    return this.accountMergeForm.get('source');
+  }
+  get destination() {
+    return this.accountMergeForm.get('destination');
+  }
 
   private async buildOperation() {
     // build account Merge operation
@@ -38,15 +51,15 @@ export class AccountMergePage implements OnInit {
       const opData = {
         destination: this.destination.value,
         source: this.source.value,
-        opType: this.stellarService.operationType.ACCOUNT_MERGE
+        opType: this.stellarService.operationType.ACCOUNT_MERGE,
       };
 
       console.log('account Merge Ops: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData)
+      const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       console.log('account Merge Ops: ', xdrString);
-      this.accountMergeForm.reset({source: this.source.value});
+      this.accountMergeForm.reset({ source: this.source.value });
     } catch (error) {
       console.log('error: ', error);
     }
@@ -58,9 +71,8 @@ export class AccountMergePage implements OnInit {
     // to do navigate to next page
   }
 
-  signOperation() {
-    console.log('signing operation');
+  buildTransaction() {
     this.buildOperation();
-    // to do navigate to next page
+    this.router.navigate(['build-tx/']);
   }
 }

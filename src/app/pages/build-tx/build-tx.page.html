@@ -10,7 +10,6 @@
 
     <ion-item>
       <ion-label>Fee</ion-label>
-      <!-- to do set default fee -->
       <ion-range name="fee" formControlName="fee" [min]="networkFees.min_accepted_fee"
         [max]="networkFees.p99_accepted_fee" color="secondary" pin="true" steps="10">
         <ion-label slot="start">{{networkFees.min_accepted_fee}}</ion-label>

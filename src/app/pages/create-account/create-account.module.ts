@@ -11,8 +11,8 @@ import { HeaderComponentModule } from 'src/app/components/header/header.module';
 const routes: Routes = [
   {
     path: '',
-    component: CreateAccountPage
-  }
+    component: CreateAccountPage,
+  },
 ];
 
 @NgModule({
@@ -27,6 +27,6 @@ const routes: Routes = [
     HeaderComponentModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [CreateAccountPage]
+  declarations: [CreateAccountPage],
 })
 export class CreateAccountPageModule {}

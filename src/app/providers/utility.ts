@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import * as Forge from 'node-forge';
 import {
-  Keypair, Asset, Operation, TransactionBuilder, StrKey,
-  FederationServer, StellarTomlResolver, Memo, Account
+  Keypair,
+  Asset,
+  Operation,
+  TransactionBuilder,
+  StrKey,
+  FederationServer,
+  StellarTomlResolver,
+  Memo,
+  Account,
 } from 'stellar-sdk';
 import * as bcrypt from 'bcryptjs';
 import * as niceware from 'niceware';
@@ -10,7 +17,7 @@ import * as niceware from 'niceware';
 
 @Injectable()
 export class Utility {
-  constructor() { }
+  constructor() {}
 
   /**
    * Generates a password using phrases.
@@ -32,12 +39,12 @@ export class Utility {
     return hashString;
   }
 
-/**
- * Checks if a plain text matches hash, returns true or false.
- * @param text plain text to check.
- * @param hash stored hash.
- */
-  validateHash(text: string, hash:  string): boolean {
+  /**
+   * Checks if a plain text matches hash, returns true or false.
+   * @param text plain text to check.
+   * @param hash stored hash.
+   */
+  validateHash(text: string, hash: string): boolean {
     return bcrypt.compareSync(text, hash);
   }
 
@@ -55,7 +62,7 @@ export class Utility {
       let rtnObj = {
         text: cipherText,
         salt: Forge.util.encode64(salt),
-        iv: Forge.util.encode64(iv)
+        iv: Forge.util.encode64(iv),
       };
 
       return rtnObj;
@@ -63,7 +70,6 @@ export class Utility {
       console.log('encrypt error: ', error);
       return false;
     }
-
   }
 
   decrypt(cipherObj, password) {
@@ -79,9 +85,10 @@ export class Utility {
       // if (cipherObj.skey) {
       //   decipher.update(Forge.util.createBuffer(Forge.util.decode64(cipherObj.skey)));
       // } else {
-        decipher.update(Forge.util.createBuffer(Forge.util.decode64(cipherObj.text)));
+      decipher.update(
+        Forge.util.createBuffer(Forge.util.decode64(cipherObj.text)),
+      );
       // }
-
 
       decipher.finish();
       let decipheredText = decipher.output.toString();
@@ -118,7 +125,10 @@ export class Utility {
       if (assetObj.asset_type === 'native') {
         return Asset.native();
       }
-      return new Asset(String(assetObj.asset_code).trim(), assetObj.asset_issuer);
+      return new Asset(
+        String(assetObj.asset_code).trim(),
+        assetObj.asset_issuer,
+      );
     } catch (error) {
       console.error('generateAsset Error: ', error);
       return false;
@@ -126,7 +136,7 @@ export class Utility {
   }
 
   validateAccountTag(userAccounts = [], tag = '') {
-    const tagExists = (account) => account.tag === tag;
+    const tagExists = account => account.tag === tag;
     if (!tag || userAccounts.some(tagExists)) {
       return `account-${userAccounts.length + 1}`;
     }

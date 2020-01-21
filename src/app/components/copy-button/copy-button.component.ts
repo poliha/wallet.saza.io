@@ -9,6 +9,7 @@ import { ClipboardService } from 'ngx-clipboard';
 export class CopyButtonComponent implements OnInit, OnDestroy {
 
   @Input() copyInput = '';
+  @Input() buttonSize = 'default';
   @Output() copyOutput: EventEmitter<any> = new EventEmitter();
 
   copyText = 'Copy';
