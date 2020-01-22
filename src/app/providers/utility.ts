@@ -142,4 +142,14 @@ export class Utility {
     }
     return tag;
   }
+
+  addYears(date, years) {
+    const newDate = new Date(date);
+    newDate.setFullYear(newDate.getFullYear() + Number(years));
+    return newDate;
+  }
+
+  range(size, start = 0) {
+    return [...Array(size).keys()].map(i => i + start);
+  }
 }

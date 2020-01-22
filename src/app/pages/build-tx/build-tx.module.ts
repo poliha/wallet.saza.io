@@ -11,12 +11,14 @@ import { SelectSourceComponentModule } from 'src/app/components/select-source/se
 import { TxService, StellarService } from 'src/app/providers/providers';
 import { MemoComponentModule } from 'src/app/components/memo/memo.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
+import { MaterialModule } from 'src/app/material.module';
+import { SazaDateTimeComponentModule } from 'src/app/components/saza-date-time/saza-date-time.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: BuildTxPage
-  }
+    component: BuildTxPage,
+  },
 ];
 
 @NgModule({
@@ -30,11 +32,10 @@ const routes: Routes = [
     SelectSourceComponentModule,
     MemoComponentModule,
     HeaderComponentModule,
+    MaterialModule,
+    SazaDateTimeComponentModule,
   ],
-  providers: [
-    TxService,
-    StellarService
-  ],
-  declarations: [BuildTxPage]
+  providers: [TxService, StellarService],
+  declarations: [BuildTxPage],
 })
 export class BuildTxPageModule {}

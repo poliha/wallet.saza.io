@@ -1,6 +1,6 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
-<ion-content>
+<ion-content class="ion-margin">
   <form [formGroup]="buildTxForm">
     <ion-item>
       <ion-label position="stacked">Memo</ion-label>
@@ -17,7 +17,9 @@
       </ion-range>
     </ion-item>
     <!-- to do: show summary of operations? -->
-    <!-- to do: add input for timebounds -->
+
+    <app-saza-date-time [form]="buildTxForm" [controlName]="'startTime'"></app-saza-date-time>
+    <app-saza-date-time [form]="buildTxForm" [controlName]="'endTime'"></app-saza-date-time>
 
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
@@ -25,10 +27,10 @@
       </app-select-source>
     </ion-item>
 
-    <ion-item>
+    <div class="ion-margin ion-text-center">
       <ion-button type="button" [disabled]="buildTxForm.invalid">Cancel</ion-button>
       <ion-button type="button" [disabled]="buildTxForm.invalid" (click)="buildTransaction()">Build Transaction
       </ion-button>
-    </ion-item>
+    </div>
   </form>
 </ion-content>

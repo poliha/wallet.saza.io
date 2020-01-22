@@ -8,6 +8,7 @@ import {
 } from '../../providers/providers';
 import { Operation, xdr } from 'stellar-sdk';
 import { SazaAccount } from 'src/app/interfaces/saza';
+import { PickerController } from '@ionic/angular';
 
 @Component({
   selector: 'app-build-tx',
@@ -28,12 +29,21 @@ export class BuildTxPage implements OnInit {
     memo: '',
     memo_type: '',
   };
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date(2020, 0, 1);
+  multiColumnOptions = [
+    ['Minified', 'Responsive', 'Full Stack', 'Mobile First', 'Serverless'],
+    ['Tomato', 'Avocado', 'Onion', 'Potato', 'Artichoke'],
+    ['Tomato', 'Avocado', 'Onion', 'Potato', 'Artichoke'],
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     private txService: TxService,
     private utility: Utility,
     private stellarService: StellarService,
     private userService: UserService,
+    private pickerCtrl: PickerController,
   ) {}
 
   ngOnInit() {
@@ -119,5 +129,50 @@ export class BuildTxPage implements OnInit {
     } catch (error) {
       console.log('error: ', error);
     }
+  }
+
+  async openPicker(numColumns = 1, numOptions = 5, columnOptions = []) {
+    const picker = await this.pickerCtrl.create({
+      // columns: this.multiColumnOptions,
+      columns: this.getColumns(numColumns, numOptions, columnOptions),
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          handler: value => {
+            console.log(`Got Value: `, value);
+          },
+        },
+      ],
+    });
+
+    await picker.present();
+  }
+
+  getColumns(numColumns, numOptions, columnOptions) {
+    let columns = [];
+    for (let i = 0; i < numColumns; i++) {
+      columns.push({
+        name: `col-${i}`,
+        options: this.getColumnOptions(i, numOptions, columnOptions),
+      });
+    }
+
+    return columns;
+  }
+
+  getColumnOptions(columnIndex, numOptions, columnOptions) {
+    let options = [];
+    for (let i = 0; i < numOptions; i++) {
+      options.push({
+        text: columnOptions[columnIndex][i % numOptions],
+        value: i,
+      });
+    }
+
+    return options;
   }
 }
