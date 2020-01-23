@@ -1,25 +1,26 @@
-<div [formGroup]="form">
-  <div [formGroupName]="controlName">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <mat-form-field class="">
-            <input matInput [formControl]="date" [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
-              placeholder="Choose a date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+<form [formGroup]="dateTimeGroup">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <mat-form-field class="">
+          <input matInput [formControl]="date" [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+            (dateChange)="dateChanged($event)" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-input (click)="openPicker()" value="00:00:00" readonly></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input (click)="openPicker()" [value]="timeString" readonly></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <app-dynamic-input [inputType]="'text'" [form]="dateTimeGroup" [controlName]="'time'" [isHidden]="true">
-    </app-dynamic-input>
-  </div>
-</div>
+  <app-dynamic-input [inputType]="'text'" [form]="dateTimeGroup" [controlName]="'time'" [isHidden]="true">
+  </app-dynamic-input>
+</form>
+
+<app-dynamic-input [inputType]="'text'" [form]="form" [controlName]="controlName" [isHidden]="true">
+</app-dynamic-input>
