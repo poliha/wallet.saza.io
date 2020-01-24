@@ -5,6 +5,7 @@ import {
   Utility,
   StellarService,
   UserService,
+  CustomValidators,
 } from '../../providers/providers';
 import { Operation, xdr } from 'stellar-sdk';
 import { SazaAccount } from 'src/app/interfaces/saza';
@@ -29,13 +30,6 @@ export class BuildTxPage implements OnInit {
     memo: '',
     memo_type: '',
   };
-  minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2020, 0, 1);
-  multiColumnOptions = [
-    ['Minified', 'Responsive', 'Full Stack', 'Mobile First', 'Serverless'],
-    ['Tomato', 'Avocado', 'Onion', 'Potato', 'Artichoke'],
-    ['Tomato', 'Avocado', 'Onion', 'Potato', 'Artichoke'],
-  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +37,6 @@ export class BuildTxPage implements OnInit {
     private utility: Utility,
     private stellarService: StellarService,
     private userService: UserService,
-    private pickerCtrl: PickerController,
   ) {}
 
   ngOnInit() {
@@ -76,6 +69,8 @@ export class BuildTxPage implements OnInit {
         console.log('memeo: ', data);
         if (data) {
           this.savedMemo = data;
+          this.memoValue.patchValue(this.savedMemo.memo);
+          this.setMemoType(this.savedMemo.memo_type);
         }
       })
       .catch(error => console.log(error));
@@ -86,6 +81,13 @@ export class BuildTxPage implements OnInit {
   makeForm() {
     this.buildTxForm = this.formBuilder.group({
       fee: [this.networkFees.min_accepted_fee, Validators.required],
+      memo: this.formBuilder.group(
+        {
+          memoValue: [],
+          memoType: [],
+        },
+        { validators: CustomValidators.isValidMemo },
+      ),
     });
   }
 
@@ -93,13 +95,35 @@ export class BuildTxPage implements OnInit {
   get memo() {
     return this.buildTxForm.get('memo');
   }
+  get memoType() {
+    return this.memo.get('memoType');
+  }
+  get memoValue() {
+    return this.memo.get('memoValue');
+  }
   get source() {
     return this.buildTxForm.get('source');
   }
   get fee() {
     return this.buildTxForm.get('fee');
   }
+  get startTime() {
+    return this.buildTxForm.get('startTime');
+  }
+  get endTime() {
+    return this.buildTxForm.get('endTime');
+  }
 
+  memoChanged(event) {
+    this.setMemoType(event.target.value);
+  }
+
+  setMemoType(value) {
+    if (!value) {
+      return;
+    }
+    this.memoType.patchValue(value);
+  }
   async buildTransaction() {
     // load source account details from horizon
     // use loaded account to start transaction builder process
@@ -111,9 +135,18 @@ export class BuildTxPage implements OnInit {
     // Show success or error message
 
     try {
+      // to do verify that endtime is not less than start time
+      // to do show operations summary
+      // to do name startTime, endTime, memo,
+      // to do make source required
+      // to do check if source is active when building
+
       const txOptions = {
         fee: this.fee.value,
-        timebounds: {},
+        timebounds: {
+          minTime: this.startTime.value,
+          maxTime: this.endTime.value,
+        },
         memo: this.memo.value,
         operations: this.pendingOperations,
         source: this.source.value,
@@ -129,50 +162,5 @@ export class BuildTxPage implements OnInit {
     } catch (error) {
       console.log('error: ', error);
     }
-  }
-
-  async openPicker(numColumns = 1, numOptions = 5, columnOptions = []) {
-    const picker = await this.pickerCtrl.create({
-      // columns: this.multiColumnOptions,
-      columns: this.getColumns(numColumns, numOptions, columnOptions),
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-        {
-          text: 'Confirm',
-          handler: value => {
-            console.log(`Got Value: `, value);
-          },
-        },
-      ],
-    });
-
-    await picker.present();
-  }
-
-  getColumns(numColumns, numOptions, columnOptions) {
-    let columns = [];
-    for (let i = 0; i < numColumns; i++) {
-      columns.push({
-        name: `col-${i}`,
-        options: this.getColumnOptions(i, numOptions, columnOptions),
-      });
-    }
-
-    return columns;
-  }
-
-  getColumnOptions(columnIndex, numOptions, columnOptions) {
-    let options = [];
-    for (let i = 0; i < numOptions; i++) {
-      options.push({
-        text: columnOptions[columnIndex][i % numOptions],
-        value: i,
-      });
-    }
-
-    return options;
   }
 }

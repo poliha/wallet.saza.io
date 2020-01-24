@@ -2,13 +2,41 @@
 
 <ion-content class="ion-margin">
   <form [formGroup]="buildTxForm">
-    <ion-item>
-      <ion-label position="stacked">Memo</ion-label>
-      <app-memo [form]="buildTxForm" [controlName]="'memo'" [memo_type]="savedMemo.memo_type"
-        [memo_value]="savedMemo.memo"></app-memo>
-    </ion-item>
+    <div>
+      <ion-segment (ionChange)="memoChanged($event)" [value]="savedMemo.memo_type">
+        <ion-segment-button value="text">
+          <ion-label>Text</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="id">
+          <ion-label>ID</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hash">
+          <ion-label>Hash</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="return">
+          <ion-label>Return</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <div formGroupName="memo">
+      <app-dynamic-input [inputType]="'text'" [form]="buildTxForm.controls['memo']" [controlName]="'memoType'"
+        [isHidden]="true">
+      </app-dynamic-input>
+
+      <app-dynamic-input [inputType]="'text'" [form]="buildTxForm.controls['memo']" [controlName]="'memoValue'"
+        [placeHolder]="'Memo Value'" [defaultValue]="savedMemo.memo">
+      </app-dynamic-input>
+      <ion-text color="danger" *ngIf="memo.invalid && (memo.dirty || memo.touched)">
+
+        <div *ngIf="memo.errors.isValidMemo">
+          {{ memo.errors.isValidMemo }}
+        </div>
+      </ion-text>
+    </div>
 
     <ion-item>
+      <!-- to do try out material slider -->
       <ion-label>Fee</ion-label>
       <ion-range name="fee" formControlName="fee" [min]="networkFees.min_accepted_fee"
         [max]="networkFees.p99_accepted_fee" color="secondary" pin="true" steps="10">
