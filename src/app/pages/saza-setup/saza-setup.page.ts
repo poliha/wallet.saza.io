@@ -68,7 +68,7 @@ export class SazaSetupPage implements OnInit {
    * @param item value to be copied
    */
   itemCopy(item) {
-    console.log("item: ", item);
+    console.log('item: ', item);
   }
 
   /**
@@ -77,7 +77,7 @@ export class SazaSetupPage implements OnInit {
    */
   setSuggestedPassword(password) {
     this.suggestedPassword = password;
-    console.log("suggested PW: ", this.suggestedPassword);
+    console.log('suggested PW: ', this.suggestedPassword);
   }
 
   // Getters for template
@@ -103,9 +103,9 @@ export class SazaSetupPage implements OnInit {
 
       // use the recovery password to encrypt the primary password.
       const encrpytedPassword = this.utility.encrypt(trimmedPwd, recoveryPassword);
-      console.log("PE: ", encrpytedPassword);
-      console.log("PH: ", passwordHash);
-      console.log("PR: ", recoveryPassword)
+      console.log('PE: ', encrpytedPassword);
+      console.log('PH: ', passwordHash);
+      console.log('PR: ', recoveryPassword);
       // save hash of primary password
       this.userService.setPassword(passwordHash);
       // save encrypted password
@@ -127,7 +127,7 @@ export class SazaSetupPage implements OnInit {
     });
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      console.log("modal dismissed");
+      console.log('modal dismissed');
       this.router.navigate(['home/']);
     });
 

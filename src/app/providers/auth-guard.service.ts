@@ -21,7 +21,7 @@ export class AuthGuardService implements CanActivate, CanDeactivate<CanDeactivat
 
     const isAuthLink = this.urlHasString(state.url, authLinks);
     this.isLoggedIn = await this.userService.getLoginStatus();
-    console.log("AG, islogged in: ", this.isLoggedIn);
+    console.log('AG, islogged in: ', this.isLoggedIn);
     if (isAuthLink && this.isLoggedIn) {
       this.router.navigate(['dashboard']);
       return false;
@@ -53,8 +53,8 @@ export class AuthGuardService implements CanActivate, CanDeactivate<CanDeactivat
         break;
       }
     }
-    console.log("HS: ", haystack)
-    console.log("found: ", found)
+    console.log('HS: ', haystack);
+    console.log('found: ', found);
     return found;
   }
 

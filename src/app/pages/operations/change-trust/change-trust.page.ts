@@ -44,7 +44,7 @@ export class ChangeTrustPage implements OnInit {
       };
 
       console.log('change Trust Ops: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData)
+      const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       this.changeTrustForm.reset({ source: this.source.value });

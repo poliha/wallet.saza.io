@@ -29,7 +29,7 @@ export class AccountBalanceComponent implements OnInit {
       return;
     }
    const data = await this.stellarService.loadAccount(this.activeAccount);
-   console.log("data: ", data);
+   console.log('data: ', data);
    if (!data) {
      this.accountBalance = [];
      return;

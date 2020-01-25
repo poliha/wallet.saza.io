@@ -8,7 +8,7 @@ import { CopyButtonComponent } from './copy-button.component';
 
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule,],
+  imports: [CommonModule, FormsModule, IonicModule, ],
   declarations: [CopyButtonComponent],
   exports: [CopyButtonComponent]
 })

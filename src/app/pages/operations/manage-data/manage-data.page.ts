@@ -43,7 +43,7 @@ export class ManageDataPage implements OnInit {
       };
 
       console.log('manage Data Ops: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData)
+      const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       this.manageDataForm.reset({ source: this.source.value });

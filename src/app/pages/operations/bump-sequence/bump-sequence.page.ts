@@ -42,7 +42,7 @@ export class BumpSequencePage implements OnInit {
       };
 
       console.log('bumpSeqOps: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData)
+      const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
       this.notification.show('Operation Added');
       this.bumpSequenceForm.reset({source: this.source.value});

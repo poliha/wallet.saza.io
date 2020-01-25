@@ -40,7 +40,7 @@ describe('HomePage', () => {
     expect(menuItems.length).toEqual(0);
   });
 
-  describe('when there is no saved user password', () =>{
+  describe('when there is no saved user password', () => {
     it('should have a single button', () => {
       const buttons = fixture.nativeElement.querySelectorAll('ion-button');
       expect(buttons.length).toEqual(1);

@@ -8,7 +8,7 @@ import { MemoComponent } from './memo.component';
 import { DynamicInputComponentModule } from '../dynamic-input/dynamic-input.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule,IonicModule, DynamicInputComponentModule, ReactiveFormsModule],
+  imports: [ CommonModule, FormsModule, IonicModule, DynamicInputComponentModule, ReactiveFormsModule],
   declarations: [MemoComponent],
   exports: [MemoComponent]
 })

@@ -20,7 +20,7 @@ export class DashboardPage implements OnInit {
       if (Array.isArray(data)) {
         this.numberOfAccounts = data.length;
       }
-    })
+    });
   }
 
   createAccount() {
@@ -30,5 +30,5 @@ export class DashboardPage implements OnInit {
   linkAccount() {
     this.router.navigate(['link-account/']);
   }
-  
+
 }

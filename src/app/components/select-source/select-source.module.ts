@@ -8,7 +8,7 @@ import { SelectSourceComponent } from './select-source.component';
 import { DynamicInputComponentModule } from '../dynamic-input/dynamic-input.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule,IonicModule, DynamicInputComponentModule ],
+  imports: [ CommonModule, FormsModule, IonicModule, DynamicInputComponentModule ],
   declarations: [SelectSourceComponent],
   exports: [SelectSourceComponent]
 })

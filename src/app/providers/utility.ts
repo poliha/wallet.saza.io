@@ -54,12 +54,12 @@ export class Utility {
       const salt = Forge.random.getBytesSync(256);
       const key = Forge.pkcs5.pbkdf2(password, salt, numIteration, 32);
       const iv = Forge.random.getBytesSync(16);
-      let cipher = Forge.cipher.createCipher('AES-CBC', key);
+      const cipher = Forge.cipher.createCipher('AES-CBC', key);
       cipher.start({ iv: iv });
       cipher.update(Forge.util.createBuffer(plainText));
       cipher.finish();
-      let cipherText = Forge.util.encode64(cipher.output.getBytes());
-      let rtnObj = {
+      const cipherText = Forge.util.encode64(cipher.output.getBytes());
+      const rtnObj = {
         text: cipherText,
         salt: Forge.util.encode64(salt),
         iv: Forge.util.encode64(iv),
@@ -79,7 +79,7 @@ export class Utility {
       const salt = Forge.util.decode64(cipherObj.salt);
       const iv = Forge.util.decode64(cipherObj.iv);
       const key = Forge.pkcs5.pbkdf2(password, salt, numIteration, 32);
-      let decipher = Forge.cipher.createDecipher('AES-CBC', key);
+      const decipher = Forge.cipher.createDecipher('AES-CBC', key);
       decipher.start({ iv: iv });
 
       // if (cipherObj.skey) {
@@ -91,7 +91,7 @@ export class Utility {
       // }
 
       decipher.finish();
-      let decipheredText = decipher.output.toString();
+      const decipheredText = decipher.output.toString();
 
       return decipheredText;
     } catch (error) {

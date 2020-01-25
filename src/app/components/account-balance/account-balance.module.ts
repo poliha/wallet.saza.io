@@ -9,7 +9,7 @@ import { BalanceItemComponentModule } from '../balance-item/balance-item.module'
 import { StellarService } from 'src/app/providers/providers';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule,IonicModule, BalanceItemComponentModule],
+  imports: [ CommonModule, FormsModule, IonicModule, BalanceItemComponentModule],
   declarations: [AccountBalanceComponent],
   providers: [StellarService],
   exports: [AccountBalanceComponent]

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BalanceItemComponent } from './balance-item.component';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule,IonicModule,],
+  imports: [ CommonModule, FormsModule, IonicModule, ],
   declarations: [BalanceItemComponent],
   exports: [BalanceItemComponent]
 })

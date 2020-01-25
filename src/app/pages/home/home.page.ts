@@ -14,7 +14,7 @@ export class HomePage {
   ionViewWillEnter() {
     this.menu.enable(false);
     this.userService.getPassword().then(pwd => {
-      console.log("pwd: ", pwd)
+      console.log('pwd: ', pwd);
       if (pwd) {
         this.userHasPassword = true;
       }

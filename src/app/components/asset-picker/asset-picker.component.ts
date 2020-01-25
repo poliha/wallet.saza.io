@@ -23,7 +23,7 @@ export class AssetPickerComponent implements OnInit {
   }
 
   makeForm() {
-    console.log('Making asset form...')
+    console.log('Making asset form...');
     this.assetGroup = new FormGroup({
       asset_type: new FormControl('native', Validators.compose([Validators.required]))
     });
@@ -35,7 +35,7 @@ export class AssetPickerComponent implements OnInit {
   }
 
   handleListChange(value) {
-    console.log("listV: ", value);
+    console.log('listV: ', value);
     if (value === 'manual') {
       this.displayType = value;
       this.makeForm();
@@ -52,7 +52,7 @@ export class AssetPickerComponent implements OnInit {
   get assetIssuer() { return this.form.get(`${this.controlName}.asset_issuer`); }
 
   setAssetType(value) {
-    console.log("saV: ", value);
+    console.log('saV: ', value);
     if (!value) { return; }
     this.form.controls[this.controlName].patchValue({
       asset_type: value

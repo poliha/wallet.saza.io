@@ -28,7 +28,7 @@ export class AccountHistoryComponent implements OnInit {
       return;
     }
     const data = await this.stellarService.loadOperations(this.activeAccount);
-    console.log("data: ", data);
+    console.log('data: ', data);
     if (!data) {
       this.accountHistory = [];
       return;

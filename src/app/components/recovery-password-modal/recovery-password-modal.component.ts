@@ -11,7 +11,7 @@ export class RecoveryPasswordModalComponent {
   constructor(private modalController: ModalController, private alertCtrl: AlertController) { }
 
   itemCopied(item) {
-    console.log("item: ", item);
+    console.log('item: ', item);
   }
 
   closeModal() {

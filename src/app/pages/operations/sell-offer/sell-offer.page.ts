@@ -45,7 +45,7 @@ export class SellOfferPage extends OfferComponent implements OnInit {
 
 
       console.log('manageSellOffer: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData)
+      const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
 
       console.log('manageSellOffer: ', xdrString);

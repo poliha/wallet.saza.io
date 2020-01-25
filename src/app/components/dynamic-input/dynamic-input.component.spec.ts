@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DynamicInputComponent } from './dynamic-input.component';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { IonicModule } from '@ionic/angular'
+import { IonicModule } from '@ionic/angular';
 
 describe('DynamicInputComponent', () => {
   let component: DynamicInputComponent;
