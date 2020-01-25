@@ -10,6 +10,8 @@ import {
 import { Operation, xdr } from 'stellar-sdk';
 import { SazaAccount } from 'src/app/interfaces/saza';
 import { PickerController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-build-tx',
@@ -30,16 +32,22 @@ export class BuildTxPage implements OnInit {
     memo: '',
     memo_type: '',
   };
-
+  startDate;
+  endDate;
   constructor(
     private formBuilder: FormBuilder,
     private txService: TxService,
     private utility: Utility,
     private stellarService: StellarService,
     private userService: UserService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
+    const today = moment();
+    this.startDate = today.toISOString();
+    this.endDate = today.add(1, 'd').toISOString();
+
     this.stellarService
       .fees()
       .then(data => {
@@ -107,11 +115,11 @@ export class BuildTxPage implements OnInit {
   get fee() {
     return this.buildTxForm.get('fee');
   }
-  get startTime() {
-    return this.buildTxForm.get('startTime');
+  get minTime() {
+    return this.buildTxForm.get('minTime');
   }
-  get endTime() {
-    return this.buildTxForm.get('endTime');
+  get maxTime() {
+    return this.buildTxForm.get('maxTime');
   }
 
   memoChanged(event) {
@@ -124,6 +132,11 @@ export class BuildTxPage implements OnInit {
     }
     this.memoType.patchValue(value);
   }
+
+  viewOperations() {
+    this.router.navigate(['operations-queue/']);
+  }
+
   async buildTransaction() {
     // load source account details from horizon
     // use loaded account to start transaction builder process
@@ -135,18 +148,20 @@ export class BuildTxPage implements OnInit {
     // Show success or error message
 
     try {
-      // to do verify that endtime is not less than start time
-      // to do show operations summary
-      // to do name startTime, endTime, memo,
-      // to do make source required
       // to do check if source is active when building
+      const timebounds = {
+        minTime: this.minTime.value,
+        maxTime: this.maxTime.value,
+      };
+      if (Number(timebounds.maxTime) < Number(timebounds.minTime)) {
+        throw new Error(
+          'Timebounds are invalid. Valid until date is befor valid after date',
+        );
+      }
 
       const txOptions = {
         fee: this.fee.value,
-        timebounds: {
-          minTime: this.startTime.value,
-          maxTime: this.endTime.value,
-        },
+        timebounds,
         memo: this.memo.value,
         operations: this.pendingOperations,
         source: this.source.value,

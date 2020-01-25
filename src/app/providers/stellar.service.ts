@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
 import {
   Networks,
-  Keypair, Asset, Operation, TransactionBuilder, StrKey,
-  FederationServer, StellarTomlResolver, Memo, Account, Server, xdr
+  Keypair,
+  Asset,
+  Operation,
+  TransactionBuilder,
+  StrKey,
+  FederationServer,
+  StellarTomlResolver,
+  Memo,
+  Account,
+  Server,
+  xdr,
 } from 'stellar-sdk';
 import { Buffer } from 'buffer';
 import { TimeoutInfinite } from 'stellar-sdk';
@@ -10,7 +19,7 @@ import { Transaction } from 'stellar-sdk';
 import { UserService } from './user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StellarService {
   activeNetwork: any;
@@ -31,7 +40,6 @@ export class StellarService {
     MANAGE_DATA: 'manage_data',
     BUMP_SEQUENCE: 'bump_sequence',
   });
-
 
   constructor(private userService: UserService) {
     this.initializeService();
@@ -56,7 +64,12 @@ export class StellarService {
 
   async loadEffects(accountID) {
     try {
-      const accountEffects = await this.server.effects().forAccount(accountID).order('desc').join('transactions').call();
+      const accountEffects = await this.server
+        .effects()
+        .forAccount(accountID)
+        .order('desc')
+        .join('transactions')
+        .call();
       return accountEffects;
     } catch (error) {
       console.log('error: ', error);
@@ -65,7 +78,12 @@ export class StellarService {
 
   async loadOperations(accountID) {
     try {
-      const accountOperations = await this.server.operations().forAccount(accountID).order('desc').join('transactions').call();
+      const accountOperations = await this.server
+        .operations()
+        .forAccount(accountID)
+        .order('desc')
+        .join('transactions')
+        .call();
       return accountOperations;
     } catch (error) {
       console.log('error: ', error);
@@ -83,6 +101,11 @@ export class StellarService {
 
   async buildTransaction({ fee, memo, operations, source, timebounds }) {
     // load source account
+    const isSourceActive = await this.isAccountActive(source);
+    if (!isSourceActive) {
+      throw new Error('Source account is not active.');
+    }
+
     const sourceAccount = await this.loadAccount(source);
     let newTx = new TransactionBuilder(sourceAccount, { fee: Number(fee) });
 
@@ -105,7 +128,10 @@ export class StellarService {
     newTx = newTx.setTimeout(TimeoutInfinite);
 
     const builtTx = newTx.build();
-    const txXdr = builtTx.toEnvelope().toXDR().toString('base64');
+    const txXdr = builtTx
+      .toEnvelope()
+      .toXDR()
+      .toString('base64');
 
     return txXdr;
   }
@@ -156,9 +182,8 @@ export class StellarService {
       const txSigner = await this.operationSigners(txObj.source, 'allow_trust');
       allSigners.push(...txSigner);
 
-      allSigners.forEach( s => signerSet.add(s));
+      allSigners.forEach(s => signerSet.add(s));
       return signerSet;
-
     } catch (error) {
       console.log('err: ', error);
       return new Set();
@@ -274,7 +299,7 @@ export class StellarService {
     // to do export constant of optype names ans use that instead
     // if opsObj.source, check if source is active, raise error if not
     // switch type - 14 conditions
-    // build operation based on type. 
+    // build operation based on type.
     try {
       const { opType, ...opData } = operationData;
       if (opData.source) {
@@ -350,5 +375,4 @@ export class StellarService {
       return Operation.fromXDRObject(opXdr);
     });
   }
-
 }

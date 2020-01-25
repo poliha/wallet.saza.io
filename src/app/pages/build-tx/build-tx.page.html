@@ -1,9 +1,23 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
 <ion-content class="ion-margin">
+  <ion-item-divider color="light" sticky>
+    <ion-label>
+      Transaction Details
+    </ion-label>
+  </ion-item-divider>
+  <ion-item (click)="viewOperations()" detail>
+    Operations
+    <ion-badge slot="end" color="dark">{{pendingOperations.length}}</ion-badge>
+  </ion-item>
+  <ion-item-divider color="light" sticky>
+    <ion-label>
+      Memo
+    </ion-label>
+  </ion-item-divider>
   <form [formGroup]="buildTxForm">
-    <div>
-      <ion-segment (ionChange)="memoChanged($event)" [value]="savedMemo.memo_type">
+    <ion-item>
+      <ion-segment (ionChange)="memoChanged($event)" [value]="savedMemo.memo_type" scrollable>
         <ion-segment-button value="text">
           <ion-label>Text</ion-label>
         </ion-segment-button>
@@ -17,41 +31,60 @@
           <ion-label>Return</ion-label>
         </ion-segment-button>
       </ion-segment>
-    </div>
-
-    <div formGroupName="memo">
-      <app-dynamic-input [inputType]="'text'" [form]="buildTxForm.controls['memo']" [controlName]="'memoType'"
-        [isHidden]="true">
-      </app-dynamic-input>
-
-      <app-dynamic-input [inputType]="'text'" [form]="buildTxForm.controls['memo']" [controlName]="'memoValue'"
-        [placeHolder]="'Memo Value'" [defaultValue]="savedMemo.memo">
-      </app-dynamic-input>
-      <ion-text color="danger" *ngIf="memo.invalid && (memo.dirty || memo.touched)">
-
-        <div *ngIf="memo.errors.isValidMemo">
-          {{ memo.errors.isValidMemo }}
-        </div>
-      </ion-text>
-    </div>
-
+    </ion-item>
+    <ion-item>
+      <div formGroupName="memo">
+        <app-dynamic-input [inputType]="'text'" [form]="buildTxForm.controls['memo']" [controlName]="'memoType'"
+          [isHidden]="true">
+        </app-dynamic-input>
+        <ion-label position="stacked">
+          Memo Value
+        </ion-label>
+        <app-dynamic-input [inputType]="'text'" [form]="buildTxForm.controls['memo']" [controlName]="'memoValue'"
+          [placeHolder]="'Memo Value'" [defaultValue]="savedMemo.memo">
+        </app-dynamic-input>
+        <ion-text color="danger" *ngIf="memo.invalid">
+          <div *ngIf="memo.errors.isValidMemo">
+            {{ memo.errors.isValidMemo }}
+          </div>
+        </ion-text>
+      </div>
+    </ion-item>
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Fee
+      </ion-label>
+    </ion-item-divider>
     <ion-item>
       <!-- to do try out material slider -->
-      <ion-label>Fee</ion-label>
       <ion-range name="fee" formControlName="fee" [min]="networkFees.min_accepted_fee"
         [max]="networkFees.p99_accepted_fee" color="secondary" pin="true" steps="10">
         <ion-label slot="start">{{networkFees.min_accepted_fee}}</ion-label>
         <ion-label slot="end">{{networkFees.p99_accepted_fee}}</ion-label>
       </ion-range>
     </ion-item>
-    <!-- to do: show summary of operations? -->
-
-    <app-saza-date-time [form]="buildTxForm" [controlName]="'startTime'"></app-saza-date-time>
-    <app-saza-date-time [form]="buildTxForm" [controlName]="'endTime'"></app-saza-date-time>
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Time bounds
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label position="stacked">
+        Valid from
+      </ion-label>
+      <app-saza-date-time [form]="buildTxForm" [controlName]="'minTime'" [minDate]="startDate"></app-saza-date-time>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">
+        Valid Until
+      </ion-label>
+      <app-saza-date-time [form]="buildTxForm" [controlName]="'maxTime'" [minDate]="endDate"></app-saza-date-time>
+    </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Source</ion-label>
-      <app-select-source [form]="buildTxForm" [controlName]="'source'" [selected]="activeAccount.public">
+      <app-select-source [form]="buildTxForm" [controlName]="'source'" [selected]="activeAccount.public"
+        [isRequired]="true">
       </app-select-source>
     </ion-item>
 

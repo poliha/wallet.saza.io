@@ -12,14 +12,15 @@ export class SelectSourceComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() controlName: string;
   @Input() selected = '';
+  @Input() isRequired = false;
 
   public userAccounts: SazaAccount[];
   public showCustomInput = false;
   private customInputForm: FormGroup;
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe((data) => {
+    this.userService.userAccounts.subscribe(data => {
       this.userAccounts = data;
       console.log('accountPicker', this.userAccounts);
     });
@@ -27,17 +28,18 @@ export class SelectSourceComponent implements OnInit {
   }
 
   makeForm() {
-    console.log('Making customInputForm...')
-    this.customInputForm = new FormGroup({ });
+    console.log('Making customInputForm...');
+    this.customInputForm = new FormGroup({});
   }
 
   // getters
-  get customPublicKey() { return this.customInputForm.get('customPublicKey'); }
-
+  get customPublicKey() {
+    return this.customInputForm.get('customPublicKey');
+  }
 
   accountChanged(event) {
     const eventValue = event.target.value;
-    console.log("a: ", eventValue);
+    console.log('a: ', eventValue);
     this.customInputForm.reset();
     this.form.controls[this.controlName].reset();
     this.toggleCustomInput(eventValue);
@@ -54,15 +56,16 @@ export class SelectSourceComponent implements OnInit {
 
   customInputChanged(event) {
     const eventValue = event.target.value;
-    console.log("a: ", eventValue);
+    console.log('a: ', eventValue);
     this.setControlNameValue(eventValue);
   }
 
   setControlNameValue(value) {
-    if (!value) { return; }
+    if (!value) {
+      return;
+    }
     this.form.controls[this.controlName].patchValue(value);
   }
 
   // To do load stellar account when source is selected and check if account is active
-
 }

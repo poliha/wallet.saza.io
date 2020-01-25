@@ -36,14 +36,14 @@ export class SazaDateTimeComponent implements OnInit {
     }
     // default to minimum allowed date before any input is received from user
     this.selectedDate = moment(this.minDate);
-    this.timeString = this.selectedDate.format('HH:mm:ss');
+    // this.timeString = this.selectedDate.format('HH:mm:ss');
     this.makeForm();
   }
 
   makeForm() {
     console.log('Making datetime input...');
     this.dateTimeGroup = new FormGroup({
-      date: new FormControl(this.minDate),
+      date: new FormControl(''),
       time: new FormControl(''),
     });
 
@@ -52,7 +52,7 @@ export class SazaDateTimeComponent implements OnInit {
     console.log('Made datetime input...', this.dateTimeGroup);
     console.log('datetime input parent...', this.form);
     // default to the selectedDate before any input from user.
-    this.setDateTime();
+    // this.setDateTime();
   }
 
   // getters
@@ -72,6 +72,7 @@ export class SazaDateTimeComponent implements OnInit {
    */
   dateChanged(event) {
     this.selectedDate = moment(event.target.value);
+    this.timeString = this.selectedDate.format('HH:mm:ss');
     this.setDateTime();
   }
 
