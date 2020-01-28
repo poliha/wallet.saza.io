@@ -10,12 +10,23 @@
     Operations
     <ion-badge slot="end" color="dark">{{pendingOperations.length}}</ion-badge>
   </ion-item>
-  <ion-item-divider color="light" sticky>
-    <ion-label>
-      Memo
-    </ion-label>
-  </ion-item-divider>
+
+
   <form [formGroup]="buildTxForm">
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Source Account
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <app-select-source [form]="buildTxForm" [controlName]="'source'" [selected]="activeAccount" [isRequired]="true">
+      </app-select-source>
+    </ion-item>
+    <ion-item-divider color="light" sticky>
+      <ion-label>
+        Memo
+      </ion-label>
+    </ion-item-divider>
     <ion-item>
       <ion-segment (ionChange)="memoChanged($event)" [value]="savedMemo.memo_type" scrollable>
         <ion-segment-button value="text">
@@ -81,16 +92,10 @@
       <app-saza-date-time [form]="buildTxForm" [controlName]="'maxTime'" [minDate]="endDate"></app-saza-date-time>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Source</ion-label>
-      <app-select-source [form]="buildTxForm" [controlName]="'source'" [selected]="activeAccount.public"
-        [isRequired]="true">
-      </app-select-source>
-    </ion-item>
-
     <div class="ion-margin ion-text-center">
       <ion-button type="button" [disabled]="buildTxForm.invalid">Cancel</ion-button>
-      <ion-button type="button" [disabled]="buildTxForm.invalid" (click)="buildTransaction()">Build Transaction
+      <ion-button type="button" [disabled]="buildTxForm.invalid" (click)="buildTransaction()">
+        Build
       </ion-button>
     </div>
   </form>

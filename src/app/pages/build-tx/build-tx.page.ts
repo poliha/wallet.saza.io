@@ -148,14 +148,13 @@ export class BuildTxPage implements OnInit {
     // Show success or error message
 
     try {
-      // to do check if source is active when building
       const timebounds = {
-        minTime: this.minTime.value,
-        maxTime: this.maxTime.value,
+        minTime: Number(this.minTime.value),
+        maxTime: Number(this.maxTime.value),
       };
-      if (Number(timebounds.maxTime) < Number(timebounds.minTime)) {
+      if (timebounds.maxTime < timebounds.minTime) {
         throw new Error(
-          'Timebounds are invalid. Valid until date is befor valid after date',
+          'Timebounds are invalid. "valid until" date is before "valid from" date',
         );
       }
 
@@ -171,9 +170,8 @@ export class BuildTxPage implements OnInit {
 
       const newTx = await this.stellarService.buildTransaction(txOptions);
       console.log('newTx', newTx);
-      this.txService.setTx(newTx);
-
-      // to do redirect to signing page
+      await this.txService.setTx(newTx);
+      this.router.navigate(['sign-tx/']);
     } catch (error) {
       console.log('error: ', error);
     }
