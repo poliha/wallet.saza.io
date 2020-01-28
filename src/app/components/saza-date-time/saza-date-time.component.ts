@@ -22,7 +22,14 @@ export class SazaDateTimeComponent implements OnInit {
     { title: 'minutes', length: 60 },
     { title: 'seconds', length: 60 },
   ];
-  timeString = '00:00:00';
+  selectedTime = {
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  };
+
+  timeString = 'HH:MM:SS';
+  showSelectDateMessage = true;
 
   constructor(private utility: Utility, private pickerCtrl: PickerController) {}
 
@@ -34,9 +41,6 @@ export class SazaDateTimeComponent implements OnInit {
     if (!this.maxDate) {
       this.maxDate = today.add(10, 'y').toISOString();
     }
-    // default to minimum allowed date before any input is received from user
-    this.selectedDate = moment(this.minDate);
-    // this.timeString = this.selectedDate.format('HH:mm:ss');
     this.makeForm();
   }
 
@@ -51,8 +55,6 @@ export class SazaDateTimeComponent implements OnInit {
     this.form.addControl(this.controlName, new FormControl(''));
     console.log('Made datetime input...', this.dateTimeGroup);
     console.log('datetime input parent...', this.form);
-    // default to the selectedDate before any input from user.
-    // this.setDateTime();
   }
 
   // getters
@@ -71,16 +73,36 @@ export class SazaDateTimeComponent implements OnInit {
    * @param event input event
    */
   dateChanged(event) {
-    this.selectedDate = moment(event.target.value);
-    this.timeString = this.selectedDate.format('HH:mm:ss');
+    const dateValue = event.target.value;
+    if (!dateValue) {
+      this.selectedDate = null;
+    } else {
+      this.selectedDate = moment(dateValue);
+      this.setTime();
+    }
     this.setDateTime();
+  }
+
+  /**
+   * Updates the selectedTime object with data from the time picker dialog.
+   * @param timeObject Oject containing the selected hour, minutes, and seconds.
+   * @param timeObject.hours Object
+   * @param timeObject.hours.value Number
+   */
+  timeChanged({ hours, minutes, seconds }) {
+    this.selectedTime = {
+      hours: hours.value,
+      minutes: minutes.value,
+      seconds: seconds.value,
+    };
+    this.setTime();
   }
 
   /**
    * updates the formControl value with the unix timestamp of the selected date.
    */
   setDateTime() {
-    this.datetime.patchValue(this.selectedDate.unix());
+    this.datetime.patchValue(this.selectedDate ? this.selectedDate.unix() : '');
   }
 
   /**
@@ -89,10 +111,13 @@ export class SazaDateTimeComponent implements OnInit {
    * @param timeObject.hours Object
    * @param timeObject.hours.value Number
    */
-  setTime({ hours, minutes, seconds }) {
-    this.selectedDate.hours(hours.value);
-    this.selectedDate.minutes(minutes.value);
-    this.selectedDate.seconds(seconds.value);
+  setTime() {
+    if (!this.selectedDate) {
+      return;
+    }
+    this.selectedDate.hours(this.selectedTime.hours);
+    this.selectedDate.minutes(this.selectedTime.minutes);
+    this.selectedDate.seconds(this.selectedTime.seconds);
     this.timeString = this.selectedDate.format('HH:mm:ss');
     console.log('SD: ', this.selectedDate.toString());
     console.log('SD unix: ', this.selectedDate.unix());
@@ -135,6 +160,16 @@ export class SazaDateTimeComponent implements OnInit {
    * opens the time picker dialog
    */
   async openPicker() {
+    if (!this.selectedDate) {
+      console.log('Select date');
+      this.showSelectDateMessage = !this.showSelectDateMessage;
+      setTimeout(() => {
+        this.showSelectDateMessage = !this.showSelectDateMessage;
+      }, 2000);
+
+      return;
+    }
+
     const picker = await this.pickerCtrl.create({
       columns: this.getPickerColumns(),
       buttons: [
@@ -147,7 +182,7 @@ export class SazaDateTimeComponent implements OnInit {
           handler: value => {
             console.log(`Got Value: `, value);
             const { hours, minutes, seconds } = value;
-            this.setTime({ hours, minutes, seconds });
+            this.timeChanged({ hours, minutes, seconds });
           },
         },
       ],

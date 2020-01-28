@@ -1,18 +1,24 @@
 <form [formGroup]="dateTimeGroup">
   <ion-grid>
+    <ion-row [ngClass]="{ 'ion-hide': showSelectDateMessage }">
+      <ion-note>
+        <ion-text color="danger">
+          Select date
+        </ion-text>
+      </ion-note>
+    </ion-row>
     <ion-row>
       <ion-col>
         <mat-form-field class="">
           <input matInput [formControl]="date" [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
-            (dateChange)="dateChanged($event)" placeholder="Choose a date">
+            (dateChange)="dateChanged($event)" placeholder="Choose a date" />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-
       </ion-col>
       <ion-col>
         <ion-item>
-          <ion-input (click)="openPicker()" [value]="timeString" readonly placeholder=""></ion-input>
+          <ion-input (click)="openPicker()" readonly [placeholder]="timeString"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
