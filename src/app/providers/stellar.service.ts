@@ -12,10 +12,10 @@ import {
   Account,
   Server,
   xdr,
+  TimeoutInfinite,
+  Transaction,
 } from 'stellar-sdk';
 import { Buffer } from 'buffer';
-import { TimeoutInfinite } from 'stellar-sdk';
-import { Transaction } from 'stellar-sdk';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -107,7 +107,10 @@ export class StellarService {
     }
 
     const sourceAccount = await this.loadAccount(source);
-    let newTx = new TransactionBuilder(sourceAccount, { fee: Number(fee) });
+    let newTx = new TransactionBuilder(sourceAccount, {
+      fee: Number(fee),
+      timebounds,
+    });
 
     // add operations
     operations.forEach(op => {
@@ -124,8 +127,11 @@ export class StellarService {
 
     newTx = newTx.setNetworkPassphrase(this.activeNetwork.passphrase);
 
-    // add timebound
-    newTx = newTx.setTimeout(TimeoutInfinite);
+    // add default timebound if non are provided
+    const { minTime, maxTime } = timebounds;
+    if (!minTime && !maxTime) {
+      newTx = newTx.setTimeout(TimeoutInfinite);
+    }
 
     const builtTx = newTx.build();
     const txXdr = builtTx
@@ -241,9 +247,7 @@ export class StellarService {
     }
 
     const [...localSigners] = signers;
-    if (localSigners.length > 1) {
-      localSigners.sort((a, b) => b.weight - a.weight);
-    }
+    localSigners.sort((a, b) => b.weight - a.weight);
 
     let totalWeight = 0;
     const eligibleKeys = [];
@@ -260,7 +264,7 @@ export class StellarService {
   }
 
   signTx(tx: string, ...privateKeys: string[]) {
-    const txObj = new Transaction(tx, Networks.TESTNET);
+    const txObj = new Transaction(tx, this.activeNetwork.passphrase);
     console.log('PKs: ', privateKeys);
     privateKeys.forEach(key => {
       console.log('key: ', key);
@@ -374,5 +378,12 @@ export class StellarService {
       const opXdr = xdr.Operation.fromXDR(opBuffer);
       return Operation.fromXDRObject(opXdr);
     });
+  }
+
+  loadTransactionObject(tx: string) {
+    if (!tx) {
+      return null;
+    }
+    return new Transaction(tx, this.activeNetwork.passphrase);
   }
 }

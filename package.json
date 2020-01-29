@@ -1,8 +1,8 @@
 {
   "name": "sazaWallet",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "@PeterOliha",
+  "homepage": "https://saza.io/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -67,7 +67,7 @@
     "tslint": "~5.12.0",
     "typescript": "^3.5.3"
   },
-  "description": "An Ionic project",
+  "description": "A Stellar Lumens wallet",
   "cordova": {
     "plugins": {
       "cordova-sqlite-storage": {}
