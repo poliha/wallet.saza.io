@@ -1,23 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, CanDeactivate, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  Router,
+  CanActivate,
+  CanDeactivate,
+  RouterStateSnapshot,
+  ActivatedRouteSnapshot,
+} from '@angular/router';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 
-
 export interface CanDeactivateComponent {
-  canDeactivate: (nextUrl: string) => Observable<boolean> | Promise<boolean> | boolean;
+  canDeactivate: (
+    nextUrl: string,
+  ) => Observable<boolean> | Promise<boolean> | boolean;
 }
 
 @Injectable()
-export class AuthGuardService implements CanActivate, CanDeactivate<CanDeactivateComponent> {
+export class AuthGuardService
+  implements CanActivate, CanDeactivate<CanDeactivateComponent> {
   private isLoggedIn: boolean;
-  constructor(public userService: UserService, public router: Router) { }
+  constructor(public userService: UserService, public router: Router) {}
 
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    const authLinks = [
-      'saza-setup',
-      'login'
-    ];
+  async canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Promise<boolean> {
+    const authLinks = ['saza-setup', 'login', 'forgot-password'];
 
     const isAuthLink = this.urlHasString(state.url, authLinks);
     this.isLoggedIn = await this.userService.getLoginStatus();
@@ -39,9 +47,15 @@ export class AuthGuardService implements CanActivate, CanDeactivate<CanDeactivat
     return true;
   }
 
-  canDeactivate(component: CanDeactivateComponent, currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot, nextState: RouterStateSnapshot) {
-    return component.canDeactivate ? component.canDeactivate(nextState.url) : true;
+  canDeactivate(
+    component: CanDeactivateComponent,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState: RouterStateSnapshot,
+  ) {
+    return component.canDeactivate
+      ? component.canDeactivate(nextState.url)
+      : true;
   }
 
   // check if URL contains string
@@ -57,5 +71,4 @@ export class AuthGuardService implements CanActivate, CanDeactivate<CanDeactivat
     console.log('found: ', found);
     return found;
   }
-
 }

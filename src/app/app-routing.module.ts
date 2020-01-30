@@ -24,6 +24,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'forgot-password',
+    loadChildren:
+      './pages/forgot-password/forgot-password.module#ForgotPasswordPageModule',
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'create-account',
     loadChildren:
       './pages/create-account/create-account.module#CreateAccountPageModule',

@@ -57,7 +57,10 @@ export class SignTxPage implements OnInit {
 
   makeForm() {
     this.signTxForm = this.formBuilder.group({
-      password: [''],
+      password: [
+        '',
+        Validators.compose([Validators.minLength(8), Validators.required]),
+      ],
       privateKeys: this.formBuilder.array([]),
     });
     console.log('form: ', this.signTxForm);
