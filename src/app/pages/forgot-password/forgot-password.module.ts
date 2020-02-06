@@ -6,7 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ForgotPasswordPage } from './forgot-password.page';
-import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
+import { MaterialModule } from 'src/app/material.module';
+import { RecoveryPasswordModalComponentModule } from 'src/app/components/recovery-password-modal/recovery-password-modal.module';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    DynamicInputComponentModule,
+    MaterialModule,
+    RecoveryPasswordModalComponentModule,
   ],
   declarations: [ForgotPasswordPage],
 })

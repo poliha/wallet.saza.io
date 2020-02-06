@@ -13,6 +13,7 @@ import {
 } from 'stellar-sdk';
 import * as bcrypt from 'bcryptjs';
 import * as niceware from 'niceware';
+import { SazaAccount } from '../interfaces/saza';
 // import { Validators, FormControl } from '@angular/forms';
 
 @Injectable()
@@ -24,8 +25,8 @@ export class Utility {
    */
   generatePassword(): string {
     const temp = niceware.generatePassphrase(10);
-    const tempCaps = temp.map(p => p.charAt().toUpperCase() + p.slice(1));
-    return tempCaps.join(' ');
+    // const tempCaps = temp.map(p => p.charAt().toUpperCase() + p.slice(1));
+    return String(temp.join(' ')).toLowerCase();
   }
 
   /**
@@ -151,5 +152,44 @@ export class Utility {
 
   range(size, start = 0) {
     return [...Array(size).keys()].map(i => i + start);
+  }
+
+  changePassword({
+    currentPassword,
+    newPassword,
+    accounts,
+  }: {
+    currentPassword: String;
+    newPassword: String;
+    accounts: SazaAccount[];
+  }) {
+    try {
+      const passwordHash = this.getHash(newPassword);
+      const recoveryPassword = this.generatePassword();
+
+      // use the recovery password to encrypt the new password.
+      const encrpytedPassword = this.encrypt(newPassword, recoveryPassword);
+
+      // encrypt user accounts with new password.
+      const newAccounts = accounts.map(account => {
+        const privatekey = this.decrypt(account.private, currentPassword);
+        const encryptedKey = this.encrypt(privatekey, newPassword);
+        if (!encryptedKey) {
+          throw new Error('Encryption failed with new password.');
+        }
+        account.private = encryptedKey;
+        return account;
+      });
+
+      return {
+        passwordHash,
+        recoveryPassword,
+        encrpytedPassword,
+        accounts: newAccounts,
+      };
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 }

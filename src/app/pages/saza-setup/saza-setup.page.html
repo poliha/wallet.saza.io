@@ -8,10 +8,10 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-          <h3>
-            <ion-icon name="lock"></ion-icon>
-            Enter a password
-          </h3>
+        <h3>
+          <ion-icon name="lock"></ion-icon>
+          Enter a password
+        </h3>
         <!-- <ion-item>
           <app-generate-password (password)="setSuggestedPassword($event)"></app-generate-password>
           <app-copy-button [copyInput]="suggestedPassword" (copyOutput)="itemCopy($event)"></app-copy-button>
@@ -38,7 +38,7 @@
                 Value is required.
               </p>
               <p *ngIf="password.errors.minlength">
-                Minimum length is 8 characters
+                Minimum length is {{password.errors.minlength.requiredLength}} characters
               </p>
               <p *ngIf="password.errors.isValidPassword">
                 Only alphanumeric and any of these special characters are allowed "$^+=!*()@%&"
@@ -48,14 +48,15 @@
 
           <ion-item>
             <ion-label position="stacked">Confirm Password</ion-label>
-            <ion-input type="password" name="confirmPassword" formControlName="confirmPassword" placeholder="Confirm password"></ion-input>
+            <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
+              placeholder="Confirm password"></ion-input>
             <ion-text color="danger"
               *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
               <p *ngIf="confirmPassword.errors.required">
                 Value is required.
               </p>
               <p *ngIf="confirmPassword.errors.minlength">
-                Minimum length is 8 characters
+                Minimum length is {{confirmPassword.errors.minlength.requiredLength}} characters
               </p>
               <p *ngIf="confirmPassword.errors.equalTo">
                 Password mismatch
@@ -66,10 +67,10 @@
             </ion-text>
           </ion-item>
 
-            <ion-button class="ion-padding" type="submit" expand="block" [disabled]="passwordForm.invalid">
-              <ion-icon slot="end" name="save"></ion-icon>
-              Save
-            </ion-button>
+          <ion-button class="ion-padding" type="submit" expand="block" [disabled]="passwordForm.invalid">
+            <ion-icon slot="end" name="save"></ion-icon>
+            Save
+          </ion-button>
         </form>
       </ion-col>
     </ion-row>

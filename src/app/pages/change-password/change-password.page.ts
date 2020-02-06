@@ -19,9 +19,10 @@ export class ChangePasswordPage implements OnInit {
   pageTitle = 'Change Password';
   helpUrl = '';
   changePasswordForm: FormGroup;
-  oldPasswaordHash: string;
+  oldPasswordHash: string;
   oldUserAccounts: SazaAccount[];
   oldRecoveryPassword: Object;
+  passwordFromRecovery = '';
 
   constructor(
     private userService: UserService,
@@ -37,11 +38,13 @@ export class ChangePasswordPage implements OnInit {
   }
 
   async loadData() {
-    this.oldPasswaordHash = await this.userService.getPassword();
+    this.oldPasswordHash = await this.userService.getPassword();
     this.oldUserAccounts = await this.userService.getAccounts();
     this.oldRecoveryPassword = await this.userService.getPasswordRecovery();
 
-    console.log('oldPW: ', this.oldPasswaordHash);
+    this.passwordFromRecovery = 'abc';
+
+    console.log('oldPW: ', this.oldPasswordHash);
     console.log('oldUA: ', this.oldUserAccounts);
     console.log('oldPR: ', this.oldRecoveryPassword);
   }
@@ -82,7 +85,7 @@ export class ChangePasswordPage implements OnInit {
     let errorMessage = '';
     try {
       const currentPassword = String(this.currentPassword.value).trim();
-      if (!this.utility.validateHash(currentPassword, this.oldPasswaordHash)) {
+      if (!this.utility.validateHash(currentPassword, this.oldPasswordHash)) {
         errorMessage = 'Inavlid Password';
         throw errorMessage;
       }
@@ -124,7 +127,7 @@ export class ChangePasswordPage implements OnInit {
       console.log('Error: ', error);
       this.notify.show(errorMessage);
       // revert to previous values
-      await this.userService.setPassword(this.oldPasswaordHash);
+      await this.userService.setPassword(this.oldPasswordHash);
       await this.userService.setPasswordRecovery(this.oldRecoveryPassword);
       for (const acc of this.oldUserAccounts) {
         await this.userService.setAccount(acc);

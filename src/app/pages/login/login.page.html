@@ -14,7 +14,7 @@
           A value is required.
         </div>
         <div *ngIf="password.errors.minlength">
-          Minimum length is 8 characters
+          Minimum length is {{password.errors.minlength.requiredLength}} characters
         </div>
       </ion-text>
     </ion-item>

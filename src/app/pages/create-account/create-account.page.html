@@ -1,4 +1,4 @@
-<app-header [title]="pageTitle" [helpUrl]="helpUrl" ></app-header>
+<app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
 <ion-content class="ion-padding">
   <ion-button expand="block" (click)="generateKeypair()" shape="round">Generate Keys</ion-button>
@@ -22,7 +22,8 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Tag</ion-label>
-      <app-dynamic-input [form]="createAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1"></app-dynamic-input>
+      <app-dynamic-input [form]="createAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1">
+      </app-dynamic-input>
     </ion-item>
     <ion-item>
       <ion-label>I have copied keys to a safe place</ion-label>
@@ -37,12 +38,11 @@
           value is required.
         </p>
         <p *ngIf="password.errors.minlength">
-          Minimum length is 8 characters
+          Minimum length is {{password.errors.minlength.requiredLength}} characters.
         </p>
       </ion-text>
     </ion-item>
-    <ion-button class="ion-margin" expand="block" shape="round" type="submit"
-      [disabled]="createAccountForm.invalid">
+    <ion-button class="ion-margin" expand="block" shape="round" type="submit" [disabled]="createAccountForm.invalid">
       <ion-icon slot="end" name="save"></ion-icon>
       Save
     </ion-button>
