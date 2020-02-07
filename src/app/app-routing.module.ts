@@ -156,6 +156,12 @@ const routes: Routes = [
       './pages/change-password/change-password.module#ChangePasswordPageModule',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'operations/set-options',
+    loadChildren:
+      './pages/operations/set-options/set-options.module#SetOptionsPageModule',
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

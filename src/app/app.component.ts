@@ -8,14 +8,14 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
 })
 export class AppComponent {
   public appPages = [
     {
       title: 'My Accounts',
       url: '/dashboard',
-      icon: 'dashboard'
+      icon: 'dashboard',
     },
     {
       title: 'Common Tasks',
@@ -25,24 +25,24 @@ export class AppComponent {
         {
           title: 'Create Account',
           url: '/create-account',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Link Account',
           url: '/link-account',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Payment',
           url: '/operations/payment',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Account Merge',
           url: '/operations/account-merge',
-          icon: 'list'
+          icon: 'list',
         },
-      ]
+      ],
     },
     {
       title: 'All Operations',
@@ -52,53 +52,58 @@ export class AppComponent {
         {
           title: 'Create Account',
           url: '/operations/create-account',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Payment',
           url: '/operations/payment',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Sell Offer',
           url: '/operations/sell-offer',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Buy Offer',
           url: '/operations/buy-offer',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Passive Offer',
           url: '/operations/passive-offer',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Bump Sequence',
           url: '/operations/bump-sequence',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Manage Data',
           url: '/operations/manage-data',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Account Merge',
           url: '/operations/account-merge',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Allow Trust',
           url: '/operations/allow-trust',
-          icon: 'list'
+          icon: 'list',
         },
         {
           title: 'Change Trust',
           url: '/operations/change-trust',
-          icon: 'list'
-        }
+          icon: 'list',
+        },
+        {
+          title: 'Set Options',
+          url: '/operations/set-options',
+          icon: 'list',
+        },
       ],
     },
     {
@@ -109,9 +114,9 @@ export class AppComponent {
         {
           title: 'Settings',
           url: '/settings',
-          icon: 'cog'
+          icon: 'cog',
         },
-      ]
+      ],
     },
   ];
 
@@ -122,7 +127,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private userService: UserService,
-    private router: Router
+    private router: Router,
   ) {
     this.initializeApp();
   }

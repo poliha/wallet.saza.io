@@ -1,0 +1,49 @@
+<app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="setOptionsForm">
+    <ion-item>
+      <ion-label position="stacked">Master Weight</ion-label>
+      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'masterWeight'"
+        [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Low Threshold</ion-label>
+      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'lowThreshold'"
+        [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Medium Threshold</ion-label>
+      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'medThreshold'"
+        [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false"></app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">High Threshold</ion-label>
+      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'highThreshold'"
+        [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false">
+      </app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Home Domain</ion-label>
+      <app-dynamic-input [inputType]="'text'" [form]="setOptionsForm" [controlName]="'homeDomain'"
+        [placeHolder]="'example.com'" [isRequired]="false">
+      </app-dynamic-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Source</ion-label>
+      <app-select-source [form]="setOptionsForm" [controlName]="'source'"></app-select-source>
+    </ion-item>
+
+    <div class="ion-margin ion-text-center">
+      <ion-button type="button" [disabled]="setOptionsForm.invalid" (click)="addOperation()">Save
+      </ion-button>
+      <ion-button type="button" [disabled]="setOptionsForm.invalid" (click)="buildTransaction()">Send
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
