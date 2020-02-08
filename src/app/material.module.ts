@@ -12,6 +12,7 @@ import {
   MatSortModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatCheckboxModule,
 } from '@angular/material';
 
 @NgModule({
@@ -28,6 +29,7 @@ import {
     MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
   ],
 })
 export class MaterialModule {}

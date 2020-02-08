@@ -2,6 +2,23 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="setOptionsForm">
+    <div>
+      <ion-item-divider color="light" sticky>
+        <ion-label>
+          Set Flags
+        </ion-label>
+      </ion-item-divider>
+      <app-account-flag [form]="setOptionsForm" [controlName]="'setFlags'"></app-account-flag>
+    </div>
+
+    <div>
+      <ion-item-divider color="light" sticky>
+        <ion-label>
+          Clear Flags </ion-label>
+      </ion-item-divider>
+      <app-account-flag [form]="setOptionsForm" [controlName]="'clearFlags'" [showImmutable]="false"></app-account-flag>
+    </div>
+
     <ion-item>
       <ion-label position="stacked">Master Weight</ion-label>
       <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'masterWeight'"

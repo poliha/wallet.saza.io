@@ -10,6 +10,7 @@ import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dy
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
 import { TxService } from 'src/app/providers/providers';
+import { AccountFlagComponentModule } from 'src/app/components/account-flag/account-flag.module';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     DynamicInputComponentModule,
     SelectSourceComponentModule,
     HeaderComponentModule,
+    AccountFlagComponentModule,
   ],
   declarations: [SetOptionsPage],
   providers: [TxService],

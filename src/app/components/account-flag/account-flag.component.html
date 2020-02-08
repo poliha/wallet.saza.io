@@ -1,0 +1,11 @@
+<div [formGroup]="form">
+  <div [formGroupName]="controlName">
+    <mat-checkbox class="ion-padding" formControlName="authRequired">Authorization Required</mat-checkbox>
+    <mat-checkbox class="ion-padding" formControlName="authRevocable">Authorization Revocable</mat-checkbox>
+
+    <mat-checkbox *ngIf="showImmutable" class="ion-padding" formControlName="authImmutable">Authorization Immutable
+    </mat-checkbox>
+
+  </div>
+
+</div>
