@@ -184,4 +184,32 @@ export class CustomValidators extends Validators {
       ? { isValidMemo: memoError }
       : null;
   }
+
+  static isValidSignerType(control: FormGroup): ValidationErrors | null {
+    const signerType = control.get('signerType');
+    const signerKey = control.get('signerKey');
+    const signerWeight = control.get('signerWeight');
+    let signerError = '';
+    if (signerType.value && signerKey.value) {
+      switch (signerType.value) {
+        case 'ed25519PublicKey':
+          if (!StrKey.isValidEd25519PublicKey(signerKey.value)) {
+            signerError = `A valid Ed25519 Public Key is required.`;
+          }
+          break;
+        case 'sha256Hash':
+        case 'preAuthTx':
+          if (!signerKey.value.match(/^[0-9a-f]{64}$/gi)) {
+            signerError = `${signerType.value} accepts a 32-byte hash in hexadecimal format (64 characters).`;
+          }
+          break;
+      }
+    }
+    if (!(0 <= signerWeight.value && signerWeight.value <= 255)) {
+      signerError = `Weight accepts only positive integers between 0 and 255.`;
+    }
+    return signerType && signerKey && signerWeight && signerError
+      ? { isValidSignerType: signerError }
+      : null;
+  }
 }

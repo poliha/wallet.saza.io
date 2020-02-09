@@ -11,6 +11,7 @@ import { SelectSourceComponentModule } from 'src/app/components/select-source/se
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
 import { TxService } from 'src/app/providers/providers';
 import { AccountFlagComponentModule } from 'src/app/components/account-flag/account-flag.module';
+import { SignerTypeComponentModule } from 'src/app/components/signer-type/signer-type.module';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
     SelectSourceComponentModule,
     HeaderComponentModule,
     AccountFlagComponentModule,
+    SignerTypeComponentModule,
   ],
   declarations: [SetOptionsPage],
   providers: [TxService],

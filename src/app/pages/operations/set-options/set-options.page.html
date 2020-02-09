@@ -45,6 +45,11 @@
     </ion-item>
 
     <ion-item>
+      <ion-label position="stacked">Signer</ion-label>
+      <app-signer-type [form]="setOptionsForm" [controlName]="'signer'"></app-signer-type>
+    </ion-item>
+
+    <ion-item>
       <ion-label position="stacked">Home Domain</ion-label>
       <app-dynamic-input [inputType]="'text'" [form]="setOptionsForm" [controlName]="'homeDomain'"
         [placeHolder]="'example.com'" [isRequired]="false">

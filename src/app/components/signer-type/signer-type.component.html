@@ -1,0 +1,30 @@
+<div [formGroup]="form">
+  <div [formGroupName]="controlName">
+    <ion-select placeholder="Select Type" (ionChange)="selectSigner($event.target.value)"
+      [formControlName]="'signerType'">
+      <ion-select-option [value]="null">Select Type</ion-select-option>
+      <ion-select-option *ngFor="let st of signerTypes" [value]="st.value">
+        {{st.name}}
+      </ion-select-option>
+    </ion-select>
+    <div *ngIf="showCustomFields">
+      <ion-item>
+        <app-dynamic-input [inputType]="'text'" [form]="signerGroup" [controlName]="'signerKey'" [placeHolder]="'Key'"
+          [isRequired]="false"></app-dynamic-input>
+      </ion-item>
+      <ion-item>
+        <app-dynamic-input [inputType]="'number'" [form]="signerGroup" [controlName]="'signerWeight'"
+          [placeHolder]="'Weight 0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false">
+        </app-dynamic-input>
+      </ion-item>
+    </div>
+    <ion-text color="danger"
+      *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
+
+      <div *ngIf="form.controls[controlName].errors.isValidSignerType">
+        {{ form.controls[controlName].errors.isValidSignerType }}
+      </div>
+    </ion-text>
+  </div>
+
+</div>
