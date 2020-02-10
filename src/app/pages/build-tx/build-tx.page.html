@@ -68,10 +68,10 @@
     </ion-item-divider>
     <ion-item>
       <!-- to do try out material slider -->
-      <ion-range name="fee" formControlName="fee" [min]="networkFees.min_accepted_fee"
-        [max]="networkFees.p99_accepted_fee" color="secondary" pin="true" steps="10">
-        <ion-label slot="start">{{networkFees.min_accepted_fee}}</ion-label>
-        <ion-label slot="end">{{networkFees.p99_accepted_fee}}</ion-label>
+      <ion-range name="fee" formControlName="fee" [min]="networkFees.minFee" [max]="networkFees.maxFee"
+        color="secondary" pin="true" steps="10">
+        <ion-label slot="start">{{networkFees.minFee}}</ion-label>
+        <ion-label slot="end">{{networkFees.maxFee}}</ion-label>
       </ion-range>
     </ion-item>
     <ion-item-divider color="light" sticky>

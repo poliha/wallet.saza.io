@@ -21,8 +21,8 @@ import * as moment from 'moment';
 export class BuildTxPage implements OnInit {
   private buildTxForm: FormGroup;
   networkFees = {
-    min_accepted_fee: 100,
-    p99_accepted_fee: 200,
+    minFee: 100,
+    maxFee: 200,
   };
   pendingOperations = [];
   activeAccount: string;
@@ -52,10 +52,10 @@ export class BuildTxPage implements OnInit {
       .fees()
       .then(data => {
         console.log('Fees: ', data);
-        const { min_accepted_fee, p99_accepted_fee } = data;
+        const { fee_charged, max_fee } = data;
         this.networkFees = {
-          min_accepted_fee,
-          p99_accepted_fee,
+          minFee: fee_charged.min,
+          maxFee: max_fee.p99,
         };
         console.log('NFees: ', this.networkFees);
       })
@@ -88,7 +88,7 @@ export class BuildTxPage implements OnInit {
 
   makeForm() {
     this.buildTxForm = this.formBuilder.group({
-      fee: [this.networkFees.min_accepted_fee, Validators.required],
+      fee: [this.networkFees.minFee, Validators.required],
       memo: this.formBuilder.group(
         {
           memoValue: [],

@@ -36,7 +36,44 @@ export class SetOptionsPage implements OnInit {
   get source() {
     return this.setOptionsForm.get('source');
   }
-  get destination() {
-    return this.setOptionsForm.get('destination');
+
+  private async buildOperation() {
+    // build set options operation
+    // convert xdr.Operation to base64 string
+    // save xdr string to be used later in building the transaction
+    // reset form
+    // Show success or error message
+    try {
+      const opData = {
+        ...this.setOptionsForm.value,
+        opType: this.stellarService.operationType.SET_OPTIONS,
+      };
+
+      console.log('setoptions Ops: ', opData);
+      const xdrString = await this.stellarService.buildOperation(opData);
+      this.txService.addOperation({ type: opData.opType, tx: xdrString });
+      this.notification.show('Operation Added');
+      console.log('account Merge Ops: ', xdrString);
+      this.setOptionsForm.reset({ source: this.source.value });
+    } catch (error) {
+      console.log('error: ', error);
+      throw error;
+    }
+  }
+
+  addOperation() {
+    console.log('adding operation');
+    this.buildOperation();
+    // to do navigate to next page
+  }
+
+  buildTransaction() {
+    try {
+      this.buildOperation();
+      this.router.navigate(['build-tx/']);
+    } catch (error) {
+      console.log('error: ', error);
+      throw error;
+    }
   }
 }

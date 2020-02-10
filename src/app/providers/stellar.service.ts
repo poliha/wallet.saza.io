@@ -14,6 +14,9 @@ import {
   xdr,
   TimeoutInfinite,
   Transaction,
+  AuthRequiredFlag,
+  AuthRevocableFlag,
+  AuthImmutableFlag,
 } from 'stellar-sdk';
 import { Buffer } from 'buffer';
 import { UserService } from './user.service';
@@ -337,7 +340,7 @@ export class StellarService {
           newOp = Operation.createPassiveSellOffer(opData);
           break;
         case this.operationType.SET_OPTIONS:
-          newOp = Operation.setOptions(opData);
+          newOp = Operation.setOptions(this.buildSetOptionsParams(opData));
           break;
         case this.operationType.CHANGE_TRUST:
           newOp = Operation.changeTrust(opData);
@@ -385,5 +388,60 @@ export class StellarService {
       return null;
     }
     return new Transaction(tx, this.activeNetwork.passphrase);
+  }
+
+  buildSetOptionsParams(params: any) {
+    const operationParams: any = {};
+
+    // remove null values
+    Object.keys(params).forEach(param => {
+      if (params[param]) {
+        operationParams[param] = params[param];
+      }
+    });
+
+    console.log('opsParams: ', operationParams);
+
+    const AUTH_FLAGS = {
+      authRequired: AuthRequiredFlag,
+      authRevocable: AuthRevocableFlag,
+      authImmutable: AuthImmutableFlag,
+    };
+
+    // check for these objects and overwrite with correct format
+    const { setFlags, clearFlags, signer } = operationParams;
+
+    if (setFlags) {
+      let setFlagValue = 0;
+
+      for (const flag in setFlags) {
+        if (setFlags[flag]) {
+          setFlagValue += AUTH_FLAGS[flag];
+        }
+      }
+      operationParams.setFlags = setFlagValue;
+    }
+
+    if (clearFlags) {
+      let clearFlagValue = 0;
+      for (const flag in clearFlags) {
+        if (clearFlags[flag]) {
+          clearFlagValue += AUTH_FLAGS[flag];
+        }
+      }
+      operationParams.clearFlags = clearFlagValue;
+    }
+
+    if (!(signer.signerType && signer.signerWeight && signer.signerKey)) {
+      delete operationParams.signer;
+    } else {
+      operationParams.signer = {
+        [signer.signerType]: signer.signerKey,
+        weight: signer.signerWeight,
+      };
+    }
+
+    console.log('opsParams 1: ', operationParams);
+    return operationParams;
   }
 }
