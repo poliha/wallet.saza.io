@@ -1,0 +1,78 @@
+<app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
+
+
+<ion-content>
+  <mat-vertical-stepper #stepper>
+    <mat-step [stepControl]="findPathForm">
+      <form [formGroup]="findPathForm">
+        <ng-template matStepLabel>Find</ng-template>
+        <div>
+          <label>Source</label>
+          <app-select-source [form]="findPathForm" [controlName]="'source'"></app-select-source>
+
+        </div>
+        <div>
+          <label>Destination Asset</label>
+
+          <app-asset-picker [form]="findPathForm" [controlName]="'destinationAsset'" [displayType]="'manual'">
+          </app-asset-picker>
+        </div>
+        <div>
+          <label>Destination Amount</label>
+
+          <app-dynamic-input [form]="findPathForm" [controlName]="'destinationAmount'" [placeHolder]="'Amount'">
+          </app-dynamic-input>
+        </div>
+
+        <div>
+          <button [disabled]="findPathForm.invalid" (click)="submitFindPathForm()" mat-button>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="choosePathForm">
+      <form [formGroup]="choosePathForm">
+        <ng-template matStepLabel>Choose</ng-template>
+        <p *ngIf="destinationAmount">
+          For {{destinationAmount}}
+          {{ destinationAsset.asset_type === 'native' ? 'XLM' : destinationAsset.asset_code}}, you
+          will send:
+        </p>
+        <ion-list>
+          <ion-radio-group formControlName="selectedPath">
+            <ng-template ngFor let-path [ngForOf]="pathsFound" let-i="index">
+              <ion-item>
+                <ion-label>{{path.source_amount}}
+                  {{path.source_asset_type === 'native' ? 'XLM' : path.source_asset_code}}
+                </ion-label>
+                <ion-radio [value]="i"></ion-radio>
+              </ion-item>
+            </ng-template>
+            <ion-item>
+              <ion-label>45 USD
+              </ion-label>
+              <ion-radio value="1"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>6 BTC
+              </ion-label>
+              <ion-radio value="5"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button [disabled]="choosePathForm.invalid" (click)="submitFindPathForm()" mat-button>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Send</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</ion-content>

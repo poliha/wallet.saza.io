@@ -444,4 +444,24 @@ export class StellarService {
     console.log('opsParams 1: ', operationParams);
     return operationParams;
   }
+
+  async findPathReceive(options: {
+    destinationAsset: any;
+    destinationAmount: string;
+    source: string;
+  }) {
+    try {
+      const { records } = await this.server
+        .strictReceivePaths(
+          options.source,
+          options.destinationAsset,
+          options.destinationAmount,
+        )
+        .call();
+      console.log('response: ', records);
+      return records;
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
 }

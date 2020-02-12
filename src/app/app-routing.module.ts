@@ -162,6 +162,12 @@ const routes: Routes = [
       './pages/operations/set-options/set-options.module#SetOptionsPageModule',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'operations/path-receive',
+    loadChildren:
+      './pages/operations/path-receive/path-receive.module#PathReceivePageModule',
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
