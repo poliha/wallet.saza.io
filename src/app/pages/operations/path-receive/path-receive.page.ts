@@ -18,8 +18,18 @@ export class PathReceivePage implements OnInit {
   helpUrl = '';
   public findPathForm: FormGroup;
   public choosePathForm: FormGroup;
-  public sendPathForm: FormGroup;
+  public sendPaymentForm: FormGroup;
   public pathsFound = [];
+  public sendParams = {
+    sendAsset: undefined,
+    sendMax: '',
+    destination: '',
+    destAsset: undefined,
+    destAmount: '',
+    path: [],
+    source: '',
+    opType: '',
+  };
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
 
   constructor(
@@ -38,13 +48,11 @@ export class PathReceivePage implements OnInit {
     this.choosePathForm = new FormGroup({
       selectedPath: new FormControl('', Validators.required),
     });
-    this.sendPathForm = new FormGroup({});
+    this.sendPaymentForm = new FormGroup({});
 
     console.log('choosepathForm: ', this.choosePathForm);
-  }
 
-  goToNext() {
-    this.stepper.next();
+    console.log('sendForm: ', this.sendPaymentForm);
   }
 
   // Getters for template
@@ -53,6 +61,10 @@ export class PathReceivePage implements OnInit {
   }
   get destinationAmount() {
     return this.findPathForm.get('destinationAmount').value;
+  }
+
+  get selectedPath() {
+    return this.choosePathForm.get('selectedPath');
   }
 
   async submitFindPathForm() {
@@ -77,7 +89,74 @@ export class PathReceivePage implements OnInit {
       console.log('paths found: ', paths);
       this.pathsFound = paths;
 
+      this.sendParams.source = source;
+
       this.stepper.next();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  submitChoosePathForm() {
+    if (
+      this.selectedPath.value === null ||
+      this.selectedPath.value === undefined
+    ) {
+      return;
+    }
+    const pathIndex = this.selectedPath.value;
+    const path = this.pathsFound[pathIndex];
+
+    this.sendParams.sendMax = path.source_amount;
+    this.sendParams.destAmount = path.destination_amount;
+    this.sendParams.sendAsset = this.utility.generateAsset({
+      asset_type: path.source_asset_type,
+      asset_code: path.source_asset_code,
+      asset_issuer: path.source_asset_issuer,
+    });
+    this.sendParams.destAsset = this.utility.generateAsset({
+      asset_type: path.destination_asset_type,
+      asset_code: path.destination_asset_code,
+      asset_issuer: path.destination_asset_issuer,
+    });
+    this.sendParams.path = path.path.map(asset =>
+      this.utility.generateAsset(asset),
+    );
+
+    this.stepper.next();
+  }
+
+  async submitSendPaymentForm() {
+    try {
+      const { destination } = this.sendPaymentForm.value;
+      this.sendParams.destination = destination;
+      this.sendParams.opType = this.stellarService.operationType.PATH_PAYMENT_STRICT_RECEIVE;
+      console.log('sendParams: ', this.sendParams);
+
+      const xdrString = await this.stellarService.buildOperation(
+        this.sendParams,
+      );
+      this.txService.addOperation({
+        type: this.sendParams.opType,
+        tx: xdrString,
+      });
+      this.notification.show('Operation Added');
+      this.stepper.reset();
+      console.log('paths receive: ', xdrString);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
+
+  addOperation() {
+    console.log('adding operation');
+    this.submitSendPaymentForm();
+    // to do navigate to next page
+  }
+
+  signOperation() {
+    console.log('signing operation');
+    this.submitSendPaymentForm();
+    // to do navigate to next page
   }
 }

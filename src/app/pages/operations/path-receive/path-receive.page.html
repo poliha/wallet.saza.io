@@ -2,7 +2,7 @@
 
 
 <ion-content>
-  <mat-vertical-stepper #stepper>
+  <mat-vertical-stepper #stepper linear>
     <mat-step [stepControl]="findPathForm">
       <form [formGroup]="findPathForm">
         <ng-template matStepLabel>Find</ng-template>
@@ -32,13 +32,13 @@
     <mat-step [stepControl]="choosePathForm">
       <form [formGroup]="choosePathForm">
         <ng-template matStepLabel>Choose</ng-template>
-        <p *ngIf="destinationAmount">
+        <p *ngIf="destinationAmount && pathsFound.length">
           For {{destinationAmount}}
           {{ destinationAsset.asset_type === 'native' ? 'XLM' : destinationAsset.asset_code}}, you
           will send:
         </p>
         <ion-list>
-          <ion-radio-group formControlName="selectedPath">
+          <ion-radio-group formControlName="selectedPath" name="selectedPath">
             <ng-template ngFor let-path [ngForOf]="pathsFound" let-i="index">
               <ion-item>
                 <ion-label>{{path.source_amount}}
@@ -47,32 +47,36 @@
                 <ion-radio [value]="i"></ion-radio>
               </ion-item>
             </ng-template>
-            <ion-item>
-              <ion-label>45 USD
-              </ion-label>
-              <ion-radio value="1"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>6 BTC
-              </ion-label>
-              <ion-radio value="5"></ion-radio>
-            </ion-item>
           </ion-radio-group>
         </ion-list>
 
+        <p *ngIf="!pathsFound.length">
+          No payment paths found
+        </p>
+
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button [disabled]="choosePathForm.invalid" (click)="submitFindPathForm()" mat-button>Next</button>
+          <button [disabled]="choosePathForm.invalid" (click)="submitChoosePathForm()" mat-button>Next</button>
         </div>
       </form>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Send</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
+      <form [formGroup]="sendPaymentForm">
+        <ng-template matStepLabel>Send Payment</ng-template>
+        <div>
+          <label>Destination</label>
+
+          <app-dynamic-input [inputType]="'text'" [form]="sendPaymentForm" [controlName]="'destination'"
+            [placeHolder]="'Destination'" [isEd25519PublicKey]="true">
+          </app-dynamic-input>
+        </div>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Save</button>
+          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Send</button>
+        </div>
+      </form>
     </mat-step>
   </mat-vertical-stepper>
 </ion-content>
