@@ -168,6 +168,12 @@ const routes: Routes = [
       './pages/operations/path-receive/path-receive.module#PathReceivePageModule',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'operations/path-send',
+    loadChildren:
+      './pages/operations/path-send/path-send.module#PathSendPageModule',
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

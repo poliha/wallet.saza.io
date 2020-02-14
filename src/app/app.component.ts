@@ -109,6 +109,11 @@ export class AppComponent {
           url: '/operations/path-receive',
           icon: 'list',
         },
+        {
+          title: 'Path Payment Send',
+          url: '/operations/path-send',
+          icon: 'list',
+        },
       ],
     },
     {

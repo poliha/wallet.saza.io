@@ -1,0 +1,84 @@
+<app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
+
+
+<ion-content>
+  <mat-vertical-stepper #stepper linear>
+    <mat-step [stepControl]="findPathForm">
+      <form [formGroup]="findPathForm">
+        <ng-template matStepLabel>Find</ng-template>
+        <div>
+          <label>Destination</label>
+
+          <app-dynamic-input [inputType]="'text'" [form]="findPathForm" [controlName]="'destination'"
+            [placeHolder]="'Destination'" [isEd25519PublicKey]="true">
+          </app-dynamic-input>
+        </div>
+
+        <div>
+          <label>Source Asset</label>
+
+          <app-asset-picker [form]="findPathForm" [controlName]="'sourceAsset'" [displayType]="'manual'">
+          </app-asset-picker>
+        </div>
+        <div>
+          <label>Source Amount</label>
+
+          <app-dynamic-input [form]="findPathForm" [controlName]="'sourceAmount'" [placeHolder]="'Amount'">
+          </app-dynamic-input>
+        </div>
+
+        <div>
+          <button [disabled]="findPathForm.invalid" (click)="submitFindPathForm()" mat-button>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="choosePathForm">
+      <form [formGroup]="choosePathForm">
+        <ng-template matStepLabel>Choose</ng-template>
+        <p *ngIf="sourceAmount && pathsFound.length">
+          For {{sourceAmount}}
+          {{ sourceAsset.asset_type === 'native' ? 'XLM' : sourceAsset.asset_code}}, recipient
+          will get:
+        </p>
+        <ion-list>
+          <ion-radio-group formControlName="selectedPath" name="selectedPath">
+            <ng-template ngFor let-path [ngForOf]="pathsFound" let-i="index">
+              <ion-item>
+                <ion-label>{{path.destination_amount}}
+                  {{path.destination_asset_type === 'native' ? 'XLM' : path.destination_asset_code}}
+                </ion-label>
+                <ion-radio [value]="i"></ion-radio>
+              </ion-item>
+            </ng-template>
+          </ion-radio-group>
+        </ion-list>
+
+        <p *ngIf="!pathsFound.length">
+          No payment paths found
+        </p>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button [disabled]="choosePathForm.invalid" (click)="submitChoosePathForm()" mat-button>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="sendPaymentForm">
+        <ng-template matStepLabel>Send Payment</ng-template>
+        <div>
+          <label>Source</label>
+          <app-select-source [form]="sendPaymentForm" [controlName]="'source'"></app-select-source>
+
+        </div>
+
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Save</button>
+          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Send</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
+</ion-content>

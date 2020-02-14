@@ -464,4 +464,24 @@ export class StellarService {
       console.log('error: ', error);
     }
   }
+
+  async findPathSend(options: {
+    sourceAsset: any;
+    sourceAmount: string;
+    destination: string;
+  }) {
+    try {
+      const { records } = await this.server
+        .strictSendPaths(
+          options.sourceAsset,
+          options.sourceAmount,
+          options.destination,
+        )
+        .call();
+      console.log('response: ', records);
+      return records;
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
 }
