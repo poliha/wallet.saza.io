@@ -20,6 +20,8 @@ import {
 } from 'stellar-sdk';
 import { Buffer } from 'buffer';
 import { UserService } from './user.service';
+import { SazaError } from './errors';
+import { NotFoundError } from 'stellar-sdk';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +63,13 @@ export class StellarService {
       return accountDetail;
     } catch (error) {
       console.log('error: ', error);
-      return false;
+      if (error instanceof NotFoundError) {
+        throw new SazaError(
+          `${accountID} is not active. Please create account.`,
+        );
+      } else {
+        throw error;
+      }
     }
   }
 
@@ -281,9 +289,11 @@ export class StellarService {
     try {
       const txObj = new Transaction(tx);
       const txResult = await this.server.submitTransaction(txObj);
+      console.log('txResult: ', txResult);
       return txResult;
     } catch (error) {
       console.log('error: ', error);
+      throw error;
     }
   }
 
@@ -299,6 +309,7 @@ export class StellarService {
 
   async isAccountActive(accountID: string) {
     const result = await this.loadAccount(accountID);
+    console.log('result is: ', result);
     return Boolean(result);
   }
 

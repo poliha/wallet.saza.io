@@ -11,6 +11,7 @@ import {
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Operation, xdr, Transaction } from 'stellar-sdk';
 import { Router } from '@angular/router';
+import { SazaError, TransactionErrors } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-sign-tx',
@@ -118,28 +119,79 @@ export class SignTxPage implements OnInit {
   }
 
   async signTransaction() {
-    const trimmedPwd = String(this.password.value).trim();
-    const privateKeys = this.privateKeys.value;
+    try {
+      const trimmedPwd = String(this.password.value).trim();
+      const privateKeys = [
+        ...this.privateKeys.value
+          .map(key => key.privateKey)
+          .filter(key => Boolean(key)),
+      ];
 
-    const passwordHash = await this.userService.getPassword();
-    if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
-      throw new Error(INVALID_PASSWORD_ERROR);
+      const passwordHash = await this.userService.getPassword();
+      if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
+        throw new SazaError(INVALID_PASSWORD_ERROR);
+      }
+
+      this.userAccounts
+        .filter(acc => {
+          return this.eligibleSigners.has(acc.public);
+        })
+        .forEach(acc => {
+          const decryptedKey = this.utility.decrypt(acc.private, trimmedPwd);
+          privateKeys.push(decryptedKey);
+        });
+      console.log('pKs: ', privateKeys);
+      const signedTx = this.stellarService.signTx(this.builtTx, ...privateKeys);
+      const submitTx = await this.stellarService.submitTx(signedTx);
+      console.log('submitTx: ', submitTx);
+      // to do clear built tx and ops
+      // show success or error
+      // redirect user
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      } else {
+        console.log('handle submit errors');
+
+        console.log(Object.keys(error.response));
+
+        const {
+          data: {
+            extras: {
+              result_codes: { transaction, operations },
+            },
+          },
+        } = error.response;
+        console.log('Error extras: ', transaction, operations);
+
+        const errorMessages = [];
+        if (!transaction) {
+          errorMessages.push('Transaction Error');
+        } else {
+          errorMessages.push(TransactionErrors.transaction[transaction]);
+        }
+
+        if (operations) {
+          const { operations: submittedOperations } = this.txDetail;
+          console.log(
+            TransactionErrors['createAccount'][
+              String('op_malformed').toUpperCase()
+            ],
+          );
+          operations.forEach((value, key) => {
+            console.log(`${key}:${value}`);
+            if (value !== 'op_success') {
+              const opType = submittedOperations[key].type;
+              console.log(`opType: ${opType}:${value}`);
+
+              const opError =
+                TransactionErrors[opType][String(value).toUpperCase()];
+              errorMessages.push(`${opType}: ${opError}`);
+            }
+          });
+        }
+        throw new SazaError(errorMessages.join('\n'));
+      }
     }
-
-    this.userAccounts
-      .filter(acc => {
-        return this.eligibleSigners.has(acc.public);
-      })
-      .forEach(acc => {
-        const decryptedKey = this.utility.decrypt(acc.private, trimmedPwd);
-        privateKeys.push(decryptedKey);
-      });
-
-    const signedTx = this.stellarService.signTx(this.builtTx, ...privateKeys);
-    const submitTx = await this.stellarService.submitTx(signedTx);
-    console.log('submitTx: ', submitTx);
-    // to do clear built tx and ops
-    // show success or error
-    // redirect user
   }
 }
