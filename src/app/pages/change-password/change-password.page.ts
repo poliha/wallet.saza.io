@@ -125,7 +125,7 @@ export class ChangePasswordPage implements OnInit {
       this.showRecoveryPassword(newRecoveryPassword);
     } catch (error) {
       console.log('Error: ', error);
-      this.notify.show(errorMessage);
+      this.notify.error(errorMessage);
       // revert to previous values
       await this.userService.setPassword(this.oldPasswordHash);
       await this.userService.setPasswordRecovery(this.oldRecoveryPassword);

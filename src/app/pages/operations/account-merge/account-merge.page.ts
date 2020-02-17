@@ -57,7 +57,7 @@ export class AccountMergePage implements OnInit {
       console.log('account Merge Ops: ', opData);
       const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
-      this.notification.show('Operation Added');
+      this.notification.success('Operation Added');
       console.log('account Merge Ops: ', xdrString);
       this.accountMergeForm.reset({ source: this.source.value });
     } catch (error) {

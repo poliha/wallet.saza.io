@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, NotificationService, StellarService } from '../../../providers/providers';
+import {
+  TxService,
+  NotificationService,
+  StellarService,
+} from '../../../providers/providers';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -11,8 +15,11 @@ export class AllowTrustPage implements OnInit {
   public allowTrustForm: FormGroup;
   pageTitle = 'Allow Trust';
   helpUrl = '';
-  constructor(private txService: TxService, private notification: NotificationService,
-    private stellarService: StellarService) { }
+  constructor(
+    private txService: TxService,
+    private notification: NotificationService,
+    private stellarService: StellarService,
+  ) {}
 
   ngOnInit() {
     this.makeForm();
@@ -20,16 +27,23 @@ export class AllowTrustPage implements OnInit {
 
   makeForm() {
     this.allowTrustForm = new FormGroup({
-      authorize: new FormControl('true', Validators.required)
+      authorize: new FormControl('true', Validators.required),
     });
   }
 
   // Getters for template
-  get source() { return this.allowTrustForm.get('source'); }
-  get trustor() { return this.allowTrustForm.get('trustor'); }
-  get assetCode() { return this.allowTrustForm.get('assetCode'); }
-  get authorize() { return this.allowTrustForm.get('authorize'); }
-
+  get source() {
+    return this.allowTrustForm.get('source');
+  }
+  get trustor() {
+    return this.allowTrustForm.get('trustor');
+  }
+  get assetCode() {
+    return this.allowTrustForm.get('assetCode');
+  }
+  get authorize() {
+    return this.allowTrustForm.get('authorize');
+  }
 
   private async buildOperation() {
     // build allow Trust operation
@@ -44,13 +58,13 @@ export class AllowTrustPage implements OnInit {
         assetCode: this.assetCode.value,
         authorize: this.authorize.value === 'true' ? true : false,
         source: this.source.value,
-        opType: this.stellarService.operationType.ALLOW_TRUST
+        opType: this.stellarService.operationType.ALLOW_TRUST,
       };
 
       console.log('allow Trust Ops: ', opData);
       const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
-      this.notification.show('Operation Added');
+      this.notification.success('Operation Added');
       this.allowTrustForm.reset({
         source: this.source.value,
       });

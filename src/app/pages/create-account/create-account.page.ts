@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import {
-  Utility, UserService, NotificationService,
-  INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR
+  Utility,
+  UserService,
+  NotificationService,
+  INVALID_PASSWORD_ERROR,
+  ENCRYPTION_FAILED_ERROR,
 } from '../../providers/providers';
 import { SazaAccount } from '../../interfaces/saza';
 @Component({
@@ -13,15 +16,19 @@ import { SazaAccount } from '../../interfaces/saza';
 export class CreateAccountPage implements OnInit {
   private createAccountForm: FormGroup;
   userAccounts = [];
-  pairObj: { public: string, private: string } = { public: '', private: '' };
+  pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;
   pageTitle = 'Create Account';
   helpUrl = '';
-  constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService, private notification: NotificationService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private utility: Utility,
+    private userService: UserService,
+    private notification: NotificationService,
+  ) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe(data => this.userAccounts = data);
+    this.userService.userAccounts.subscribe(data => (this.userAccounts = data));
     this.makeForm();
   }
 
@@ -41,7 +48,10 @@ export class CreateAccountPage implements OnInit {
   makeForm() {
     this.createAccountForm = this.formBuilder.group({
       keysCopied: ['', Validators.requiredTrue],
-      password: ['', Validators.compose([Validators.minLength(8), Validators.required])],
+      password: [
+        '',
+        Validators.compose([Validators.minLength(8), Validators.required]),
+      ],
       tag: [''],
     });
   }
@@ -51,9 +61,15 @@ export class CreateAccountPage implements OnInit {
   }
 
   // Getters for template
-  get keysCopied() { return this.createAccountForm.get('keysCopied'); }
-  get password() { return this.createAccountForm.get('password'); }
-  get tag() { return this.createAccountForm.get('tag'); }
+  get keysCopied() {
+    return this.createAccountForm.get('keysCopied');
+  }
+  get password() {
+    return this.createAccountForm.get('password');
+  }
+  get tag() {
+    return this.createAccountForm.get('tag');
+  }
 
   async formSubmit() {
     // check that pairobj is not empty
@@ -71,7 +87,10 @@ export class CreateAccountPage implements OnInit {
       throw new Error(INVALID_PASSWORD_ERROR);
     }
 
-    const encrpytedObject = this.utility.encrypt(this.pairObj.private, trimmedPwd);
+    const encrpytedObject = this.utility.encrypt(
+      this.pairObj.private,
+      trimmedPwd,
+    );
 
     if (!encrpytedObject) {
       throw new Error(ENCRYPTION_FAILED_ERROR);
@@ -84,7 +103,7 @@ export class CreateAccountPage implements OnInit {
     };
 
     this.userService.setAccount(sazaAccount);
-    this.notification.show('Account saved!');
+    this.notification.success('Account saved!');
     this.pairObj.private = '';
     this.pairObj.public = '';
     this.keypairGenerated = false;

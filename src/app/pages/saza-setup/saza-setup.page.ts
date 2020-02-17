@@ -182,7 +182,7 @@ export class SazaSetupPage implements OnInit {
 
     if (!status) {
       console.log(status);
-      this.notification.show('Please complete wallet setup.');
+      this.notification.error('Please complete wallet setup.');
     }
     return status;
   }

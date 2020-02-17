@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, INVALID_PASSWORD_ERROR, NotificationService } from '../../providers/providers';
+import {
+  Utility,
+  UserService,
+  INVALID_PASSWORD_ERROR,
+  NotificationService,
+} from '../../providers/providers';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-
 
 @Component({
   selector: 'app-login',
@@ -13,9 +17,14 @@ import { MenuController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   private loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService, private router: Router,
-    private notification: NotificationService, private menu: MenuController) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private utility: Utility,
+    private userService: UserService,
+    private router: Router,
+    private notification: NotificationService,
+    private menu: MenuController,
+  ) {}
 
   ngOnInit() {
     this.makeForm();
@@ -31,11 +40,16 @@ export class LoginPage implements OnInit {
 
   makeForm() {
     this.loginForm = this.formBuilder.group({
-      password: ['', Validators.compose([Validators.minLength(8), Validators.required])],
+      password: [
+        '',
+        Validators.compose([Validators.minLength(8), Validators.required]),
+      ],
     });
   }
 
-  get password() { return this.loginForm.get('password'); }
+  get password() {
+    return this.loginForm.get('password');
+  }
 
   async formSubmit() {
     // validate password
@@ -45,7 +59,7 @@ export class LoginPage implements OnInit {
     if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
       throw new Error(INVALID_PASSWORD_ERROR);
     }
-    this.notification.show('Login success');
+    this.notification.success('Login success');
     this.userService.login();
     this.router.navigate(['dashboard/']);
   }

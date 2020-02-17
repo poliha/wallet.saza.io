@@ -143,7 +143,7 @@ export class ManageAccountsDetailPage implements OnInit {
             if (
               !this.utility.validateHash(trimmedPassword, this.passwordHash)
             ) {
-              this.notify.show('Invalid Password');
+              this.notify.error('Invalid Password');
               return this.router.navigate(['manage-accounts/']);
             }
             this.userPassword = trimmedPassword;

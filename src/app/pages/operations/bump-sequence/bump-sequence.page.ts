@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TxService, NotificationService, StellarService } from '../../../providers/providers';
+import {
+  TxService,
+  NotificationService,
+  StellarService,
+} from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,9 +15,11 @@ export class BumpSequencePage implements OnInit {
   public bumpSequenceForm: FormGroup;
   pageTitle = 'Bump Sequence';
   helpUrl = '';
-  constructor(private txService: TxService, private notification: NotificationService,
-    private stellarService: StellarService) {
-  }
+  constructor(
+    private txService: TxService,
+    private notification: NotificationService,
+    private stellarService: StellarService,
+  ) {}
 
   ngOnInit() {
     this.makeForm();
@@ -24,8 +30,12 @@ export class BumpSequencePage implements OnInit {
   }
 
   // Getters for template
-  get source() { return this.bumpSequenceForm.get('source'); }
-  get bumpTo() { return this.bumpSequenceForm.get('bumpTo'); }
+  get source() {
+    return this.bumpSequenceForm.get('source');
+  }
+  get bumpTo() {
+    return this.bumpSequenceForm.get('bumpTo');
+  }
 
   private async buildOperation() {
     // build bump sequence operation
@@ -38,14 +48,14 @@ export class BumpSequencePage implements OnInit {
       const opData = {
         bumpTo: String(this.bumpTo.value),
         source: this.source.value,
-        opType: this.stellarService.operationType.BUMP_SEQUENCE
+        opType: this.stellarService.operationType.BUMP_SEQUENCE,
       };
 
       console.log('bumpSeqOps: ', opData);
       const xdrString = await this.stellarService.buildOperation(opData);
       this.txService.addOperation({ type: opData.opType, tx: xdrString });
-      this.notification.show('Operation Added');
-      this.bumpSequenceForm.reset({source: this.source.value});
+      this.notification.success('Operation Added');
+      this.bumpSequenceForm.reset({ source: this.source.value });
       console.log('bumpSeqOps: ', xdrString);
     } catch (error) {
       console.log('error: ', error);

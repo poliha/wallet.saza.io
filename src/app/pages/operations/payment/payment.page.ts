@@ -77,7 +77,7 @@ export class PaymentPage implements OnInit {
         // make a create-account operation
         const { asset_type } = this.asset.value;
         if (asset_type !== 'native') {
-          this.notification.show(
+          this.notification.error(
             'Can not send custom asset to inactive destination. Send XLM to create the destination account.',
           );
           return;

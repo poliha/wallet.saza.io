@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Utility, UserService, CustomValidators,
-  INVALID_PASSWORD_ERROR, ENCRYPTION_FAILED_ERROR, NotificationService } from '../../providers/providers';
+import {
+  Utility,
+  UserService,
+  CustomValidators,
+  INVALID_PASSWORD_ERROR,
+  ENCRYPTION_FAILED_ERROR,
+  NotificationService,
+} from '../../providers/providers';
 import { SazaAccount } from '../../interfaces/saza';
 
 @Component({
@@ -12,15 +18,19 @@ import { SazaAccount } from '../../interfaces/saza';
 export class LinkAccountPage implements OnInit {
   private linkAccountForm: FormGroup;
   userAccounts = [];
-  pairObj: { public: string, private: string } = { public: '', private: '' };
+  pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;
   pageTitle = 'Link Account';
   helpUrl = '';
-  constructor(private formBuilder: FormBuilder, private utility: Utility,
-    private userService: UserService, public notification: NotificationService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private utility: Utility,
+    private userService: UserService,
+    public notification: NotificationService,
+  ) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe(data => this.userAccounts = data);
+    this.userService.userAccounts.subscribe(data => (this.userAccounts = data));
     this.makeForm();
   }
 
@@ -38,9 +48,18 @@ export class LinkAccountPage implements OnInit {
 
   makeForm() {
     this.linkAccountForm = this.formBuilder.group({
-      privateKey: ['', Validators.compose([Validators.required, CustomValidators.isValidPrivateKey()])],
+      privateKey: [
+        '',
+        Validators.compose([
+          Validators.required,
+          CustomValidators.isValidPrivateKey(),
+        ]),
+      ],
       keysCopied: ['', Validators.requiredTrue],
-      password: ['', Validators.compose([Validators.minLength(8), Validators.required])],
+      password: [
+        '',
+        Validators.compose([Validators.minLength(8), Validators.required]),
+      ],
       tag: [''],
     });
   }
@@ -50,10 +69,18 @@ export class LinkAccountPage implements OnInit {
   }
 
   // Getters for template
-  get privateKey() { return this.linkAccountForm.get('privateKey'); }
-  get keysCopied() { return this.linkAccountForm.get('keysCopied'); }
-  get password() { return this.linkAccountForm.get('password'); }
-  get tag() { return this.linkAccountForm.get('tag'); }
+  get privateKey() {
+    return this.linkAccountForm.get('privateKey');
+  }
+  get keysCopied() {
+    return this.linkAccountForm.get('keysCopied');
+  }
+  get password() {
+    return this.linkAccountForm.get('password');
+  }
+  get tag() {
+    return this.linkAccountForm.get('tag');
+  }
 
   async formSubmit() {
     // check that pairobj is not empty
@@ -71,7 +98,10 @@ export class LinkAccountPage implements OnInit {
       throw new Error(INVALID_PASSWORD_ERROR);
     }
 
-    const encrpytedObject = this.utility.encrypt(this.pairObj.private, trimmedPwd);
+    const encrpytedObject = this.utility.encrypt(
+      this.pairObj.private,
+      trimmedPwd,
+    );
     if (!encrpytedObject) {
       throw new Error(ENCRYPTION_FAILED_ERROR);
     }
@@ -83,7 +113,7 @@ export class LinkAccountPage implements OnInit {
     };
 
     this.userService.setAccount(sazaAccount);
-    this.notification.show('Account linked!');
+    this.notification.success('Account linked!');
     this.pairObj.private = '';
     this.pairObj.public = '';
     this.keypairGenerated = false;

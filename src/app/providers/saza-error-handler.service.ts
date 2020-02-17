@@ -30,7 +30,7 @@ export class SazaErrorHandler implements ErrorHandler {
       this.errorMessages.push('Unable to process request.');
     }
 
-    this.notification.show(this.errorMessages.join('\n'));
+    this.notification.error(this.errorMessages.join('\n'));
     this.errorMessages = [];
     console.log('error stack: ', error.stack);
     return;

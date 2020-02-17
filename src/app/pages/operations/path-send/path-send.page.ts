@@ -140,7 +140,7 @@ export class PathSendPage implements OnInit {
         type: this.sendParams.opType,
         tx: xdrString,
       });
-      this.notification.show('Operation Added');
+      this.notification.success('Operation Added');
       this.stepper.reset();
       console.log('paths send: ', xdrString);
     } catch (error) {
