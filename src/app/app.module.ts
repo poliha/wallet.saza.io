@@ -13,6 +13,7 @@ import {
   UserService,
   AuthGuard,
   NotificationService,
+  LoadingService,
 } from './providers/providers';
 import { IonicStorageModule } from '@ionic/storage';
 import { SazaErrorHandler } from './providers/saza-error-handler.service';
@@ -37,6 +38,7 @@ import { MaterialModule } from './material.module';
     UserService,
     AuthGuard,
     NotificationService,
+    LoadingService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: ErrorHandler, useClass: SazaErrorHandler },
   ],
