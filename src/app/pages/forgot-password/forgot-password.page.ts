@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormControl,
+} from '@angular/forms';
 import {
   CustomValidators,
   UserService,
@@ -16,8 +22,8 @@ import { SazaAccount } from 'src/app/interfaces/saza';
   styleUrls: ['./forgot-password.page.scss'],
 })
 export class ForgotPasswordPage implements OnInit {
-  private forgotPasswordForm: FormGroup;
-  private changePasswordForm: FormGroup;
+  forgotPasswordForm: FormGroup;
+  changePasswordForm: FormGroup;
   passwordInputs: FormArray;
   private passwordInputsLength = 5;
   private oldData: {
@@ -95,7 +101,7 @@ export class ForgotPasswordPage implements OnInit {
   }
   // Getters for template
   get passwords() {
-    return this.forgotPasswordForm.get('passwords');
+    return <FormArray>this.forgotPasswordForm.get('passwords');
   }
   get currentPassword() {
     return this.changePasswordForm.get('currentPassword');

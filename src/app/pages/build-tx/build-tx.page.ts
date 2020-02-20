@@ -19,7 +19,7 @@ import * as moment from 'moment';
   styleUrls: ['./build-tx.page.scss'],
 })
 export class BuildTxPage implements OnInit {
-  private buildTxForm: FormGroup;
+  buildTxForm: FormGroup;
   networkFees = {
     minFee: 100,
     maxFee: 200,

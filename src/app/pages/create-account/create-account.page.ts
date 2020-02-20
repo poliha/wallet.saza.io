@@ -14,7 +14,7 @@ import { SazaAccount } from '../../interfaces/saza';
   styleUrls: ['./create-account.page.scss'],
 })
 export class CreateAccountPage implements OnInit {
-  private createAccountForm: FormGroup;
+  createAccountForm: FormGroup;
   userAccounts = [];
   pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;

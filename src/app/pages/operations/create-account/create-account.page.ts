@@ -12,7 +12,7 @@ import {
   styleUrls: ['./create-account.page.scss'],
 })
 export class CreateAccountPage implements OnInit {
-  private createAccountForm: FormGroup;
+  createAccountForm: FormGroup;
   pageTitle = 'Create Account';
   helpUrl = '';
   constructor(

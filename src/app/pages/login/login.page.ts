@@ -15,7 +15,7 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  private loginForm: FormGroup;
+  loginForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,

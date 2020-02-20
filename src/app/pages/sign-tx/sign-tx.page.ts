@@ -115,7 +115,7 @@ export class SignTxPage implements OnInit {
     return this.signTxForm.get('password');
   }
   get privateKeys() {
-    return this.signTxForm.get('privateKeys');
+    return <FormArray>this.signTxForm.get('privateKeys');
   }
 
   async signTransaction() {

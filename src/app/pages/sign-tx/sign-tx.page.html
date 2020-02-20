@@ -39,7 +39,7 @@
 
     </ion-item-divider>
 
-    <div formArrayName="privateKeys" *ngFor="let p of signTxForm.get('privateKeys').controls; let i = index;">
+    <div formArrayName="privateKeys" *ngFor="let p of privateKeys.controls; let i = index;">
       <ion-item [formGroupName]="i">
         <ion-label position="stacked">For {{privateKeyLabels[i]}}</ion-label>
         <ion-input type="text" name="privateKey" formControlName="privateKey"></ion-input>

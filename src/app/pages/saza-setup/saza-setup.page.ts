@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 })
 export class SazaSetupPage implements OnInit {
   suggestedPassword = '';
-  private passwordForm: FormGroup;
+  passwordForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private utility: Utility,

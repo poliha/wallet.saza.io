@@ -16,7 +16,7 @@ import { SazaAccount } from '../../interfaces/saza';
   styleUrls: ['./link-account.page.scss'],
 })
 export class LinkAccountPage implements OnInit {
-  private linkAccountForm: FormGroup;
+  linkAccountForm: FormGroup;
   userAccounts = [];
   pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;

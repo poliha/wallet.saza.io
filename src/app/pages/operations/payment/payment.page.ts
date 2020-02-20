@@ -13,7 +13,7 @@ import {
   styleUrls: ['./payment.page.scss'],
 })
 export class PaymentPage implements OnInit {
-  private paymentForm: FormGroup;
+  paymentForm: FormGroup;
   pageTitle = 'Payment';
   helpUrl = '';
   constructor(
