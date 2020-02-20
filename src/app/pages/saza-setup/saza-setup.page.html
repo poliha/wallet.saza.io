@@ -41,7 +41,7 @@
                 Minimum length is {{password.errors.minlength.requiredLength}} characters
               </p>
               <p *ngIf="password.errors.isValidPassword">
-                Only alphanumeric and any of these special characters are allowed "$^+=!*()@%&"
+                {{password.errors.isValidPassword}}
               </p>
             </ion-text>
           </ion-item>

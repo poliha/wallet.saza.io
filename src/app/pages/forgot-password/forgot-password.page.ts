@@ -76,6 +76,8 @@ export class ForgotPasswordPage implements OnInit {
         ]),
       ],
     });
+
+    console.log('forgot password form: ', this.changePasswordForm);
   }
 
   async loadData() {

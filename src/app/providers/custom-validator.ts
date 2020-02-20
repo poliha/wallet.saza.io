@@ -139,7 +139,10 @@ export class CustomValidators extends Validators {
         const passwordRegex = /^[\w\s#$^+=!*()@%&]{8,}$/gi;
         return passwordRegex.test(String(c.value).trim())
           ? null
-          : { isValidPassword: true };
+          : {
+              isValidPassword:
+                'Can only contain alphanumeric characters and "$^+=!*()@%&"',
+            };
       }
       return null;
     };
