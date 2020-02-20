@@ -14,8 +14,8 @@ import { HeaderComponentModule } from 'src/app/components/header/header.module';
 const routes: Routes = [
   {
     path: '',
-    component: ManageDataPage
-  }
+    component: ManageDataPage,
+  },
 ];
 
 @NgModule({
@@ -30,8 +30,6 @@ const routes: Routes = [
     HeaderComponentModule,
   ],
   declarations: [ManageDataPage],
-  providers: [
-    TxService,
-  ]
+  providers: [TxService],
 })
 export class ManageDataPageModule {}

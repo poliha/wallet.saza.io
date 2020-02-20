@@ -35,11 +35,12 @@ export class SazaSetupPage implements OnInit {
 
   ionViewWillEnter() {
     this.userService.getPassword().then(pwd => {
-      if (pwd) {
+      if (!pwd) {
+        this.menu.enable(false);
+      } else {
         this.router.navigate(['/login']);
       }
     });
-    this.menu.enable(false);
   }
 
   ionViewWillLeave() {

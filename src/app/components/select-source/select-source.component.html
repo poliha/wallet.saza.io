@@ -1,4 +1,6 @@
 <div>
+  <ion-label position="stacked">Source <i>(Optional)</i></ion-label>
+
   <ion-select placeholder="Source Account" (ionChange)="accountChanged($event)">
     <ion-select-option [value]="0">Select Account</ion-select-option>
     <ion-select-option *ngFor="let a of userAccounts" [value]="a.public"

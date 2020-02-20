@@ -16,7 +16,7 @@ export class SelectSourceComponent implements OnInit {
 
   public userAccounts: SazaAccount[];
   public showCustomInput = false;
-  private customInputForm: FormGroup;
+  public customInputForm: FormGroup;
   constructor(private userService: UserService) {}
 
   ngOnInit() {
