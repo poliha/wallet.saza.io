@@ -67,9 +67,7 @@
       <form [formGroup]="sendPaymentForm">
         <ng-template matStepLabel>Send Payment</ng-template>
         <div>
-          <label>Source</label>
-          <app-select-source [form]="sendPaymentForm" [controlName]="'source'"></app-select-source>
-
+          <app-select-source [form]="sendPaymentForm" [controlName]="'source'" [isRequired]="true"></app-select-source>
         </div>
 
 

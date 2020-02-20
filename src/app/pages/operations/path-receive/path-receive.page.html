@@ -7,9 +7,7 @@
       <form [formGroup]="findPathForm">
         <ng-template matStepLabel>Find</ng-template>
         <div>
-          <label>Source</label>
-          <app-select-source [form]="findPathForm" [controlName]="'source'"></app-select-source>
-
+          <app-select-source [form]="findPathForm" [controlName]="'source'" [isRequired]="true"></app-select-source>
         </div>
         <div>
           <label>Destination Asset</label>
