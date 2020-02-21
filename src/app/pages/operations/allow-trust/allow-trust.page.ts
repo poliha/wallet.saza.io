@@ -14,6 +14,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AllowTrustPage implements OnInit {
   public allowTrustForm: FormGroup;
   pageTitle = 'Allow Trust';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,

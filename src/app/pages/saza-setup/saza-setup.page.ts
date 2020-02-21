@@ -10,6 +10,7 @@ import { ModalController, MenuController } from '@ionic/angular';
 import { RecoveryPasswordModalComponent } from '../../components/recovery-password-modal/recovery-password-modal.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { Router } from '@angular/router';
+import { SazaError } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-saza-setup',
@@ -17,7 +18,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./saza-setup.page.scss'],
 })
 export class SazaSetupPage implements OnInit {
-  suggestedPassword = '';
   passwordForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -49,11 +49,6 @@ export class SazaSetupPage implements OnInit {
 
   makeForm() {
     this.passwordForm = this.formBuilder.group({
-      useSuggestion: [''],
-      passwordSaved: [
-        '',
-        Validators.compose([CustomValidators.requiredIf('useSuggestion')]),
-      ],
       password: [
         '',
         Validators.compose([
@@ -75,39 +70,11 @@ export class SazaSetupPage implements OnInit {
   }
 
   /**
-   * adds the suggested password to the form when clicked. Resets the form otherwise.
-   * @param event the checkbox event that was clicked
-   */
-  setSuggestion(event) {
-    if (event.target.checked) {
-      this.passwordForm.patchValue({
-        password: this.suggestedPassword,
-        confirmPassword: this.suggestedPassword,
-      });
-      this.password.disable();
-      this.confirmPassword.disable();
-    } else {
-      this.passwordForm.reset();
-      this.password.enable();
-      this.confirmPassword.enable();
-    }
-  }
-
-  /**
    * Copies a value to the clipboard
    * @param item value to be copied
    */
   itemCopy(item) {
     console.log('item: ', item);
-  }
-
-  /**
-   * sets the suggested password to the "suggestedPassword" member variable.
-   * @param password password to be set.
-   */
-  setSuggestedPassword(password) {
-    this.suggestedPassword = password;
-    console.log('suggested PW: ', this.suggestedPassword);
   }
 
   // Getters for template
@@ -116,9 +83,6 @@ export class SazaSetupPage implements OnInit {
   }
   get confirmPassword() {
     return this.passwordForm.get('confirmPassword');
-  }
-  get useSuggestion() {
-    return this.passwordForm.get('useSuggestion');
   }
 
   formSubmit() {
@@ -129,33 +93,27 @@ export class SazaSetupPage implements OnInit {
     // save hash of password
     // save encrypted password
     // return recovery password to user in plain text
-    try {
-      if (this.password.value !== this.confirmPassword.value) {
-        throw new Error('Password mismatch');
-      }
-      const trimmedPwd = String(this.password.value).trim();
-      const passwordHash = this.utility.getHash(trimmedPwd);
-      const recoveryPassword = this.utility.generatePassword();
-
-      // use the recovery password to encrypt the primary password.
-      const encrpytedPassword = this.utility.encrypt(
-        trimmedPwd,
-        recoveryPassword,
-      );
-      console.log('PE: ', encrpytedPassword);
-      console.log('PH: ', passwordHash);
-      console.log('PR: ', recoveryPassword);
-      // save hash of primary password
-      this.userService.setPassword(passwordHash);
-      // save encrypted password
-      this.userService.setPasswordRecovery(encrpytedPassword);
-      // display recovery password to user
-      this.presentModal(recoveryPassword);
-    } catch (error) {
-      console.log(error);
-      // to do... make this more descriptive?
-      throw new Error('Saza wallet setup failed.');
+    if (this.password.value !== this.confirmPassword.value) {
+      throw new SazaError('Password mismatch');
     }
+    const trimmedPwd = String(this.password.value).trim();
+    const passwordHash = this.utility.getHash(trimmedPwd);
+    const recoveryPassword = this.utility.generatePassword();
+
+    // use the recovery password to encrypt the primary password.
+    const encrpytedPassword = this.utility.encrypt(
+      trimmedPwd,
+      recoveryPassword,
+    );
+    console.log('PE: ', encrpytedPassword);
+    console.log('PH: ', passwordHash);
+    console.log('PR: ', recoveryPassword);
+    // save hash of primary password
+    this.userService.setPassword(passwordHash);
+    // save encrypted password
+    this.userService.setPasswordRecovery(encrpytedPassword);
+    // display recovery password to user
+    this.presentModal(recoveryPassword);
   }
 
   async presentModal(modalValue) {

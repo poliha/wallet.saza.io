@@ -57,6 +57,9 @@ export class CustomValidators extends Validators {
 
       mainControlValue = c.value;
       otherControlValue = c.parent.get(otherControlName).value;
+      if (!otherControlValue) {
+        return null;
+      }
 
       const subscription = c.parent
         .get(otherControlName)

@@ -15,6 +15,7 @@ import { FormGroup } from '@angular/forms';
 export class ChangeTrustPage implements OnInit {
   public changeTrustForm: FormGroup;
   pageTitle = 'Change Trust';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,

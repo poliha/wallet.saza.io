@@ -15,6 +15,7 @@ import { MatStepper } from '@angular/material';
 })
 export class PathReceivePage implements OnInit {
   pageTitle = 'Path Payment Strict Receive';
+  subTitle = 'Operation';
   helpUrl = '';
   public findPathForm: FormGroup;
   public choosePathForm: FormGroup;

@@ -14,6 +14,7 @@ import {
 export class CreateAccountPage implements OnInit {
   createAccountForm: FormGroup;
   pageTitle = 'Create Account';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,

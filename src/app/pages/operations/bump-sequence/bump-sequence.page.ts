@@ -14,6 +14,7 @@ import { FormGroup } from '@angular/forms';
 export class BumpSequencePage implements OnInit {
   public bumpSequenceForm: FormGroup;
   pageTitle = 'Bump Sequence';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,

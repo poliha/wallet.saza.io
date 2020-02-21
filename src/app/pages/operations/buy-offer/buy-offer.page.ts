@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Utility, TxService, StellarService } from '../../../providers/providers';
+import {
+  Utility,
+  TxService,
+  StellarService,
+} from '../../../providers/providers';
 import { OfferComponent } from 'src/app/components/offer/offer.component';
-
 
 @Component({
   selector: 'app-buy-offer',
@@ -10,8 +13,13 @@ import { OfferComponent } from 'src/app/components/offer/offer.component';
 })
 export class BuyOfferPage extends OfferComponent implements OnInit {
   pageTitle = 'Buy Offer';
+  subTitle = 'Operation';
   helpUrl = '';
-  constructor(private txService: TxService, private utility: Utility, private stellaService: StellarService) {
+  constructor(
+    private txService: TxService,
+    private utility: Utility,
+    private stellaService: StellarService,
+  ) {
     super();
   }
 
@@ -20,8 +28,9 @@ export class BuyOfferPage extends OfferComponent implements OnInit {
   }
 
   // Getters for template
-  get offerID() { return this.offerForm.get('offerID'); }
-
+  get offerID() {
+    return this.offerForm.get('offerID');
+  }
 
   async buildOperation() {
     // build buy offer operation
@@ -38,7 +47,7 @@ export class BuyOfferPage extends OfferComponent implements OnInit {
         price: this.price.value,
         offerId: this.offerID.value || '0',
         source: this.source.value,
-        opType: this.stellaService.operationType.MANAGE_BUY_OFFER
+        opType: this.stellaService.operationType.MANAGE_BUY_OFFER,
       };
 
       console.log('manageBuyOffer: ', opData);

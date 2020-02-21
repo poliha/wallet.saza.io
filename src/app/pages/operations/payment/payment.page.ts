@@ -15,6 +15,7 @@ import {
 export class PaymentPage implements OnInit {
   paymentForm: FormGroup;
   pageTitle = 'Payment';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,

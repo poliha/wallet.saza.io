@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class SetOptionsPage implements OnInit {
   public setOptionsForm: FormGroup;
   pageTitle = 'Set Options';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,

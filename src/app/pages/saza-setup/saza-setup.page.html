@@ -12,9 +12,7 @@
           <ion-icon name="lock"></ion-icon>
           Enter a password
         </h3>
-
-
-        <form [formGroup]="passwordForm" (submit)="formSubmit()">
+        <form [formGroup]="passwordForm">
           <ion-item>
             <ion-label position="stacked">Password</ion-label>
             <ion-input type="password" name="password" formControlName="password" placeholder="Password"></ion-input>
@@ -23,7 +21,7 @@
                 Value is required.
               </p>
               <p *ngIf="password.errors.minlength">
-                Minimum length is {{password.errors.minlength.requiredLength}} characters
+                Minimum length of {{password.errors.minlength.requiredLength}} characters required.
               </p>
               <p *ngIf="password.errors.isValidPassword">
                 {{password.errors.isValidPassword}}
@@ -41,7 +39,7 @@
                 Value is required.
               </p>
               <p *ngIf="confirmPassword.errors.minlength">
-                Minimum length is {{confirmPassword.errors.minlength.requiredLength}} characters
+                Minimum length of {{confirmPassword.errors.minlength.requiredLength}} characters required.
               </p>
               <p *ngIf="confirmPassword.errors.equalTo">
                 Password mismatch
@@ -52,7 +50,7 @@
             </ion-text>
           </ion-item>
 
-          <ion-button class="ion-padding" type="submit" expand="block" [disabled]="passwordForm.invalid">
+          <ion-button class="ion-padding" expand="block" (click)="formSubmit()" [disabled]="passwordForm.invalid">
             <ion-icon slot="end" name="save"></ion-icon>
             Save
           </ion-button>

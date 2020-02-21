@@ -10,7 +10,7 @@
       Please enter a value
     </div>
     <div *ngIf="form.controls[controlName].errors.min">
-      Minimum value is {{minValue}}
+      Minimum value of {{minValue}} required.
     </div>
 
     <div *ngIf="form.controls[controlName].errors.max">
@@ -22,7 +22,7 @@
     </div>
 
     <div *ngIf="form.controls[controlName].errors.minlength">
-      Minimum length is {{minValue}}
+      Minimum length of {{minValue}} characters required.
     </div>
 
     <div *ngIf="form.controls[controlName].errors.isValidRecipient">

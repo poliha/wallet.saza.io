@@ -15,6 +15,8 @@ import { Utility } from 'src/app/providers/utility';
 })
 export class PathSendPage implements OnInit {
   pageTitle = 'Path Payment Strict Send';
+  subTitle = 'Operation';
+
   helpUrl = '';
   public findPathForm: FormGroup;
   public choosePathForm: FormGroup;

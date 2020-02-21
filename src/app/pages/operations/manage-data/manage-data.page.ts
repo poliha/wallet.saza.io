@@ -14,6 +14,7 @@ import { FormGroup } from '@angular/forms';
 export class ManageDataPage implements OnInit {
   public manageDataForm: FormGroup;
   pageTitle = 'Manage Data';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,

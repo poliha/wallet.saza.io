@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class AccountMergePage implements OnInit {
   public accountMergeForm: FormGroup;
   pageTitle = 'Account Merge';
+  subTitle = 'Operation';
   helpUrl = '';
   constructor(
     private txService: TxService,
