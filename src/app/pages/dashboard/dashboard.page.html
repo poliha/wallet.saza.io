@@ -9,17 +9,19 @@
       </ion-label>
     </ion-item-divider>
     <div class="ion-padding">
-      <ion-button class="ion-margin" expand="block" shape="round" (click)="createAccount()">
+      <ion-button class="ion-margin" expand="block" shape="round" [routerDirection]="'root'"
+        [routerLink]="'/create-account'">
         Create Account</ion-button>
     </div>
 
     <ion-item-divider color="light" sticky>
       <ion-label>
-          Link Existing Account
+        Link Existing Account
       </ion-label>
     </ion-item-divider>
     <div class="ion-padding">
-      <ion-button class="ion-margin" expand="block" shape="round" (click)="linkAccount()">
+      <ion-button class="ion-margin" expand="block" shape="round" [routerDirection]="'root'"
+        [routerLink]="'/link-account'">
         Link Account</ion-button>
     </div>
   </div>

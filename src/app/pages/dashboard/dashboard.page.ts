@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/providers/providers';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,10 +9,9 @@ import { Router } from '@angular/router';
 export class DashboardPage implements OnInit {
   numberOfAccounts = 0;
   showAccountPicker = true;
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.userService.getAccounts().then(data => {
@@ -22,13 +20,4 @@ export class DashboardPage implements OnInit {
       }
     });
   }
-
-  createAccount() {
-    this.router.navigate(['create-account/']);
-  }
-
-  linkAccount() {
-    this.router.navigate(['link-account/']);
-  }
-
 }
