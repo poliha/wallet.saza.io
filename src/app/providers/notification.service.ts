@@ -5,8 +5,10 @@ import { ToastController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class NotificationService {
-  defaultDuration = 3000;
+  defaultDuration = 5000;
+  maxDuration = 10000;
   defaultColour = 'primary';
+
   constructor(private toastCtrl: ToastController) {}
 
   async show(options: {
@@ -20,9 +22,11 @@ export class NotificationService {
     if (!message) {
       return;
     }
+
     const toastOptions: any = {
       message,
       color: color || this.defaultColour,
+      duration: duration || this.defaultDuration,
     };
 
     if (dismissButton) {
@@ -35,12 +39,15 @@ export class NotificationService {
           },
         },
       ];
-    } else {
-      toastOptions.duration = duration || this.defaultDuration;
+      toastOptions.duration = this.maxDuration;
     }
 
     const toast = await this.toastCtrl.create(toastOptions);
+
     toast.present();
+
+    const event = await toast.onDidDismiss();
+    console.log('dismiss event: ', event);
   }
 
   success(message: string) {
@@ -48,7 +55,7 @@ export class NotificationService {
   }
 
   info(message: string) {
-    return this.show({ message });
+    return this.show({ message, color: 'dark' });
   }
 
   error(message: string) {

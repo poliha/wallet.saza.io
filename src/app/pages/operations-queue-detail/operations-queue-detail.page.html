@@ -5,10 +5,18 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let item of operationDetail | keyvalue: compareFn">
-      <ion-label>
+      <div>
         <p>{{ item.key | splitOpName | titlecase }}</p>
-        <small class="ion-text-wrap">{{ item.value }}</small>
-      </ion-label>
+        <div *ngIf="item.value && item.key === 'signer'; else otherDetail">
+          <p class="ion-text-wrap">Key:
+            {{ item.value.sha256Hash || item.value.preAuthTx || item.value.ed25519PublicKey }}</p>
+          <p class="ion-text-wrap">Weight: {{item.value.weight}}</p>
+
+        </div>
+        <ng-template #otherDetail>
+          <p class="ion-text-wrap">{{ item.value }}</p>
+        </ng-template>
+      </div>
     </ion-item>
   </ion-list>
   <ion-button class="ion-margin" shape="round" expand="block" color="danger" (click)="confirmDelete()">

@@ -41,19 +41,30 @@ export class SignTxPage implements OnInit {
   ngOnInit() {
     this.makeForm();
     this.userService.userAccounts.subscribe(data => (this.userAccounts = data));
-    this.txService.tx.subscribe(data => {
-      if (data) {
-        this.builtTx = data;
+  }
+
+  ionViewWillEnter() {
+    this.txService
+      .getTx()
+      .then(builtTx => {
+        if (!builtTx) {
+          this.notify.info(
+            'No transaction to sign. Please create an operation.',
+          );
+          return this.router.navigate(['dashboard']);
+        }
+        this.builtTx = builtTx;
         console.log('builtTx: ', this.builtTx);
         this.txDetail = this.stellarService.loadTransactionObject(this.builtTx);
         console.log('txDetail: ', this.txDetail);
         this.loadEligibleSigners();
-        // const txObj = new Transaction(this.builtTx);
-        // console.log('txObj: ', txObj);
-        // const txSources = this.stellarService.txSourceAccounts(this.builtTx);
-        // console.log('srcAccounts: ', txSources);
-      }
-    });
+      })
+      .catch(error => {
+        console.log(error);
+        throw new SazaError(
+          'Unable to complete task: load transaction for signing',
+        );
+      });
   }
 
   makeForm() {

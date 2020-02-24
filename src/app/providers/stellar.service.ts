@@ -64,9 +64,7 @@ export class StellarService {
     } catch (error) {
       console.log('error: ', error);
       if (error instanceof NotFoundError) {
-        throw new SazaError(
-          `${accountID} is not active. Please create account.`,
-        );
+        throw new SazaError(`${accountID} is not active. Please fund account.`);
       } else {
         throw error;
       }

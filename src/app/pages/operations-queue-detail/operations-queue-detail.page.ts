@@ -19,23 +19,34 @@ export class OperationsQueueDetailPage implements OnInit {
   showBackButton = true;
   compareFn = (a, b) => 0; // preserves object order
 
-  constructor(private txService: TxService, private stellarService: StellarService,
-    private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController,
-    private splitOpNamePipe: SplitOpName, private titleCasePipe: TitleCasePipe) { }
+  constructor(
+    private txService: TxService,
+    private stellarService: StellarService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private alertCtrl: AlertController,
+    private splitOpNamePipe: SplitOpName,
+    private titleCasePipe: TitleCasePipe,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.operationId = this.route.snapshot.paramMap.get('id');
     this.txService.getOperations().then(data => {
-      if (!data) { return; }
+      if (!data) {
+        return;
+      }
 
       const ops = this.stellarService.getOperationObject(data);
       this.operationDetail = ops[this.operationId];
-      if (!this.operationDetail) { return; }
+      if (!this.operationDetail) {
+        return;
+      }
 
-      this.operationDetail.type = this.titleCasePipe.transform(this.splitOpNamePipe.transform(this.operationDetail.type));
+      this.operationDetail.type = this.titleCasePipe.transform(
+        this.splitOpNamePipe.transform(this.operationDetail.type),
+      );
       this.pageTitle = this.operationDetail.type;
       console.log('od: ', this.operationDetail);
     });
@@ -49,14 +60,14 @@ export class OperationsQueueDetailPage implements OnInit {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => { }
+          handler: () => {},
         },
         {
           text: 'Continue',
           handler: () => {
             this.deleteOperation();
-          }
-        }
+          },
+        },
       ],
     });
 
@@ -65,6 +76,8 @@ export class OperationsQueueDetailPage implements OnInit {
 
   async deleteOperation() {
     await this.txService.deleteOperation(this.operationId);
+    // remove built transaction if any.
+    await this.txService.deleteTx();
     this.router.navigate(['operations-queue/']);
   }
 }
