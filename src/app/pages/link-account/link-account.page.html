@@ -34,7 +34,8 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Tag</ion-label>
-        <app-dynamic-input [form]="linkAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1">
+        <app-dynamic-input [form]="linkAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1"
+          [placeHolder]="'My account'">
         </app-dynamic-input>
       </ion-item>
       <ion-item>
@@ -44,7 +45,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Password</ion-label>
-        <ion-input type="password" name="password" formControlName="password"></ion-input>
+        <ion-input type="password" name="password" formControlName="password" placeHolder="Enter Password"></ion-input>
         <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
           <div *ngIf="password.errors.required">
             A value is required.
