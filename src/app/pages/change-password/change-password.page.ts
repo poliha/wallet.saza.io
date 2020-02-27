@@ -41,9 +41,6 @@ export class ChangePasswordPage implements OnInit {
     this.oldPasswordHash = await this.userService.getPassword();
     this.oldUserAccounts = await this.userService.getAccounts();
     this.oldRecoveryPassword = await this.userService.getPasswordRecovery();
-
-    this.passwordFromRecovery = 'abc';
-
     console.log('oldPW: ', this.oldPasswordHash);
     console.log('oldUA: ', this.oldUserAccounts);
     console.log('oldPR: ', this.oldRecoveryPassword);
@@ -121,6 +118,7 @@ export class ChangePasswordPage implements OnInit {
       }
       // display recovery password to user
       this.showRecoveryPassword(recoveryPassword);
+      this.changePasswordForm.reset();
     } catch (error) {
       console.log('Error: ', error);
       this.notify.error(errorMessage);
