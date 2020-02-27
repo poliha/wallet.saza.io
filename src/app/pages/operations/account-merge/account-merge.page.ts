@@ -47,23 +47,18 @@ export class AccountMergePage implements OnInit {
     // save xdr string to be used later in building the transaction
     // reset form
     // Show success or error message
+    const opData = {
+      destination: this.destination.value,
+      source: this.source.value,
+      opType: this.stellarService.operationType.ACCOUNT_MERGE,
+    };
 
-    try {
-      const opData = {
-        destination: this.destination.value,
-        source: this.source.value,
-        opType: this.stellarService.operationType.ACCOUNT_MERGE,
-      };
-
-      console.log('account Merge Ops: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData);
-      this.txService.addOperation({ type: opData.opType, tx: xdrString });
-      this.notification.success('Operation Added');
-      console.log('account Merge Ops: ', xdrString);
-      this.accountMergeForm.reset({ source: this.source.value });
-    } catch (error) {
-      console.log('error: ', error);
-    }
+    console.log('account Merge Ops: ', opData);
+    const xdrString = await this.stellarService.buildOperation(opData);
+    this.txService.addOperation({ type: opData.opType, tx: xdrString });
+    this.notification.success('Operation Added');
+    console.log('account Merge Ops: ', xdrString);
+    this.accountMergeForm.reset({ source: this.source.value });
   }
 
   addOperation() {
@@ -73,7 +68,8 @@ export class AccountMergePage implements OnInit {
   }
 
   buildTransaction() {
-    this.buildOperation();
-    this.router.navigate(['build-tx/']);
+    this.buildOperation().then(() => {
+      this.router.navigate(['build-tx/']);
+    });
   }
 }
