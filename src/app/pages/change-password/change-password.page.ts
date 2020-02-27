@@ -97,32 +97,30 @@ export class ChangePasswordPage implements OnInit {
         throw errorMessage;
       }
 
-      const newPasswordHash = this.utility.getHash(newPassword);
-      const newRecoveryPassword = this.utility.generatePassword();
+      const accounts = await this.userService.getAccounts();
 
-      // use the recovery password to encrypt the new password.
-      const encrpytedPassword = this.utility.encrypt(
+      const {
+        passwordHash,
+        recoveryPassword,
+        encrpytedPassword,
+        accounts: newAccounts,
+      } = this.utility.changePassword({
+        currentPassword,
         newPassword,
-        newRecoveryPassword,
-      );
+        accounts,
+      });
+
       // save hash of new password
-      await this.userService.setPassword(newPasswordHash);
+      await this.userService.setPassword(passwordHash);
       // save new recovery password
       await this.userService.setPasswordRecovery(encrpytedPassword);
       // save user accounts
-      for (const acc of this.oldUserAccounts) {
-        const privatekey = this.utility.decrypt(acc.private, currentPassword);
-        const encryptedKey = this.utility.encrypt(privatekey, newPassword);
-        if (!encryptedKey) {
-          errorMessage = 'Encryption failed with new password.';
-          throw errorMessage;
-        }
-        acc.private = encryptedKey;
+      for (const acc of newAccounts) {
+        // to do: use Promise.all
         await this.userService.setAccount(acc);
       }
-
       // display recovery password to user
-      this.showRecoveryPassword(newRecoveryPassword);
+      this.showRecoveryPassword(recoveryPassword);
     } catch (error) {
       console.log('Error: ', error);
       this.notify.error(errorMessage);
