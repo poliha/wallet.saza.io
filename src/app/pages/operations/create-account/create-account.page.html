@@ -1,24 +1,24 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl" [subTitle]="subTitle"></app-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="createAccountForm">
+  <form [formGroup]="operationForm">
     <ion-item>
       <ion-label position="stacked">Destination</ion-label>
-      <app-dynamic-input [controlName]="'destination'" [form]="createAccountForm" [inputType]="'text'"
+      <app-dynamic-input [controlName]="'destination'" [form]="operationForm" [inputType]="'text'"
         [placeHolder]="'Public Key'" [isEd25519PublicKey]="true"></app-dynamic-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Amount</ion-label>
-      <app-dynamic-input [controlName]="'amount'" [form]="createAccountForm" [placeHolder]="'Enter starting balance'">
+      <app-dynamic-input [controlName]="'amount'" [form]="operationForm" [placeHolder]="'Enter starting balance'">
       </app-dynamic-input>
     </ion-item>
     <ion-item>
-      <app-select-source [form]="createAccountForm" [controlName]="'source'"></app-select-source>
+      <app-select-source [form]="operationForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="createAccountForm.invalid" (click)="addOperation()">Save</ion-button>
-      <ion-button type="button" [disabled]="createAccountForm.invalid" (click)="signOperation()">Send</ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save</ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send</ion-button>
     </div>
   </form>
 </ion-content>

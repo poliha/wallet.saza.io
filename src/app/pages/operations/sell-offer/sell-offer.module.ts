@@ -8,15 +8,14 @@ import { IonicModule } from '@ionic/angular';
 import { SellOfferPage } from './sell-offer.page';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
-import { TxService } from 'src/app/providers/providers';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: SellOfferPage
-  }
+    component: SellOfferPage,
+  },
 ];
 
 @NgModule({
@@ -31,9 +30,6 @@ const routes: Routes = [
     SelectSourceComponentModule,
     HeaderComponentModule,
   ],
-  providers: [
-    TxService,
-  ],
-  declarations: [SellOfferPage]
+  declarations: [SellOfferPage],
 })
 export class SellOfferPageModule {}

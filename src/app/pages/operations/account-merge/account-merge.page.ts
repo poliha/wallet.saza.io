@@ -1,75 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  TxService,
-  NotificationService,
-  StellarService,
-} from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
 
 @Component({
   selector: 'app-account-merge',
   templateUrl: './account-merge.page.html',
   styleUrls: ['./account-merge.page.scss'],
 })
-export class AccountMergePage implements OnInit {
-  public accountMergeForm: FormGroup;
+export class AccountMergePage extends OperationBuilderComponent
+  implements OnInit {
   pageTitle = 'Account Merge';
   subTitle = 'Operation';
   helpUrl = '';
-  constructor(
-    private txService: TxService,
-    private notification: NotificationService,
-    private stellarService: StellarService,
-    private router: Router,
-  ) {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
+    super.ngOnInit();
+    this.operationType = this.stellarService.operationType.ACCOUNT_MERGE;
     this.makeForm();
   }
 
   makeForm() {
-    this.accountMergeForm = new FormGroup({});
-    console.log('form: ', this.accountMergeForm);
+    this.operationForm = new FormGroup({});
+    console.log('form: ', this.operationForm);
   }
 
   // Getters for template
   get source() {
-    return this.accountMergeForm.get('source');
+    return this.operationForm.get('source');
   }
   get destination() {
-    return this.accountMergeForm.get('destination');
+    return this.operationForm.get('destination');
   }
 
-  private async buildOperation() {
-    // build account Merge operation
-    // convert xdr.Operation to base64 string
-    // save xdr string to be used later in building the transaction
-    // reset form
-    // Show success or error message
-    const opData = {
+  setOperationData() {
+    this.operationData = {
       destination: this.destination.value,
       source: this.source.value,
-      opType: this.stellarService.operationType.ACCOUNT_MERGE,
+      opType: this.operationType,
     };
-
-    console.log('account Merge Ops: ', opData);
-    const xdrString = await this.stellarService.buildOperation(opData);
-    this.txService.addOperation({ type: opData.opType, tx: xdrString });
-    this.notification.success('Operation Added');
-    console.log('account Merge Ops: ', xdrString);
-    this.accountMergeForm.reset({ source: this.source.value });
   }
 
-  addOperation() {
-    console.log('adding operation');
-    this.buildOperation();
-    // to do navigate to next page
+  async saveOperation() {
+    this.setOperationData();
+    await this.buildOperation();
+    this.operationForm.reset({ source: this.source.value });
   }
 
-  buildTransaction() {
-    this.buildOperation().then(() => {
-      this.router.navigate(['build-tx/']);
-    });
+  async sendOperation() {
+    this.setOperationData();
+    await this.buildTransaction();
   }
 }

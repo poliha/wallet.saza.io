@@ -1,27 +1,27 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl" [subTitle]="subTitle"></app-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="manageDataForm">
+  <form [formGroup]="operationForm">
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'dataName'" [placeHolder]="'Name'"
+      <app-dynamic-input [inputType]="'text'" [form]="operationForm" [controlName]="'dataName'" [placeHolder]="'Name'"
         [maxValue]="64">
       </app-dynamic-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Value</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="manageDataForm" [controlName]="'dataValue'"
-        [placeHolder]="'Value'" [maxValue]="64">
+      <app-dynamic-input [inputType]="'text'" [form]="operationForm" [controlName]="'dataValue'" [placeHolder]="'Value'"
+        [maxValue]="64">
       </app-dynamic-input>
     </ion-item>
     <ion-item>
-      <app-select-source [form]="manageDataForm" [controlName]="'source'"></app-select-source>
+      <app-select-source [form]="operationForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="addOperation()">Save
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save
       </ion-button>
-      <ion-button type="button" [disabled]="manageDataForm.invalid" (click)="signOperation()">Send
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send
       </ion-button>
     </div>
   </form>

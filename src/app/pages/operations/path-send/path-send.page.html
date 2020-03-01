@@ -64,17 +64,17 @@
       </form>
     </mat-step>
     <mat-step>
-      <form [formGroup]="sendPaymentForm">
+      <form [formGroup]="operationForm">
         <ng-template matStepLabel>Send Payment</ng-template>
         <div>
-          <app-select-source [form]="sendPaymentForm" [controlName]="'source'" [isRequired]="true"></app-select-source>
+          <app-select-source [form]="operationForm" [controlName]="'source'" [isRequired]="true"></app-select-source>
         </div>
 
 
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Save</button>
-          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Send</button>
+          <button [disabled]="operationForm.invalid" (click)="saveOperation()" mat-button>Save</button>
+          <button [disabled]="operationForm.invalid" (click)="sendOperation()" mat-button>Send</button>
         </div>
       </form>
     </mat-step>

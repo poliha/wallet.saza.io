@@ -1,60 +1,72 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Utility,
-  TxService,
-  StellarService,
-} from '../../../providers/providers';
-import { OfferComponent } from 'src/app/components/offer/offer.component';
+import { Utility } from '../../../providers/providers';
+import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-passive-offer',
   templateUrl: './passive-offer.page.html',
   styleUrls: ['./passive-offer.page.scss'],
 })
-export class PassiveOfferPage extends OfferComponent implements OnInit {
+export class PassiveOfferPage extends OperationBuilderComponent
+  implements OnInit {
   pageTitle = 'Passive Offer';
   subTitle = 'Operation';
   helpUrl = 'helpUrl';
-  constructor(
-    private txService: TxService,
-    private utility: Utility,
-    private stellarService: StellarService,
-  ) {
+  constructor(private utility: Utility) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.operationType = this.stellarService.operationType.CREATE_PASSIVE_SELL_OFFER;
+    this.makeForm();
   }
 
-  async buildOperation() {
-    // build passive offer operation
-    // convert xdr.Operation to base64 string
-    // save xdr string to be used later in building the transaction
-    // reset form
-    // Show success or error message
+  makeForm() {
+    this.operationForm = new FormGroup({});
+  }
 
-    try {
-      const opData = {
-        selling: this.utility.generateAsset(this.selling.value),
-        buying: this.utility.generateAsset(this.buying.value),
-        amount: this.amount.value,
-        price: this.price.value,
-        source: this.source.value,
-        opType: this.stellarService.operationType.CREATE_PASSIVE_SELL_OFFER,
-      };
+  // Getters for template
+  get source() {
+    return this.operationForm.get('source');
+  }
+  get selling() {
+    return this.operationForm.get('selling');
+  }
+  get buying() {
+    return this.operationForm.get('buying');
+  }
+  get amount() {
+    return this.operationForm.get('amount');
+  }
+  get price() {
+    return this.operationForm.get('price');
+  }
 
-      console.log('managePassiveOffer: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData);
-      this.txService.addOperation({
-        type: 'create_passive_sell_offer',
-        tx: xdrString,
-      });
+  setOperationData() {
+    this.operationData = {
+      selling: this.utility.generateAsset(this.selling.value),
+      buying: this.utility.generateAsset(this.buying.value),
+      amount: this.amount.value,
+      price: this.price.value,
+      source: this.source.value,
+      opType: this.operationType,
+    };
+  }
 
-      console.log('managePassiveOffer: ', xdrString);
-      this.resetForm();
-    } catch (error) {
-      console.log('error: ', error);
-    }
+  async saveOperation() {
+    this.setOperationData();
+    await this.buildOperation();
+    this.operationForm.reset({
+      source: this.source.value,
+      selling: { asset_type: 'native' },
+      buying: { asset_type: 'native' },
+    });
+  }
+
+  async sendOperation() {
+    this.setOperationData();
+    await this.buildTransaction();
   }
 }

@@ -1,83 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  TxService,
-  NotificationService,
-  Utility,
-  StellarService,
-} from '../../../providers/providers';
+import { Utility } from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
+import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
 
 @Component({
   selector: 'app-change-trust',
   templateUrl: './change-trust.page.html',
   styleUrls: ['./change-trust.page.scss'],
 })
-export class ChangeTrustPage implements OnInit {
-  public changeTrustForm: FormGroup;
+export class ChangeTrustPage extends OperationBuilderComponent
+  implements OnInit {
   pageTitle = 'Change Trust';
   subTitle = 'Operation';
   helpUrl = '';
-  constructor(
-    private txService: TxService,
-    private notification: NotificationService,
-    private utility: Utility,
-    private stellarService: StellarService,
-  ) {}
+  constructor(private utility: Utility) {
+    super();
+  }
 
   ngOnInit() {
+    super.ngOnInit();
     this.makeForm();
+    this.operationType = this.stellarService.operationType.CHANGE_TRUST;
   }
 
   makeForm() {
-    this.changeTrustForm = new FormGroup({});
+    this.operationForm = new FormGroup({});
   }
 
   // Getters for template
   get source() {
-    return this.changeTrustForm.get('source');
+    return this.operationForm.get('source');
   }
   get asset() {
-    return this.changeTrustForm.get('asset');
+    return this.operationForm.get('asset');
   }
   get limit() {
-    return this.changeTrustForm.get('limit');
+    return this.operationForm.get('limit');
   }
 
-  private async buildOperation() {
-    // build change Trust operation
-    // convert xdr.Operation to base64 string
-    // save xdr string to be used later in building the transaction
-    // reset form
-    // Show success or error message
-
-    try {
-      const opData = {
-        limit: String(this.limit.value),
-        asset: this.utility.generateAsset(this.asset.value),
-        source: this.source.value,
-        opType: this.stellarService.operationType.CHANGE_TRUST,
-      };
-
-      console.log('change Trust Ops: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData);
-      this.txService.addOperation({ type: opData.opType, tx: xdrString });
-      this.notification.success('Operation Added');
-      this.changeTrustForm.reset({ source: this.source.value });
-      console.log('change Trust Ops: ', xdrString);
-    } catch (error) {
-      console.log('error: ', error);
-    }
+  setOperationData() {
+    this.operationData = {
+      limit: String(this.limit.value),
+      asset: this.utility.generateAsset(this.asset.value),
+      source: this.source.value,
+      opType: this.operationType,
+    };
   }
 
-  addOperation() {
-    console.log('adding operation');
-    this.buildOperation();
-    // to do navigate to next page
+  async saveOperation() {
+    this.setOperationData();
+    await this.buildOperation();
+    this.operationForm.reset({ source: this.source.value });
   }
 
-  signOperation() {
-    console.log('signing operation');
-    this.buildOperation();
-    // to do navigate to next page
+  async sendOperation() {
+    this.setOperationData();
+    await this.buildTransaction();
   }
 }

@@ -1,14 +1,14 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl" [subTitle]="subTitle"></app-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="setOptionsForm">
+  <form [formGroup]="operationForm">
     <div>
       <ion-item-divider color="light" sticky>
         <ion-label>
           Set Flags
         </ion-label>
       </ion-item-divider>
-      <app-account-flag [form]="setOptionsForm" [controlName]="'setFlags'"></app-account-flag>
+      <app-account-flag [form]="operationForm" [controlName]="'setFlags'"></app-account-flag>
     </div>
 
     <div>
@@ -16,54 +16,54 @@
         <ion-label>
           Clear Flags </ion-label>
       </ion-item-divider>
-      <app-account-flag [form]="setOptionsForm" [controlName]="'clearFlags'" [showImmutable]="false"></app-account-flag>
+      <app-account-flag [form]="operationForm" [controlName]="'clearFlags'" [showImmutable]="false"></app-account-flag>
     </div>
 
     <ion-item>
       <ion-label position="stacked">Master Weight</ion-label>
-      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'masterWeight'"
+      <app-dynamic-input [inputType]="'number'" [form]="operationForm" [controlName]="'masterWeight'"
         [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false"></app-dynamic-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Low Threshold</ion-label>
-      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'lowThreshold'"
+      <app-dynamic-input [inputType]="'number'" [form]="operationForm" [controlName]="'lowThreshold'"
         [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false"></app-dynamic-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Medium Threshold</ion-label>
-      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'medThreshold'"
+      <app-dynamic-input [inputType]="'number'" [form]="operationForm" [controlName]="'medThreshold'"
         [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false"></app-dynamic-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">High Threshold</ion-label>
-      <app-dynamic-input [inputType]="'number'" [form]="setOptionsForm" [controlName]="'highThreshold'"
+      <app-dynamic-input [inputType]="'number'" [form]="operationForm" [controlName]="'highThreshold'"
         [placeHolder]="'0 - 255'" [minValue]="0" [maxValue]="255" [isRequired]="false">
       </app-dynamic-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Signer</ion-label>
-      <app-signer-type [form]="setOptionsForm" [controlName]="'signer'"></app-signer-type>
+      <app-signer-type [form]="operationForm" [controlName]="'signer'"></app-signer-type>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Home Domain</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="setOptionsForm" [controlName]="'homeDomain'"
+      <app-dynamic-input [inputType]="'text'" [form]="operationForm" [controlName]="'homeDomain'"
         [placeHolder]="'example.com'" [isRequired]="false">
       </app-dynamic-input>
     </ion-item>
 
     <ion-item>
-      <app-select-source [form]="setOptionsForm" [controlName]="'source'"></app-select-source>
+      <app-select-source [form]="operationForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="setOptionsForm.invalid" (click)="addOperation()">Save
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save
       </ion-button>
-      <ion-button type="button" [disabled]="setOptionsForm.invalid" (click)="buildTransaction()">Send
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send
       </ion-button>
     </div>
   </form>

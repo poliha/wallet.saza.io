@@ -9,7 +9,6 @@ import { SetOptionsPage } from './set-options.page';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
-import { TxService } from 'src/app/providers/providers';
 import { AccountFlagComponentModule } from 'src/app/components/account-flag/account-flag.module';
 import { SignerTypeComponentModule } from 'src/app/components/signer-type/signer-type.module';
 
@@ -34,6 +33,5 @@ const routes: Routes = [
     SignerTypeComponentModule,
   ],
   declarations: [SetOptionsPage],
-  providers: [TxService],
 })
 export class SetOptionsPageModule {}

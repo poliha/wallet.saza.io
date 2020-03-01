@@ -8,15 +8,14 @@ import { IonicModule } from '@ionic/angular';
 import { PassiveOfferPage } from './passive-offer.page';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
-import { TxService } from 'src/app/providers/providers';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: PassiveOfferPage
-  }
+    component: PassiveOfferPage,
+  },
 ];
 
 @NgModule({
@@ -32,8 +31,5 @@ const routes: Routes = [
     HeaderComponentModule,
   ],
   declarations: [PassiveOfferPage],
-  providers: [
-    TxService,
-  ]
 })
 export class PassiveOfferPageModule {}

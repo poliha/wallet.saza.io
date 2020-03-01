@@ -1,80 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import {
-  TxService,
-  NotificationService,
-  StellarService,
-} from '../../../providers/providers';
+import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
 
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.page.html',
   styleUrls: ['./create-account.page.scss'],
 })
-export class CreateAccountPage implements OnInit {
-  createAccountForm: FormGroup;
+export class CreateAccountPage extends OperationBuilderComponent
+  implements OnInit {
   pageTitle = 'Create Account';
   subTitle = 'Operation';
   helpUrl = '';
-  constructor(
-    private txService: TxService,
-    private stellarService: StellarService,
-    private notification: NotificationService,
-  ) {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
+    super.ngOnInit();
+    this.operationType = this.stellarService.operationType.CREATE_ACCOUNT;
     this.makeForm();
   }
 
   makeForm() {
-    this.createAccountForm = new FormGroup({});
+    this.operationForm = new FormGroup({});
   }
 
   // Getters for template
   get source() {
-    return this.createAccountForm.get('source');
+    return this.operationForm.get('source');
   }
   get destination() {
-    return this.createAccountForm.get('destination');
+    return this.operationForm.get('destination');
   }
   get amount() {
-    return this.createAccountForm.get('amount');
+    return this.operationForm.get('amount');
   }
 
-  private async buildOperation() {
-    // build create account operation
-    // convert xdr.Operation to base64 string
-    // save xdr string to be used later in building the transaction
-    // reset form
-    // Show success or error message
-
-    try {
-      const opData = {
-        destination: this.destination.value,
-        startingBalance: String(this.amount.value),
-        source: this.source.value,
-        opType: this.stellarService.operationType.CREATE_ACCOUNT,
-      };
-
-      const xdrString = await this.stellarService.buildOperation(opData);
-      console.log('XDR: ', xdrString);
-      this.txService.addOperation({ type: opData.opType, tx: xdrString });
-      this.notification.success('Operation Added');
-      this.createAccountForm.reset({ source: this.source.value });
-    } catch (error) {
-      console.log('error: ', error);
-    }
+  setOperationData() {
+    this.operationData = {
+      destination: this.destination.value,
+      startingBalance: String(this.amount.value),
+      source: this.source.value,
+      opType: this.operationType,
+    };
   }
 
-  addOperation() {
-    console.log('adding operation');
-    this.buildOperation();
-    // to do navigate to dashboard
+  async saveOperation() {
+    this.setOperationData();
+    await this.buildOperation();
+    this.operationForm.reset({ source: this.source.value });
   }
 
-  signOperation() {
-    console.log('adding operation');
-    this.buildOperation();
-    // to do navigate to build
+  async sendOperation() {
+    this.setOperationData();
+    await this.buildTransaction();
   }
 }

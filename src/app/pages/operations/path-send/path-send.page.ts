@@ -1,26 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material';
-import {
-  TxService,
-  NotificationService,
-  StellarService,
-} from 'src/app/providers/providers';
 import { Utility } from 'src/app/providers/utility';
+import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
 
 @Component({
   selector: 'app-path-send',
   templateUrl: './path-send.page.html',
   styleUrls: ['./path-send.page.scss'],
 })
-export class PathSendPage implements OnInit {
+export class PathSendPage extends OperationBuilderComponent implements OnInit {
   pageTitle = 'Path Payment Strict Send';
   subTitle = 'Operation';
 
   helpUrl = '';
   public findPathForm: FormGroup;
   public choosePathForm: FormGroup;
-  public sendPaymentForm: FormGroup;
+  public operationForm: FormGroup;
   public pathsFound = [];
   public sendParams = {
     sendAsset: undefined,
@@ -34,14 +30,13 @@ export class PathSendPage implements OnInit {
   };
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
 
-  constructor(
-    private txService: TxService,
-    private notification: NotificationService,
-    private stellarService: StellarService,
-    private utility: Utility,
-  ) {}
+  constructor(private utility: Utility) {
+    super();
+  }
 
   ngOnInit() {
+    super.ngOnInit();
+    this.operationType = this.stellarService.operationType.PATH_PAYMENT_STRICT_SEND;
     this.makeForm();
   }
 
@@ -50,11 +45,11 @@ export class PathSendPage implements OnInit {
     this.choosePathForm = new FormGroup({
       selectedPath: new FormControl('', Validators.required),
     });
-    this.sendPaymentForm = new FormGroup({});
+    this.operationForm = new FormGroup({});
 
     console.log('choosepathForm: ', this.choosePathForm);
 
-    console.log('sendForm: ', this.sendPaymentForm);
+    console.log('sendForm: ', this.operationForm);
   }
 
   // Getters for template
@@ -128,37 +123,25 @@ export class PathSendPage implements OnInit {
     this.stepper.next();
   }
 
-  async submitSendPaymentForm() {
-    try {
-      const { source } = this.sendPaymentForm.value;
-      this.sendParams.source = source;
-      this.sendParams.opType = this.stellarService.operationType.PATH_PAYMENT_STRICT_SEND;
-      console.log('sendParams: ', this.sendParams);
+  setOperationData() {
+    const { source } = this.operationForm.value;
+    this.sendParams.source = source;
+    this.sendParams.opType = this.operationType;
+    console.log('sendParams: ', this.sendParams);
 
-      const xdrString = await this.stellarService.buildOperation(
-        this.sendParams,
-      );
-      this.txService.addOperation({
-        type: this.sendParams.opType,
-        tx: xdrString,
-      });
-      this.notification.success('Operation Added');
-      this.stepper.reset();
-      console.log('paths send: ', xdrString);
-    } catch (error) {
-      console.log('error: ', error);
-    }
+    this.operationData = {
+      ...this.sendParams,
+    };
   }
 
-  addOperation() {
-    console.log('adding operation');
-    this.submitSendPaymentForm();
-    // to do navigate to next page
+  async saveOperation() {
+    this.setOperationData();
+    await this.buildOperation();
+    this.stepper.reset();
   }
 
-  signOperation() {
-    console.log('signing operation');
-    this.submitSendPaymentForm();
-    // to do navigate to next page
+  async sendOperation() {
+    this.setOperationData();
+    await this.buildTransaction();
   }
 }

@@ -1,16 +1,16 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl" [subTitle]="subTitle"></app-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="allowTrustForm">
+  <form [formGroup]="operationForm">
     <ion-item>
       <ion-label position="stacked">Trustor</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="allowTrustForm" [controlName]="'trustor'"
+      <app-dynamic-input [inputType]="'text'" [form]="operationForm" [controlName]="'trustor'"
         [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Asset Code</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="allowTrustForm" [controlName]="'assetCode'"
+      <app-dynamic-input [inputType]="'text'" [form]="operationForm" [controlName]="'assetCode'"
         [placeHolder]="'Asset Code'" [maxValue]="12"></app-dynamic-input>
     </ion-item>
 
@@ -34,14 +34,14 @@
     </ion-item>
 
     <ion-item>
-      <app-select-source [form]="allowTrustForm" [controlName]="'source'"></app-select-source>
+      <app-select-source [form]="operationForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="addOperation()">
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">
         Save
       </ion-button>
-      <ion-button type="button" [disabled]="allowTrustForm.invalid" (click)="signOperation()">Send
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send
       </ion-button>
     </div>
   </form>

@@ -1,81 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  TxService,
-  NotificationService,
-  StellarService,
-} from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
+import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
 
 @Component({
   selector: 'app-manage-data',
   templateUrl: './manage-data.page.html',
   styleUrls: ['./manage-data.page.scss'],
 })
-export class ManageDataPage implements OnInit {
-  public manageDataForm: FormGroup;
+export class ManageDataPage extends OperationBuilderComponent
+  implements OnInit {
   pageTitle = 'Manage Data';
   subTitle = 'Operation';
   helpUrl = '';
-  constructor(
-    private txService: TxService,
-    private notification: NotificationService,
-    private stellarService: StellarService,
-  ) {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
+    super.ngOnInit();
+    this.operationType = this.stellarService.operationType.MANAGE_DATA;
     this.makeForm();
   }
 
   makeForm() {
-    this.manageDataForm = new FormGroup({});
+    this.operationForm = new FormGroup({});
   }
 
   // Getters for template
   get source() {
-    return this.manageDataForm.get('source');
+    return this.operationForm.get('source');
   }
   get dataName() {
-    return this.manageDataForm.get('dataName');
+    return this.operationForm.get('dataName');
   }
   get dataValue() {
-    return this.manageDataForm.get('dataValue');
+    return this.operationForm.get('dataValue');
   }
 
-  private async buildOperation() {
-    // build manage data operation
-    // convert xdr.Operation to base64 string
-    // save xdr string to be used later in building the transaction
-    // reset form
-    // Show success or error message
-
-    try {
-      const opData = {
-        name: this.dataName.value,
-        value: this.dataValue.value,
-        source: this.source.value,
-        opType: this.stellarService.operationType.MANAGE_DATA,
-      };
-
-      console.log('manage Data Ops: ', opData);
-      const xdrString = await this.stellarService.buildOperation(opData);
-      this.txService.addOperation({ type: opData.opType, tx: xdrString });
-      this.notification.success('Operation Added');
-      this.manageDataForm.reset({ source: this.source.value });
-      console.log('manage Data Ops: ', xdrString);
-    } catch (error) {
-      console.log('error: ', error);
-    }
+  setOperationData() {
+    this.operationData = {
+      name: this.dataName.value,
+      value: this.dataValue.value,
+      source: this.source.value,
+      opType: this.operationType,
+    };
   }
 
-  addOperation() {
-    console.log('adding operation');
-    this.buildOperation();
-    // to do navigate to next page
+  async saveOperation() {
+    this.setOperationData();
+    await this.buildOperation();
+    this.operationForm.reset({ source: this.source.value });
   }
 
-  signOperation() {
-    console.log('signing operation');
-    this.buildOperation();
-    // to do navigate to next page
+  async sendOperation() {
+    this.setOperationData();
+    await this.buildTransaction();
   }
 }

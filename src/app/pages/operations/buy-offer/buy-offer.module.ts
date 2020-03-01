@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { BuyOfferPage } from './buy-offer.page';
-import { TxService } from 'src/app/providers/providers';
 import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
@@ -15,8 +14,8 @@ import { HeaderComponentModule } from 'src/app/components/header/header.module';
 const routes: Routes = [
   {
     path: '',
-    component: BuyOfferPage
-  }
+    component: BuyOfferPage,
+  },
 ];
 
 @NgModule({
@@ -32,8 +31,5 @@ const routes: Routes = [
     HeaderComponentModule,
   ],
   declarations: [BuyOfferPage],
-  providers: [
-    TxService,
-  ]
 })
 export class BuyOfferPageModule {}

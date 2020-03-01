@@ -1,21 +1,21 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl" [subTitle]="subTitle"></app-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="bumpSequenceForm">
+  <form [formGroup]="operationForm">
     <ion-item>
       <ion-label position="stacked">BumpTo</ion-label>
-      <app-dynamic-input [form]="bumpSequenceForm" [controlName]="'bumpTo'" [placeHolder]="'Sequence Number'">
+      <app-dynamic-input [form]="operationForm" [controlName]="'bumpTo'" [placeHolder]="'Sequence Number'">
       </app-dynamic-input>
     </ion-item>
 
     <ion-item>
-      <app-select-source [form]="bumpSequenceForm" [controlName]="'source'"></app-select-source>
+      <app-select-source [form]="operationForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="bumpSequenceForm.invalid" (click)="addOperation()">Save
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save
       </ion-button>
-      <ion-button type="button" [disabled]="bumpSequenceForm.invalid" (click)="signOperation()">Send
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send
       </ion-button>
     </div>
   </form>

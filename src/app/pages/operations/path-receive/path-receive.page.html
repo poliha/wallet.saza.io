@@ -59,20 +59,20 @@
       </form>
     </mat-step>
     <mat-step>
-      <form [formGroup]="sendPaymentForm">
+      <form [formGroup]="operationForm">
         <ng-template matStepLabel>Send Payment</ng-template>
         <div>
           <label>Destination</label>
 
-          <app-dynamic-input [inputType]="'text'" [form]="sendPaymentForm" [controlName]="'destination'"
+          <app-dynamic-input [inputType]="'text'" [form]="operationForm" [controlName]="'destination'"
             [placeHolder]="'Destination'" [isEd25519PublicKey]="true">
           </app-dynamic-input>
         </div>
 
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Save</button>
-          <button [disabled]="sendPaymentForm.invalid" (click)="submitSendPaymentForm()" mat-button>Send</button>
+          <button [disabled]="operationForm.invalid" (click)="saveOperation()" mat-button>Save</button>
+          <button [disabled]="operationForm.invalid" (click)="sendOperation()" mat-button>Send</button>
         </div>
       </form>
     </mat-step>

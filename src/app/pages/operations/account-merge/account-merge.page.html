@@ -1,21 +1,21 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl" [subTitle]="subTitle"></app-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="accountMergeForm">
+  <form [formGroup]="operationForm">
     <ion-item>
       <ion-label position="stacked">Destination</ion-label>
-      <app-dynamic-input [inputType]="'text'" [form]="accountMergeForm" [controlName]="'destination'"
+      <app-dynamic-input [inputType]="'text'" [form]="operationForm" [controlName]="'destination'"
         [placeHolder]="'Public key'" [isEd25519PublicKey]="true"></app-dynamic-input>
     </ion-item>
 
     <ion-item>
-      <app-select-source [form]="accountMergeForm" [controlName]="'source'"></app-select-source>
+      <app-select-source [form]="operationForm" [controlName]="'source'"></app-select-source>
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="addOperation()">Save
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save
       </ion-button>
-      <ion-button type="button" [disabled]="accountMergeForm.invalid" (click)="buildTransaction()">Send
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send
       </ion-button>
     </div>
   </form>

@@ -2,41 +2,42 @@
 
 
 <ion-content class="ion-padding">
-  <form [formGroup]="offerForm">
+  <form [formGroup]="operationForm">
     <ion-item>
       <ion-label position="stacked">Selling</ion-label>
       <div>
-        <app-asset-picker [form]="offerForm" [controlName]="'selling'" [displayType]="'manual'"></app-asset-picker>
+        <app-asset-picker [form]="operationForm" [controlName]="'selling'" [displayType]="'manual'"></app-asset-picker>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Buying</ion-label>
       <div>
-        <app-asset-picker [form]="offerForm" [controlName]="'buying'" [displayType]="'manual'"></app-asset-picker>
+        <app-asset-picker [form]="operationForm" [controlName]="'buying'" [displayType]="'manual'"></app-asset-picker>
       </div>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Price</ion-label>
-      <app-dynamic-input [form]="offerForm" [controlName]="'price'" [placeHolder]="'Price'">
+      <app-dynamic-input [form]="operationForm" [controlName]="'price'" [placeHolder]="'Price'">
       </app-dynamic-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Amount</ion-label>
-      <app-dynamic-input [form]="offerForm" [controlName]="'amount'" [placeHolder]="'Amount'">
+      <app-dynamic-input [form]="operationForm" [controlName]="'amount'" [placeHolder]="'Amount'">
       </app-dynamic-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Offer ID</ion-label>
-      <app-dynamic-input [form]="offerForm" [controlName]="'offerID'" [placeHolder]="'Offer ID'" [isRequired]="false">
+      <app-dynamic-input [form]="operationForm" [controlName]="'offerID'" [placeHolder]="'Offer ID'"
+        [isRequired]="false">
       </app-dynamic-input>
       <ion-note>Leave blank to create new offer</ion-note>
     </ion-item>
     <ion-item>
-      <app-select-source [form]="offerForm" [controlName]="'source'"></app-select-source>
+      <app-select-source [form]="operationForm" [controlName]="'source'"></app-select-source>
     </ion-item>
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Save</ion-button>
-      <ion-button type="button" [disabled]="offerForm.invalid" (click)="buildOperation()">Send</ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save</ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send</ion-button>
     </div>
   </form>
 </ion-content>
