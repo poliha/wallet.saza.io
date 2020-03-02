@@ -8,6 +8,7 @@ import {
 } from '../../providers/providers';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { SazaError } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-login',
@@ -57,8 +58,9 @@ export class LoginPage implements OnInit {
     const passwordHash = await this.userService.getPassword();
     const trimmedPwd = String(this.password.value).trim();
     if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
-      throw new Error(INVALID_PASSWORD_ERROR);
+      throw new SazaError(INVALID_PASSWORD_ERROR);
     }
+    this.loginForm.reset();
     this.notification.success('Login success');
     this.userService.login();
     this.router.navigate(['dashboard/']);

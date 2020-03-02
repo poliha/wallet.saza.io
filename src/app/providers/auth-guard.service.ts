@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 export interface CanDeactivateComponent {
   canDeactivate: (
@@ -19,27 +20,34 @@ export interface CanDeactivateComponent {
 export class AuthGuardService
   implements CanActivate, CanDeactivate<CanDeactivateComponent> {
   private isLoggedIn: boolean;
-  constructor(public userService: UserService, public router: Router) {}
+  private authLinks = ['saza-setup', 'login', 'forgot-password'];
+
+  constructor(
+    public userService: UserService,
+    public router: Router,
+    private notification: NotificationService,
+  ) {}
 
   async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Promise<boolean> {
-    const authLinks = ['saza-setup', 'login', 'forgot-password'];
+    const isAuthLink = this.isAuthUrl(state.url);
+    console.log('AG, isAuthUrl: ', isAuthLink);
 
-    const isAuthLink = this.urlHasString(state.url, authLinks);
-    this.isLoggedIn = await this.userService.getLoginStatus();
+    this.isLoggedIn = await this.userService.isAuthValid();
     console.log('AG, islogged in: ', this.isLoggedIn);
-    if (isAuthLink && this.isLoggedIn) {
+    if (isAuthLink) {
+      if (!this.isLoggedIn) {
+        return true;
+      }
       this.router.navigate(['dashboard']);
       return false;
     }
 
-    if (isAuthLink && !this.isLoggedIn) {
-      return true;
-    }
-
     if (!this.isLoggedIn) {
+      this.userService.logout();
+      this.notification.info('Session expired, please login.');
       this.router.navigate(['login']);
       return false;
     }
@@ -58,17 +66,8 @@ export class AuthGuardService
       : true;
   }
 
-  // check if URL contains string
-  urlHasString(haystack: string, links: Array<string>) {
-    let found = false;
-    for (let i = 0; i < links.length; i++) {
-      if (haystack.includes(links[i])) {
-        found = true;
-        break;
-      }
-    }
-    console.log('HS: ', haystack);
-    console.log('found: ', found);
-    return found;
+  // checks if url is an auth url
+  isAuthUrl(nextUrl: string) {
+    return this.authLinks.some(link => nextUrl.includes(link));
   }
 }

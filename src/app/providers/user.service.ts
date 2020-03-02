@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { SazaAccount } from '../interfaces/saza';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const STORAGE_KEYS = {
   ACCOUNTS: 'user.saza.account',
@@ -38,14 +39,13 @@ export class UserService {
   public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(
     STELLAR_NETWORKS.pubnet,
   );
-  public isLoggedIn: BehaviorSubject<any> = new BehaviorSubject(false);
 
   constructor(public storage: Storage) {
     console.log('User service setup');
     this.getAccounts();
     this.getActiveAccount();
     this.getActiveNetwork();
-    this.getLoginStatus();
+    this.isAuthValid();
   }
 
   /**
@@ -89,14 +89,19 @@ export class UserService {
     return this.setData(STORAGE_KEYS.ACTIVE_NETWORK, STELLAR_NETWORKS[network]);
   }
 
-  getLoginStatus() {
-    return this.getData(STORAGE_KEYS.LOGGED_IN).then((status: any) => {
-      if (status == null) {
-        this.isLoggedIn.next(false);
-      } else {
-        this.isLoggedIn.next(status);
+  isAuthValid() {
+    return this.getData(STORAGE_KEYS.LOGGED_IN).then((loginData: any) => {
+      if (!loginData) {
+        return false;
       }
-      return status;
+      const elapsedTime = Date.now() - Number(loginData.timestamp);
+      console.log('elapsed: ', elapsedTime);
+
+      if (elapsedTime > environment.AUTH_TIMEOUT) {
+        return false;
+      }
+      this.login(); // resets the timestamp
+      return true;
     });
   }
 
@@ -213,27 +218,33 @@ export class UserService {
   }
 
   login() {
-    this.isLoggedIn.next(true);
-    return this.setData(STORAGE_KEYS.LOGGED_IN, true);
+    const loginStatus = {
+      status: true,
+      timestamp: Date.now(),
+    };
+    return this.setData(STORAGE_KEYS.LOGGED_IN, loginStatus);
   }
 
   logout() {
-    this.isLoggedIn.next(false);
-    return this.setData(STORAGE_KEYS.LOGGED_IN, false);
+    const loginStatus = {
+      status: false,
+      timestamp: 0,
+    };
+    return this.setData(STORAGE_KEYS.LOGGED_IN, loginStatus);
   }
 
   async isSetupComplete() {
-    // to do: complete method
     const values = await Promise.all([
       this.getPassword(),
       this.getPasswordRecovery(),
     ]);
 
-    if (values.length === 2) {
-      if (values[0] == null || values[1] == null) {
-        return false;
-      }
-      return true;
+    if (!values.length) {
+      return false;
+    }
+
+    if (values.some(v => v === null)) {
+      return false;
     }
 
     return false;

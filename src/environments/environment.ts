@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  AUTH_TIMEOUT: 60000,
 };
 
 /*
