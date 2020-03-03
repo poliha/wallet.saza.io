@@ -6,22 +6,32 @@
 
 <ion-content>
   <form [formGroup]="loginForm" (submit)="formSubmit()">
-    <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input type="password" name="password" formControlName="password"></ion-input>
-      <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-        <div *ngIf="password.errors.required">
-          A value is required.
-        </div>
-        <div *ngIf="password.errors.minlength">
-          Minimum length of {{password.errors.minlength.requiredLength}} characters required.
-        </div>
-      </ion-text>
-    </ion-item>
-    <div class="ion-margin ion-text-center">
-      <ion-button expand="block" type="submit" shape="round" [disabled]="loginForm.invalid">Login</ion-button>
-      <a routerLink="/forgot-password" routerDirection="root">Forgot password?</a>
-    </div>
-
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3" size-lg="4" offset-lg="4">
+          <ion-item>
+            <ion-label position="stacked">Password</ion-label>
+            <ion-input type="password" name="password" formControlName="password"></ion-input>
+            <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+              <div *ngIf="password.errors.required">
+                A value is required.
+              </div>
+              <div *ngIf="password.errors.minlength">
+                Minimum length of {{password.errors.minlength.requiredLength}} characters required.
+              </div>
+            </ion-text>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="4" offset-md="4" size-lg="2" offset-lg="5">
+          <div class="ion-margin ion-text-center">
+            <ion-button expand="block" type="submit" shape="round" [disabled]="loginForm.invalid">Login</ion-button>
+            <a routerLink="/forgot-password" routerDirection="root">Forgot password?</a>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </form>
+
 </ion-content>
