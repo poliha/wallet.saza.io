@@ -18,7 +18,7 @@ export class ManageAccountsDetailPage implements OnInit {
   @ViewChild('accountTagInput', { static: false }) accountTagInput: IonInput;
   @ViewChild('privateKey', { static: false }) privateKey: IonInput;
 
-  private updateTagForm: FormGroup;
+  updateTagForm: FormGroup;
   accountID;
   accountDetail: SazaAccount;
   userAccounts: SazaAccount[];

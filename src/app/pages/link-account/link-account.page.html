@@ -1,64 +1,84 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   <form [formGroup]="linkAccountForm" (submit)="formSubmit()">
-    <ion-item>
-      <ion-label position="stacked">Private Key</ion-label>
-      <ion-input type="text" name="privateKey" formControlName="privateKey" (keyup)="generateKeypair()"></ion-input>
-      <ion-text color="danger" *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
-        <div *ngIf="privateKey.errors.required">
-          A value is required.
-        </div>
-        <div *ngIf="privateKey.errors.isValidPrivateKey">
-          Invalid Private Key
-        </div>
-      </ion-text>
-    </ion-item>
-    <div *ngIf="keypairGenerated">
-      <ion-item class="ion-text-wrap">
-        <ion-label>
-          <h4>Public Key <app-copy-button class="ion-padding" [copyInput]="pairObj.public"
-              (copyOutput)="itemCopied($event)">
-            </app-copy-button>
-          </h4>
-          <p>{{pairObj.public}}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item class="ion-text-wrap">
-        <ion-label>
-          <h4>Private Key <app-copy-button class="ion-padding" [copyInput]="pairObj.private"
-              (copyOutput)="itemCopied($event)"></app-copy-button>
-          </h4>
-          <p>{{pairObj.private}}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Tag</ion-label>
-        <app-dynamic-input [form]="linkAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1"
-          [placeHolder]="'My account'">
-        </app-dynamic-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>I have copied keys to a safe place</ion-label>
-        <ion-checkbox name="keysCopied" formControlName="keysCopied" checked="false">
-        </ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Password</ion-label>
-        <ion-input type="password" name="password" formControlName="password" placeHolder="Enter Password"></ion-input>
-        <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-          <div *ngIf="password.errors.required">
-            A value is required.
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Private Key</ion-label>
+            <ion-input type="text" name="privateKey" formControlName="privateKey" (keyup)="generateKeypair()">
+            </ion-input>
+            <ion-text color="danger" *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
+              <div *ngIf="privateKey.errors.required">
+                A value is required.
+              </div>
+              <div *ngIf="privateKey.errors.isValidPrivateKey">
+                Invalid Private Key
+              </div>
+            </ion-text>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div *ngIf="keypairGenerated">
+            <ion-item class="ion-text-wrap">
+              <ion-label>
+                <h4>Public Key <app-copy-button class="ion-padding" [copyInput]="pairObj.public"
+                    (copyOutput)="itemCopied($event)">
+                  </app-copy-button>
+                </h4>
+                <p>{{pairObj.public}}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item class="ion-text-wrap">
+              <ion-label>
+                <h4>Private Key <app-copy-button class="ion-padding" [copyInput]="pairObj.private"
+                    (copyOutput)="itemCopied($event)"></app-copy-button>
+                </h4>
+                <p>{{pairObj.private}}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Tag</ion-label>
+              <app-dynamic-input [form]="linkAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1"
+                [placeHolder]="'My account'">
+              </app-dynamic-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>I have copied keys to a safe place</ion-label>
+              <ion-checkbox name="keysCopied" formControlName="keysCopied" checked="false">
+              </ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Password</ion-label>
+              <ion-input type="password" name="password" formControlName="password" placeHolder="Enter Password">
+              </ion-input>
+              <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.errors.required">
+                  A value is required.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  Minimum length of {{password.errors.minlength.requiredLength}} characters required.
+                </div>
+              </div>
+            </ion-item>
           </div>
-          <div *ngIf="password.errors.minlength">
-            Minimum length of {{password.errors.minlength.requiredLength}} characters required.
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="4" offset-sm="4">
+          <div class="ion-margin ion-text-center">
+            <ion-button class="ion-margin" expand="block" shape="round" type="submit"
+              [disabled]="linkAccountForm.invalid">
+              <ion-icon slot="end" name="save"></ion-icon>
+              Save
+            </ion-button>
           </div>
-        </div>
-      </ion-item>
-    </div>
-    <ion-button class="ion-margin" expand="block" shape="round" type="submit" [disabled]="linkAccountForm.invalid">
-      <ion-icon slot="end" name="save"></ion-icon>
-      Save
-    </ion-button>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </form>
 </ion-content>

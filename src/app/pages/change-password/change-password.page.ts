@@ -9,6 +9,7 @@ import { SazaAccount } from 'src/app/interfaces/saza';
 import { ModalController } from '@ionic/angular';
 import { RecoveryPasswordModalComponent } from 'src/app/components/recovery-password-modal/recovery-password-modal.component';
 import { Router } from '@angular/router';
+import { SazaError } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-change-password',
@@ -84,14 +85,14 @@ export class ChangePasswordPage implements OnInit {
       const currentPassword = String(this.currentPassword.value).trim();
       if (!this.utility.validateHash(currentPassword, this.oldPasswordHash)) {
         errorMessage = 'Inavlid Password';
-        throw errorMessage;
+        throw new SazaError(errorMessage);
       }
 
       const newPassword = String(this.newPassword.value).trim();
       const confirmNewPassword = String(this.confirmNewPassword.value).trim();
       if (newPassword !== confirmNewPassword) {
         errorMessage = 'New password mismatch';
-        throw errorMessage;
+        throw new SazaError(errorMessage);
       }
 
       const accounts = await this.userService.getAccounts();
@@ -120,14 +121,13 @@ export class ChangePasswordPage implements OnInit {
       this.showRecoveryPassword(recoveryPassword);
       this.changePasswordForm.reset();
     } catch (error) {
-      console.log('Error: ', error);
-      this.notify.error(errorMessage);
       // revert to previous values
       await this.userService.setPassword(this.oldPasswordHash);
       await this.userService.setPasswordRecovery(this.oldRecoveryPassword);
       for (const acc of this.oldUserAccounts) {
         await this.userService.setAccount(acc);
       }
+      throw error;
     }
   }
 

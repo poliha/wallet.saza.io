@@ -8,6 +8,7 @@ import {
   ENCRYPTION_FAILED_ERROR,
 } from '../../providers/providers';
 import { SazaAccount } from '../../interfaces/saza';
+import { SazaError } from 'src/app/providers/errors';
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.page.html',
@@ -37,7 +38,7 @@ export class CreateAccountPage implements OnInit {
     if (!pair) {
       console.log('pair: ', pair);
       this.keypairGenerated = false;
-      throw new Error('Unable to generate keypair. Contact admin');
+      throw new SazaError('Unable to generate keypair.');
     }
 
     this.pairObj.public = pair.publicKey();
@@ -79,12 +80,12 @@ export class CreateAccountPage implements OnInit {
     // save account object
     // Clear form
     if (this.pairObj.public === '' || this.pairObj.private === '') {
-      throw new Error('Invalid keys');
+      throw new SazaError('Public or private key not provided.');
     }
     const trimmedPwd = String(this.password.value).trim();
     const passwordHash = await this.userService.getPassword();
     if (!this.utility.validateHash(trimmedPwd, passwordHash)) {
-      throw new Error(INVALID_PASSWORD_ERROR);
+      throw new SazaError(INVALID_PASSWORD_ERROR);
     }
 
     const encrpytedObject = this.utility.encrypt(
@@ -93,7 +94,7 @@ export class CreateAccountPage implements OnInit {
     );
 
     if (!encrpytedObject) {
-      throw new Error(ENCRYPTION_FAILED_ERROR);
+      throw new SazaError(ENCRYPTION_FAILED_ERROR);
     }
 
     const sazaAccount: SazaAccount = {

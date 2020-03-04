@@ -9,8 +9,16 @@
       </ion-label>
     </ion-item-divider>
     <div class="ion-padding">
-      <ion-button class="ion-margin" expand="block" shape="round" (click)="createAccount()">
-        Create Account</ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="4" offset-sm="4">
+            <ion-button class="ion-margin" expand="block" shape="round" [routerDirection]="'root'"
+              [routerLink]="'/create-account'">
+              Create Account</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
     </div>
 
     <ion-item-divider color="light" sticky>
@@ -19,8 +27,16 @@
       </ion-label>
     </ion-item-divider>
     <div class="ion-padding">
-      <ion-button class="ion-margin" expand="block" shape="round" (click)="linkAccount()">
-        Link Account</ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="4" offset-sm="4">
+            <ion-button class="ion-margin" expand="block" shape="round" [routerDirection]="'root'"
+              [routerLink]="'/link-account'">
+              Link Account</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
     </div>
   </div>
   <ion-list *ngIf="userAccounts.length">
