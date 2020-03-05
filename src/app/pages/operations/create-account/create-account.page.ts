@@ -9,15 +9,14 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
 })
 export class CreateAccountPage extends OperationBuilderComponent
   implements OnInit {
-  pageTitle = 'Create Account';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor() {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Create Account';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.CREATE_ACCOUNT;
     this.makeForm();
   }

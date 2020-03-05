@@ -9,15 +9,14 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
 })
 export class AllowTrustPage extends OperationBuilderComponent
   implements OnInit {
-  pageTitle = 'Allow Trust';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor() {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Allow Trust';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.ALLOW_TRUST;
     this.makeForm();
   }

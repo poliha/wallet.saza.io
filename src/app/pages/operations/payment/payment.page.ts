@@ -9,15 +9,14 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
   styleUrls: ['./payment.page.scss'],
 })
 export class PaymentPage extends OperationBuilderComponent implements OnInit {
-  pageTitle = 'Payment';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor(private utility: Utility) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Payment';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.PAYMENT;
     this.makeForm();
   }

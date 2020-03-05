@@ -9,15 +9,14 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
 })
 export class ManageDataPage extends OperationBuilderComponent
   implements OnInit {
-  pageTitle = 'Manage Data';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor() {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Manage Data';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.MANAGE_DATA;
     this.makeForm();
   }

@@ -23,7 +23,9 @@ export class OperationBuilderComponent implements OnInit {
   protected router: Router;
   operationForm: FormGroup;
   operationData: any;
-
+  pageTitle = '';
+  subTitle = 'Operation';
+  helpUrl = '';
   constructor() {
     const injector = InjectorService.getInjector();
     this.txService = injector.get(TxService);

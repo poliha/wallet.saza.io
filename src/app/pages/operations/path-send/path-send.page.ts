@@ -10,10 +10,6 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
   styleUrls: ['./path-send.page.scss'],
 })
 export class PathSendPage extends OperationBuilderComponent implements OnInit {
-  pageTitle = 'Path Payment Strict Send';
-  subTitle = 'Operation';
-
-  helpUrl = '';
   public findPathForm: FormGroup;
   public choosePathForm: FormGroup;
   public operationForm: FormGroup;
@@ -36,6 +32,8 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Path Payment Strict Send';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.PATH_PAYMENT_STRICT_SEND;
     this.makeForm();
   }

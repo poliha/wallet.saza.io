@@ -19,8 +19,14 @@
       </div>
     </ion-item>
   </ion-list>
-  <ion-button class="ion-margin" shape="round" expand="block" color="danger" (click)="confirmDelete()">
-    <ion-icon slot="end" name="trash"></ion-icon>
-    Delete
-  </ion-button>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="4" offset-sm="4">
+        <ion-button class="ion-margin" shape="round" expand="block" color="danger" (click)="confirmDelete()">
+          <ion-icon slot="end" name="trash"></ion-icon>
+          Delete
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

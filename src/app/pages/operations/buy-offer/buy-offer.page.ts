@@ -9,15 +9,14 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./buy-offer.page.scss'],
 })
 export class BuyOfferPage extends OperationBuilderComponent implements OnInit {
-  pageTitle = 'Buy Offer';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor(private utility: Utility) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Buy Offer';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.MANAGE_BUY_OFFER;
     this.makeForm();
   }

@@ -9,14 +9,15 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
 })
 export class SetOptionsPage extends OperationBuilderComponent
   implements OnInit {
-  pageTitle = 'Set Options';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor() {
     super();
   }
 
   ngOnInit() {
+    super.ngOnInit();
+    this.pageTitle = 'Set Options';
+    this.helpUrl = '';
+    this.operationType = this.stellarService.operationType.SET_OPTIONS;
     this.makeForm();
   }
 

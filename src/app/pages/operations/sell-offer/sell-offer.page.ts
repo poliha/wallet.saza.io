@@ -18,6 +18,8 @@ export class SellOfferPage extends OperationBuilderComponent implements OnInit {
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Sell Offer';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.MANAGE_SELL_OFFER;
     this.makeForm();
   }

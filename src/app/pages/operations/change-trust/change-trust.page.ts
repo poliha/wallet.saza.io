@@ -10,15 +10,14 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
 })
 export class ChangeTrustPage extends OperationBuilderComponent
   implements OnInit {
-  pageTitle = 'Change Trust';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor(private utility: Utility) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Change Trust';
+    this.helpUrl = '';
     this.makeForm();
     this.operationType = this.stellarService.operationType.CHANGE_TRUST;
   }

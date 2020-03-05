@@ -11,15 +11,14 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
 export class BumpSequencePage extends OperationBuilderComponent
   implements OnInit {
   public operationForm: FormGroup;
-  pageTitle = 'Bump Sequence';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor() {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Bump Sequence';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.BUMP_SEQUENCE;
     this.makeForm();
   }

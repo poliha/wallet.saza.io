@@ -9,15 +9,14 @@ import { OperationBuilderComponent } from 'src/app/components/operation-builder/
 })
 export class AccountMergePage extends OperationBuilderComponent
   implements OnInit {
-  pageTitle = 'Account Merge';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor() {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Account Merge';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.ACCOUNT_MERGE;
     this.makeForm();
   }

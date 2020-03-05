@@ -10,15 +10,14 @@ import { FormGroup } from '@angular/forms';
 })
 export class PassiveOfferPage extends OperationBuilderComponent
   implements OnInit {
-  pageTitle = 'Passive Offer';
-  subTitle = 'Operation';
-  helpUrl = 'helpUrl';
   constructor(private utility: Utility) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+    this.pageTitle = 'Passive Offer';
+    this.helpUrl = '';
     this.operationType = this.stellarService.operationType.CREATE_PASSIVE_SELL_OFFER;
     this.makeForm();
   }
