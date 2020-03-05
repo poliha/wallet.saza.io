@@ -1,7 +1,7 @@
 <app-header [accountPicker]="showAccountPicker"></app-header>
 
 <ion-content>
-  <div *ngIf="!numberOfAccounts">
+  <div *ngIf="!numberOfAccounts; else showDashboard">
     <h3 class="ion-text-center ion-margin">Add a Stellar Account</h3>
     <ion-item-divider color="light" sticky>
       <ion-label>
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div *ngIf="numberOfAccounts">
+  <ng-template #showDashboard>
     <div>
       <ion-item-divider color="light" sticky>
         <ion-label>
@@ -55,5 +55,5 @@
       </ion-item-divider>
       <app-account-history></app-account-history>
     </div>
-  </div>
+  </ng-template>
 </ion-content>

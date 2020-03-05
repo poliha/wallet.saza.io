@@ -12,11 +12,14 @@ export class AccountHistoryComponent implements OnInit {
   activeAccount: string;
   nextPage;
 
-  constructor(private stellarService: StellarService, private userService: UserService,
-    private router: Router) { }
+  constructor(
+    private stellarService: StellarService,
+    private userService: UserService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
-    this.userService.activeAccount.subscribe((data) => {
+    this.userService.activeAccount.subscribe(data => {
       this.activeAccount = data;
       console.log('active account', this.activeAccount);
       this.loadHistory();
@@ -27,10 +30,10 @@ export class AccountHistoryComponent implements OnInit {
     if (!this.activeAccount) {
       return;
     }
+    this.accountHistory = [];
     const data = await this.stellarService.loadOperations(this.activeAccount);
     console.log('data: ', data);
     if (!data) {
-      this.accountHistory = [];
       return;
     }
     const { next, records } = data;

@@ -7,12 +7,15 @@
       </ion-row>
       <ion-row>
          <ion-col size-md="4" offset-md="4">
-            <ion-button class="ion-padding" *ngIf="!userHasPassword" expand="block" (click)="sazaSetup()">
+            <ion-button *ngIf="!userHasPassword; else loginButton" class="ion-padding" expand="block"
+               (click)="sazaSetup()">
                Setup Wallet
             </ion-button>
-            <ion-button class="ion-padding" *ngIf="userHasPassword" expand="block" (click)="login()">
-               Login
-            </ion-button>
+            <ng-template #loginButton>
+               <ion-button class="ion-padding" expand="block" (click)="login()">
+                  Login
+               </ion-button>
+            </ng-template>
          </ion-col>
       </ion-row>
    </ion-grid>

@@ -1,7 +1,7 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
 <ion-content>
-  <div *ngIf="!userAccounts.length">
+  <div *ngIf="!userAccounts.length; else showAccounts">
     <h3 class="ion-text-center ion-margin">Add a Stellar Account</h3>
     <ion-item-divider color="light" sticky>
       <ion-label>
@@ -39,13 +39,16 @@
 
     </div>
   </div>
-  <ion-list *ngIf="userAccounts.length">
-    <ion-item *ngFor="let u of userAccounts; index as i" [routerDirection]="'root'"
-      [routerLink]="'/manage-accounts/'+ i" detail>
-      <ion-label>
-        <p>{{ u.tag | titlecase }}</p>
-        <small>{{ u.public | truncatePublicKey }}</small>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ng-template #showAccounts>
+    <ion-list>
+      <ion-item *ngFor="let u of userAccounts; index as i" [routerDirection]="'root'"
+        [routerLink]="'/manage-accounts/'+ i" detail>
+        <ion-label>
+          <p>{{ u.tag | titlecase }}</p>
+          <small>{{ u.public | truncatePublicKey }}</small>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+
 </ion-content>

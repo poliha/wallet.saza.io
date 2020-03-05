@@ -7,34 +7,33 @@ import { StellarService, UserService } from 'src/app/providers/providers';
   styleUrls: ['./account-balance.component.scss'],
 })
 export class AccountBalanceComponent implements OnInit {
-
   accountBalance = [];
 
   activeAccount: string;
 
-  constructor(private stellarService: StellarService, private userService: UserService) {
-   }
+  constructor(
+    private stellarService: StellarService,
+    private userService: UserService,
+  ) {}
 
   ngOnInit() {
-    this.userService.activeAccount.subscribe((data) => {
+    this.userService.activeAccount.subscribe(data => {
       this.activeAccount = data;
       console.log('active account', this.activeAccount);
       this.loadAccount();
     });
   }
 
-
   async loadAccount() {
     if (!this.activeAccount) {
       return;
     }
-   const data = await this.stellarService.loadAccount(this.activeAccount);
-   console.log('data: ', data);
-   if (!data) {
-     this.accountBalance = [];
-     return;
-   }
-   this.accountBalance = data.balances.reverse();
+    this.accountBalance = [];
+    const data = await this.stellarService.loadAccount(this.activeAccount);
+    console.log('data: ', data);
+    if (!data) {
+      return;
+    }
+    this.accountBalance = data.balances.reverse();
   }
-
 }

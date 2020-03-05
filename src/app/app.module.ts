@@ -19,6 +19,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SazaErrorHandler } from './providers/saza-error-handler.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,10 @@ import { MaterialModule } from './material.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage'],
+      name: environment.DB_NAME,
+    }),
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,

@@ -1,20 +1,22 @@
-<div *ngIf="!accountHistory.length">
+<div *ngIf="!accountHistory.length; else showHistory">
   <h3 class="ion-text-center" color="secondary">
     No Account History
   </h3>
 </div>
-<ion-list *ngIf="accountHistory.length">
-  <ion-item *ngFor="let a of accountHistory" (click)="viewHistoryDetail(a)" detail>
-    <ion-label>
-      <small>{{a.created_at | date:'medium' }}</small>
-      <p class="ion-text-capitalize">{{ a.type | splitOpName }}</p>
-      <p>Source: {{ a.source_account | truncatePublicKey }}</p>
-    </ion-label>
-    <ion-text slot="end" color="primary">{{a.amount}}</ion-text>
-  </ion-item>
-</ion-list>
-<div class="ion-text-center">
-  <ion-button color="medium" size="small" fill="clear" (click)="loadMore()">
-    Load more ...
-  </ion-button>
-</div>
+<ng-template #showHistory>
+  <ion-list>
+    <ion-item *ngFor="let a of accountHistory" (click)="viewHistoryDetail(a)" detail>
+      <ion-label>
+        <small>{{a.created_at | date:'medium' }}</small>
+        <p class="ion-text-capitalize">{{ a.type | splitOpName }}</p>
+        <p>Source: {{ a.source_account | truncatePublicKey }}</p>
+      </ion-label>
+      <ion-text slot="end" color="primary">{{a.amount}}</ion-text>
+    </ion-item>
+  </ion-list>
+  <div class="ion-text-center">
+    <ion-button color="medium" size="small" fill="clear" (click)="loadMore()">
+      Load more ...
+    </ion-button>
+  </div>
+</ng-template>

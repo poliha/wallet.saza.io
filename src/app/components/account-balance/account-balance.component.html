@@ -1,10 +1,10 @@
-<div *ngIf="!accountBalance.length">
+<div *ngIf="!accountBalance.length; else showBalance">
   <h3 class="ion-text-center">
     No Account Balance
   </h3>
 </div>
-<div *ngIf="accountBalance.length">
+<ng-template #showBalance>
   <ion-item *ngFor="let b of accountBalance">
     <app-balance-item [balance]="b"></app-balance-item>
   </ion-item>
-</div>
+</ng-template>

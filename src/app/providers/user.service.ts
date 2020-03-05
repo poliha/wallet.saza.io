@@ -247,7 +247,7 @@ export class UserService {
       return false;
     }
 
-    return false;
+    return true;
   }
 
   setAccountHistory(data) {

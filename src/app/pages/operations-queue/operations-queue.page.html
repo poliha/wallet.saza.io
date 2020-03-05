@@ -1,18 +1,21 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
 <ion-content>
-  <div *ngIf="!operations.length">
+  <div *ngIf="!operations.length; else showOperations">
     <h3 class="ion-text-center" color="secondary">
       No Pending Operations.
     </h3>
   </div>
-  <ion-list *ngIf="operations.length">
-    <ion-item *ngFor="let op of operations; index as i" [routerDirection]="'root'"
-      [routerLink]="'/operations-queue/'+ i" detail>
-      <ion-label>
-        <p>{{ op.type | splitOpName | titlecase }}</p>
-        <small>{{ op.source | truncatePublicKey }}</small>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ng-template #showOperations>
+    <ion-list>
+      <ion-item *ngFor="let op of operations; index as i" [routerDirection]="'root'"
+        [routerLink]="'/operations-queue/'+ i" detail>
+        <ion-label>
+          <p>{{ op.type | splitOpName | titlecase }}</p>
+          <small>{{ op.source | truncatePublicKey }}</small>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+
 </ion-content>

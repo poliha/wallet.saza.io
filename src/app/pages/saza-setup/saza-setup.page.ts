@@ -85,7 +85,7 @@ export class SazaSetupPage implements OnInit {
     return this.passwordForm.get('confirmPassword');
   }
 
-  formSubmit() {
+  async formSubmit() {
     // check that passwords match
     // get hash of password
     // generate recovery password
@@ -109,11 +109,11 @@ export class SazaSetupPage implements OnInit {
     console.log('PH: ', passwordHash);
     console.log('PR: ', recoveryPassword);
     // save hash of primary password
-    this.userService.setPassword(passwordHash);
+    await this.userService.setPassword(passwordHash);
     // save encrypted password
-    this.userService.setPasswordRecovery(encrpytedPassword);
+    await this.userService.setPasswordRecovery(encrpytedPassword);
     // display recovery password to user
-    this.presentModal(recoveryPassword);
+    await this.presentModal(recoveryPassword);
   }
 
   async presentModal(modalValue) {
@@ -125,7 +125,7 @@ export class SazaSetupPage implements OnInit {
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       console.log('modal dismissed');
-      this.router.navigate(['home/']);
+      this.router.navigate(['login/']);
     });
 
     return await modal.present();
