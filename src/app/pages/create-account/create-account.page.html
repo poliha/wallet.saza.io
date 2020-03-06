@@ -4,7 +4,9 @@
   <ion-grid>
     <ion-row>
       <ion-col size-sm="4" offset-sm="4">
-        <ion-button expand="block" (click)="generateKeypair()" shape="round">Generate Keys</ion-button>
+        <ion-button expand="block" (click)="generateKeypair()" shape="round">
+          <ion-icon name="refresh" slot="end"></ion-icon>Generate Keys
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -13,21 +15,20 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-item class="ion-text-wrap">
+          <ion-item>
             <ion-label>
-              <h4>Public Key <app-copy-button class="ion-padding" [copyInput]="pairObj.public"
-                  (copyOutput)="itemCopied($event)">
+              <ion-text>Public Key <app-copy-button [copyInput]="pairObj.public" (copyOutput)="itemCopied($event)">
                 </app-copy-button>
-              </h4>
-              <p>{{pairObj.public}}</p>
+              </ion-text>
+              <p class="ion-text-wrap">{{pairObj.public}}</p>
             </ion-label>
           </ion-item>
-          <ion-item class="ion-text-wrap">
+          <ion-item>
             <ion-label>
-              <h4>Private Key <app-copy-button class="ion-padding" [copyInput]="pairObj.private"
-                  (copyOutput)="itemCopied($event)"></app-copy-button>
-              </h4>
-              <p>{{pairObj.private}}</p>
+              <ion-text>Private Key <app-copy-button [copyInput]="pairObj.private" (copyOutput)="itemCopied($event)">
+                </app-copy-button>
+              </ion-text>
+              <p class="ion-text-wrap">{{pairObj.private}}</p>
             </ion-label>
           </ion-item>
           <ion-item>
@@ -61,7 +62,7 @@
           <div class="ion-margin ion-text-center">
             <ion-button class="ion-margin" expand="block" shape="round" type="submit"
               [disabled]="createAccountForm.invalid">
-              <ion-icon slot="end" name="save"></ion-icon>
+              <ion-icon slot="end" name="checkmark"></ion-icon>
               Save
             </ion-button>
           </div>

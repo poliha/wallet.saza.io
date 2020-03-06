@@ -55,9 +55,11 @@
 
     <div class="ion-margin ion-text-center">
       <ion-button type="button" [disabled]="signTxForm.invalid">
+        <ion-icon name="close" slot="end"></ion-icon>
         Cancel
       </ion-button>
       <ion-button type="button" [disabled]="signTxForm.invalid" (click)="signTransaction()">
+        <ion-icon name="checkmark" slot="end"></ion-icon>
         Submit
       </ion-button>
     </div>

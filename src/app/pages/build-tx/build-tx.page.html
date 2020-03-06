@@ -93,8 +93,11 @@
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="buildTxForm.invalid">Cancel</ion-button>
+      <ion-button type="button" [disabled]="buildTxForm.invalid">Cancel
+        <ion-icon slot="end" name="close" slot="end"></ion-icon>
+      </ion-button>
       <ion-button type="button" [disabled]="buildTxForm.invalid" (click)="buildTransaction()">
+        <ion-icon slot="end" name="checkmark" slot="end"></ion-icon>
         Build
       </ion-button>
     </div>

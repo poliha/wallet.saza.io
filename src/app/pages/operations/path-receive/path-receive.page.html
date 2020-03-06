@@ -71,8 +71,12 @@
 
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button [disabled]="operationForm.invalid" (click)="saveOperation()" mat-button>Save</button>
-          <button [disabled]="operationForm.invalid" (click)="sendOperation()" mat-button>Send</button>
+          <button [disabled]="operationForm.invalid" (click)="saveOperation()" mat-button>Save<ion-icon slot="end"
+              name="add"></ion-icon>
+          </button>
+          <button [disabled]="operationForm.invalid" (click)="sendOperation()" mat-button>Send<ion-icon slot="end"
+              name="checkmark"></ion-icon>
+          </button>
         </div>
       </form>
     </mat-step>
