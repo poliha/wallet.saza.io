@@ -3,6 +3,7 @@ import {
   TxService,
   NotificationService,
   StellarService,
+  LoadingService,
 } from 'src/app/providers/providers';
 import { Router } from '@angular/router';
 import { InjectorService } from 'src/app/providers/injector.service';
@@ -21,6 +22,7 @@ export class OperationBuilderComponent implements OnInit {
   protected notification: NotificationService;
   protected stellarService: StellarService;
   protected router: Router;
+  protected loadingService: LoadingService;
   operationForm: FormGroup;
   operationData: any;
   pageTitle = '';
@@ -32,6 +34,7 @@ export class OperationBuilderComponent implements OnInit {
     this.stellarService = injector.get(StellarService);
     this.notification = injector.get(NotificationService);
     this.router = injector.get(Router);
+    this.loadingService = injector.get(LoadingService);
   }
 
   ngOnInit() {}
@@ -53,14 +56,21 @@ export class OperationBuilderComponent implements OnInit {
   }
 
   async buildOperation() {
-    console.log('operationsData: ', this.operationData);
-    if (!this._operationType) {
-      throw new SazaError('Invalid operation type.');
+    try {
+      await this.loadingService.start();
+      console.log('operationsData: ', this.operationData);
+      if (!this._operationType) {
+        throw new SazaError('Invalid operation type.');
+      }
+      this.operationXDR = await this.stellarService.buildOperation(
+        this.operationData,
+      );
+      await this.addOperation();
+    } catch (error) {
+      throw error;
+    } finally {
+      await this.loadingService.stop();
     }
-    this.operationXDR = await this.stellarService.buildOperation(
-      this.operationData,
-    );
-    await this.addOperation();
   }
 
   addOperation() {

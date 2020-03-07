@@ -10,12 +10,15 @@ import { TruncatePublicKeyPipeModule } from 'src/app/pipes/truncate-public-key.m
 import { SplitOpNamePipeModule } from 'src/app/pipes/split-operation-name-module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule, TruncatePublicKeyPipeModule,
-  SplitOpNamePipeModule ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    TruncatePublicKeyPipeModule,
+    SplitOpNamePipeModule,
+  ],
   declarations: [AccountHistoryComponent],
   exports: [AccountHistoryComponent],
-  providers: [
-    StellarService,
-  ]
+  providers: [StellarService],
 })
 export class AccountHistoryComponentModule {}

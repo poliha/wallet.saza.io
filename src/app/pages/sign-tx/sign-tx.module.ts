@@ -6,15 +6,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SignTxPage } from './sign-tx.page';
-import { TxService, StellarService } from 'src/app/providers/providers';
+import {
+  TxService,
+  StellarService,
+  LoadingService,
+} from 'src/app/providers/providers';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: SignTxPage
-  }
+    component: SignTxPage,
+  },
 ];
 
 @NgModule({
@@ -28,9 +32,6 @@ const routes: Routes = [
     HeaderComponentModule,
   ],
   declarations: [SignTxPage],
-  providers: [
-    TxService,
-    StellarService,
-  ]
+  providers: [TxService, StellarService, LoadingService],
 })
 export class SignTxPageModule {}

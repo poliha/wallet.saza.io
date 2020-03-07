@@ -8,7 +8,11 @@ import { IonicModule } from '@ionic/angular';
 import { BuildTxPage } from './build-tx.page';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
-import { TxService, StellarService } from 'src/app/providers/providers';
+import {
+  TxService,
+  StellarService,
+  LoadingService,
+} from 'src/app/providers/providers';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
 import { MaterialModule } from 'src/app/material.module';
 import { SazaDateTimeComponentModule } from 'src/app/components/saza-date-time/saza-date-time.module';
@@ -33,7 +37,7 @@ const routes: Routes = [
     MaterialModule,
     SazaDateTimeComponentModule,
   ],
-  providers: [TxService, StellarService],
+  providers: [TxService, StellarService, LoadingService],
   declarations: [BuildTxPage],
 })
 export class BuildTxPageModule {}

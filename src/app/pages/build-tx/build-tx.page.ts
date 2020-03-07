@@ -6,12 +6,14 @@ import {
   StellarService,
   UserService,
   CustomValidators,
+  LoadingService,
 } from '../../providers/providers';
 import { Operation, xdr } from 'stellar-sdk';
 import { SazaAccount } from 'src/app/interfaces/saza';
 import { PickerController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { SazaError } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-build-tx',
@@ -41,6 +43,7 @@ export class BuildTxPage implements OnInit {
     private stellarService: StellarService,
     private userService: UserService,
     private router: Router,
+    private loadingService: LoadingService,
   ) {}
 
   ngOnInit() {
@@ -148,12 +151,13 @@ export class BuildTxPage implements OnInit {
     // Show success or error message
 
     try {
+      await this.loadingService.start();
       const timebounds = {
         minTime: Number(this.minTime.value),
         maxTime: Number(this.maxTime.value),
       };
       if (timebounds.maxTime < timebounds.minTime) {
-        throw new Error(
+        throw new SazaError(
           'Timebounds are invalid. "valid until" date is before "valid from" date',
         );
       }
@@ -174,6 +178,9 @@ export class BuildTxPage implements OnInit {
       this.router.navigate(['sign-tx/']);
     } catch (error) {
       console.log('error: ', error);
+      throw error;
+    } finally {
+      await this.loadingService.stop();
     }
   }
 }

@@ -27,6 +27,9 @@ export class LoadingService {
   }
 
   async stop() {
+    if (!this.loader) {
+      return;
+    }
     return this.loader.dismiss();
   }
 }

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { StellarService, UserService } from 'src/app/providers/providers';
+import {
+  StellarService,
+  UserService,
+  LoadingService,
+} from 'src/app/providers/providers';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +20,7 @@ export class AccountHistoryComponent implements OnInit {
     private stellarService: StellarService,
     private userService: UserService,
     private router: Router,
+    private loadingService: LoadingService,
   ) {}
 
   ngOnInit() {
@@ -27,18 +32,27 @@ export class AccountHistoryComponent implements OnInit {
   }
 
   async loadHistory() {
-    if (!this.activeAccount) {
-      return;
+    try {
+      if (!this.activeAccount) {
+        return;
+      }
+
+      await this.loadingService.start();
+
+      this.accountHistory = [];
+      const data = await this.stellarService.loadOperations(this.activeAccount);
+      console.log('data: ', data);
+      if (!data) {
+        return;
+      }
+      const { next, records } = data;
+      this.accountHistory = records;
+      this.nextPage = next;
+    } catch (error) {
+      throw error;
+    } finally {
+      await this.loadingService.stop();
     }
-    this.accountHistory = [];
-    const data = await this.stellarService.loadOperations(this.activeAccount);
-    console.log('data: ', data);
-    if (!data) {
-      return;
-    }
-    const { next, records } = data;
-    this.accountHistory = records;
-    this.nextPage = next;
   }
 
   async viewHistoryDetail(data) {
@@ -50,13 +64,21 @@ export class AccountHistoryComponent implements OnInit {
   }
 
   async loadMore() {
-    const resp = await this.nextPage();
-    if (!resp) {
-      return;
+    try {
+      await this.loadingService.start();
+
+      const resp = await this.nextPage();
+      if (!resp) {
+        return;
+      }
+      console.log('more: ', resp);
+      const { next, records } = resp;
+      this.accountHistory.push(...records);
+      this.nextPage = next;
+    } catch (error) {
+      throw error;
+    } finally {
+      await this.loadingService.stop();
     }
-    console.log('more: ', resp);
-    const { next, records } = resp;
-    this.accountHistory.push(...records);
-    this.nextPage = next;
   }
 }

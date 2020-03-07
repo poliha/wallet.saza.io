@@ -7,6 +7,7 @@ import {
   CustomValidators,
   INVALID_PASSWORD_ERROR,
   NotificationService,
+  LoadingService,
 } from '../../providers/providers';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Operation, xdr, Transaction } from 'stellar-sdk';
@@ -36,6 +37,7 @@ export class SignTxPage implements OnInit {
     private userService: UserService,
     private notify: NotificationService,
     private router: Router,
+    private loadingService: LoadingService,
   ) {}
 
   ngOnInit() {
@@ -131,6 +133,7 @@ export class SignTxPage implements OnInit {
 
   async signTransaction() {
     try {
+      await this.loadingService.start();
       const trimmedPwd = String(this.password.value).trim();
       const privateKeys = [
         ...this.privateKeys.value
@@ -184,11 +187,6 @@ export class SignTxPage implements OnInit {
 
         if (operations) {
           const { operations: submittedOperations } = this.txDetail;
-          console.log(
-            TransactionErrors['createAccount'][
-              String('op_malformed').toUpperCase()
-            ],
-          );
           operations.forEach((value, key) => {
             console.log(`${key}:${value}`);
             if (value !== 'op_success') {
@@ -203,6 +201,8 @@ export class SignTxPage implements OnInit {
         }
         throw new SazaError(errorMessages.join('\n'));
       }
+    } finally {
+      await this.loadingService.stop();
     }
   }
 }
