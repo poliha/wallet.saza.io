@@ -59,11 +59,10 @@ export class Utility {
       cipher.start({ iv: iv });
       cipher.update(Forge.util.createBuffer(plainText));
       cipher.finish();
-      const cipherText = Forge.util.encode64(cipher.output.getBytes());
       const rtnObj = {
-        text: cipherText,
-        salt: Forge.util.encode64(salt),
-        iv: Forge.util.encode64(iv),
+        text: cipher.output.toHex(),
+        salt: Forge.util.bytesToHex(salt),
+        iv: Forge.util.bytesToHex(iv),
       };
 
       return rtnObj;
@@ -77,19 +76,14 @@ export class Utility {
     console.log('CO: ', cipherObj, ' PW: ', password);
     try {
       const numIteration = 4096;
-      const salt = Forge.util.decode64(cipherObj.salt);
-      const iv = Forge.util.decode64(cipherObj.iv);
+      const salt = Forge.util.hexToBytes(cipherObj.salt);
+      const iv = Forge.util.hexToBytes(cipherObj.iv);
       const key = Forge.pkcs5.pbkdf2(password, salt, numIteration, 32);
       const decipher = Forge.cipher.createDecipher('AES-CBC', key);
       decipher.start({ iv: iv });
-
-      // if (cipherObj.skey) {
-      //   decipher.update(Forge.util.createBuffer(Forge.util.decode64(cipherObj.skey)));
-      // } else {
       decipher.update(
-        Forge.util.createBuffer(Forge.util.decode64(cipherObj.text)),
+        Forge.util.createBuffer(Forge.util.hexToBytes(cipherObj.text)),
       );
-      // }
 
       decipher.finish();
       const decipheredText = decipher.output.toString();
@@ -174,7 +168,7 @@ export class Utility {
       const newAccounts = accounts.map(account => {
         const privatekey = this.decrypt(account.private, currentPassword);
         const encryptedKey = this.encrypt(privatekey, newPassword);
-        if (!encryptedKey) {
+        if (!privatekey || !encryptedKey) {
           throw new Error('Encryption failed with new password.');
         }
         account.private = encryptedKey;

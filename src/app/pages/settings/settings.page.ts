@@ -15,6 +15,14 @@ export class SettingsPage implements OnInit {
       title: 'Change Password',
       url: '/change-password',
     },
+    {
+      title: 'Export Accounts',
+      url: '/export-account',
+    },
+    {
+      title: 'Import Accounts',
+      url: '#',
+    },
   ];
   pageTitle = 'Settings';
   helpUrl = '';

@@ -174,6 +174,12 @@ const routes: Routes = [
       './pages/operations/path-send/path-send.module#PathSendPageModule',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'export-account',
+    loadChildren:
+      './pages/export-account/export-account.module#ExportAccountPageModule',
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
