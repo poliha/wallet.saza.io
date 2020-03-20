@@ -1,0 +1,29 @@
+<app-header [title]="pageTitle"></app-header>
+
+<ion-content class="ion-padding">
+  <div>
+    <form [formGroup]="importAccountForm">
+      <ion-item>
+        <ion-label position="stacked">Backup Data</ion-label>
+        <ion-textarea formControlName="backupData" placeholder="c8e4adc24479220e33aa78 ..." auto-grow autofocus>
+        </ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Backup Key</ion-label>
+        <app-dynamic-input [inputType]="'text'" [form]="importAccountForm" [controlName]="'backupKey'"
+          [placeHolder]="'just five words expected here'"></app-dynamic-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <app-dynamic-input [inputType]="'password'" [form]="importAccountForm" [controlName]="'password'"
+          [placeHolder]="'Password'"></app-dynamic-input>
+      </ion-item>
+
+      <div class="ion-margin ion-text-center">
+        <ion-button type="button" [disabled]="importAccountForm.invalid" (click)="importAccounts()">Import<ion-icon
+            slot="end" name="checkmark"></ion-icon>
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

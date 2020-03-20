@@ -21,7 +21,7 @@ export class SettingsPage implements OnInit {
     },
     {
       title: 'Import Accounts',
-      url: '#',
+      url: '/import-account',
     },
   ];
   pageTitle = 'Settings';

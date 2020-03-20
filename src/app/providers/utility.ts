@@ -23,8 +23,12 @@ export class Utility {
   /**
    * Generates a password using phrases.
    */
-  generatePassword(): string {
-    const temp = niceware.generatePassphrase(10);
+  generatePassword(byteArraySize = 10): string {
+    if (byteArraySize % 2 !== 0) {
+      this.generatePassword(byteArraySize + 1);
+    }
+
+    const temp = niceware.generatePassphrase(byteArraySize);
     // const tempCaps = temp.map(p => p.charAt().toUpperCase() + p.slice(1));
     return String(temp.join(' ')).toLowerCase();
   }
@@ -133,7 +137,7 @@ export class Utility {
   validateAccountTag(userAccounts = [], tag = '') {
     const tagExists = account => account.tag === tag;
     if (!tag || userAccounts.some(tagExists)) {
-      return `account-${userAccounts.length + 1}`;
+      return this.generatePassword(2);
     }
     return tag;
   }

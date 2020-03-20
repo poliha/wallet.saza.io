@@ -180,6 +180,12 @@ const routes: Routes = [
       './pages/export-account/export-account.module#ExportAccountPageModule',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'import-account',
+    loadChildren:
+      './pages/import-account/import-account.module#ImportAccountPageModule',
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
