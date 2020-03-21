@@ -19,6 +19,9 @@ import { SazaError } from 'src/app/providers/errors';
 })
 export class SazaSetupPage implements OnInit {
   passwordForm: FormGroup;
+  pageTitle = 'Setup Wallet';
+  subTitle = '';
+  helpUrl = '#';
   constructor(
     private formBuilder: FormBuilder,
     private utility: Utility,
@@ -34,8 +37,8 @@ export class SazaSetupPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.userService.getPassword().then(pwd => {
-      if (!pwd) {
+    this.userService.getPassword().then(password => {
+      if (!password) {
         this.menu.enable(false);
       } else {
         this.router.navigate(['/login']);
@@ -69,14 +72,6 @@ export class SazaSetupPage implements OnInit {
     });
   }
 
-  /**
-   * Copies a value to the clipboard
-   * @param item value to be copied
-   */
-  itemCopy(item) {
-    console.log('item: ', item);
-  }
-
   // Getters for template
   get password() {
     return this.passwordForm.get('password');
@@ -85,7 +80,7 @@ export class SazaSetupPage implements OnInit {
     return this.passwordForm.get('confirmPassword');
   }
 
-  async formSubmit() {
+  async setupWallet() {
     // check that passwords match
     // get hash of password
     // generate recovery password

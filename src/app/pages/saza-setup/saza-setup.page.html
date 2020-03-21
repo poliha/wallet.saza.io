@@ -1,8 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Setup Wallet</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [title]="pageTitle" [helpUrl]="helpUrl" [subTitle]="subTitle"></app-header>
 
 <ion-content>
   <form [formGroup]="passwordForm">
@@ -60,7 +56,7 @@
       <ion-row>
         <ion-col size-md="4" offset-md="4" size-lg="2" offset-lg="5">
           <div class="ion-margin ion-text-center">
-            <ion-button expand="block" (click)="formSubmit()" [disabled]="passwordForm.invalid">
+            <ion-button expand="block" (click)="setupWallet()" [disabled]="passwordForm.invalid">
               <ion-icon slot="end" name="checkmark"></ion-icon>
               Save
             </ion-button>

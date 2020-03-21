@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { ForgotPasswordPage } from './forgot-password.page';
 import { MaterialModule } from 'src/app/material.module';
 import { RecoveryPasswordModalComponentModule } from 'src/app/components/recovery-password-modal/recovery-password-modal.module';
+import { HeaderComponentModule } from 'src/app/components/header/header.module';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MaterialModule,
     RecoveryPasswordModalComponentModule,
+    HeaderComponentModule,
   ],
   declarations: [ForgotPasswordPage],
 })

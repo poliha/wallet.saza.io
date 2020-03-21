@@ -9,6 +9,7 @@ import {
 import { RecoveryPasswordModalComponent } from 'src/app/components/recovery-password-modal/recovery-password-modal.component';
 import { Router } from '@angular/router';
 import { SazaAccount } from 'src/app/interfaces/saza';
+import { SazaError } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-forgot-password',
@@ -25,6 +26,9 @@ export class ForgotPasswordPage implements OnInit {
     recoveryPassword: any;
     accounts: SazaAccount[];
   };
+  pageTitle = 'Forgot Password';
+  subTitle = '';
+  helpUrl = '#';
 
   constructor(
     private menu: MenuController,
@@ -131,7 +135,7 @@ export class ForgotPasswordPage implements OnInit {
 
       const storedRecovery = await this.userService.getPasswordRecovery();
       if (!storedRecovery) {
-        throw new Error('Recovery password not stored.');
+        throw new SazaError('Recovery password not stored.');
       }
       console.log('storedRec: ', storedRecovery);
       const recoveredPassword = this.utility.decrypt(
@@ -139,7 +143,7 @@ export class ForgotPasswordPage implements OnInit {
         passwordString,
       );
       if (!recoveredPassword) {
-        throw new Error('Invalid passwords provided.');
+        throw new SazaError('Invalid passwords provided.');
       }
       return recoveredPassword;
     } catch (error) {
@@ -154,7 +158,7 @@ export class ForgotPasswordPage implements OnInit {
       const confirmNewPassword = String(this.confirmNewPassword.value).trim();
 
       if (newPassword !== confirmNewPassword) {
-        throw new Error('Passwords mismatch');
+        throw new SazaError('Passwords mismatch');
       }
 
       const accounts = await this.userService.getAccounts();
