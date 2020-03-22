@@ -20,7 +20,7 @@ export class CreateAccountPage implements OnInit {
   pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;
   pageTitle = 'Create Account';
-  helpUrl = '';
+  helpUrl = '#';
   constructor(
     private formBuilder: FormBuilder,
     private utility: Utility,

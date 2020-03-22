@@ -22,7 +22,7 @@ export class LinkAccountPage implements OnInit {
   pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;
   pageTitle = 'Link Account';
-  helpUrl = '';
+  helpUrl = '#';
   constructor(
     private formBuilder: FormBuilder,
     private utility: Utility,

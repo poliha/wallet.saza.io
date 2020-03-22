@@ -2,20 +2,25 @@
    <ion-grid>
       <ion-row>
          <ion-col size-md="4" offset-md="4">
-            <h1 class="ion-text-center ion-padding-top">Saza Wallet</h1>
+            <ion-text color="tertiary">
+               <h1 class="ion-text-center ion-padding-top xxlarge-font">
+                  S<span class="rot-180">V</span>Z<span class="rot-180">V</span></h1>
+            </ion-text>
          </ion-col>
       </ion-row>
       <ion-row>
          <ion-col size-md="4" offset-md="4">
-            <ion-button *ngIf="!userHasPassword; else loginButton" class="ion-padding middle" expand="block"
-               size="large" [routerLink]="'/saza-setup'">
-               Setup Wallet
-            </ion-button>
-            <ng-template #loginButton>
-               <ion-button class="ion-padding middle" size="large" expand="block" [routerLink]="'/login'">
-                  Login
+            <div class="ion-margin ion-text-center">
+               <ion-button *ngIf="!userHasPassword; else loginButton" class="ion-padding" expand="block" size="large"
+                  [routerLink]="'/saza-setup'">
+                  Setup Wallet
                </ion-button>
-            </ng-template>
+               <ng-template #loginButton>
+                  <ion-button class="ion-padding" size="large" expand="block" [routerLink]="'/login'">
+                     Login
+                  </ion-button>
+               </ng-template>
+            </div>
          </ion-col>
       </ion-row>
    </ion-grid>

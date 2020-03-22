@@ -90,9 +90,9 @@ ion-input {
 }
 
 ion-header {
-  -webkit-box-shadow: 0px 2px 2px 0px rgba(33, 136, 173, 0.75);
-  -moz-box-shadow: 0px 2px 2px 0px rgba(33, 136, 173, 0.75);
-  box-shadow: 0px 2px 2px 0px rgba(33, 136, 173, 0.75);
+  -webkit-box-shadow: 0px 2px 2px 0px rgba(126, 87, 255, 0.75);
+  -moz-box-shadow: 0px 2px 2px 0px rgba(126, 87, 255, 0.75);
+  box-shadow: 0px 2px 2px 0px rgba(126, 87, 255, 0.75);
 }
 
 .middle {
@@ -100,4 +100,34 @@ ion-header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.heading-border {
+  border-left: 1px solid #7e57ff;
+}
+
+.small-font {
+  font-size: 12px;
+}
+
+.normal-font {
+  font-size: 16px;
+}
+
+.large-font {
+  font-size: 20px;
+}
+
+.xlarge-font {
+  font-size: 26px;
+}
+
+.xxlarge-font {
+  font-size: 32px;
+}
+
+.rot-180 {
+  transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  display: inline-block;
 }

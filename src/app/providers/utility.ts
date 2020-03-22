@@ -20,9 +20,6 @@ import { SazaAccount } from '../interfaces/saza';
 export class Utility {
   constructor() {}
 
-  /**
-   * Generates a password using phrases.
-   */
   generatePassword(byteArraySize = 10): string {
     if (byteArraySize % 2 !== 0) {
       this.generatePassword(byteArraySize + 1);

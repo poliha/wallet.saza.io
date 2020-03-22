@@ -2,20 +2,17 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="operationForm">
-    <div>
-      <ion-item-divider color="light" sticky>
-        <ion-label>
-          Set Flags
-        </ion-label>
-      </ion-item-divider>
+    <div class="ion-padding">
+      <P class="small-font">
+        Set Flags
+      </P>
       <app-account-flag [form]="operationForm" [controlName]="'setFlags'"></app-account-flag>
     </div>
 
-    <div>
-      <ion-item-divider color="light" sticky>
-        <ion-label>
-          Clear Flags </ion-label>
-      </ion-item-divider>
+    <div class="ion-padding">
+      <p class="small-font">
+        Clear Flags
+      </p>
       <app-account-flag [form]="operationForm" [controlName]="'clearFlags'" [showImmutable]="false"></app-account-flag>
     </div>
 
@@ -61,10 +58,12 @@
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end" name="add"></ion-icon>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end"
+          name="add"></ion-icon>
 
       </ion-button>
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end" name="checkmark"></ion-icon>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end"
+          name="checkmark"></ion-icon>
 
       </ion-button>
     </div>

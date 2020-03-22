@@ -18,6 +18,7 @@ export class ImportAccountPage implements OnInit {
   importAccountForm: FormGroup;
   dataToImport: String;
   pageTitle = 'Import Accounts';
+  helpUrl = '#';
   constructor(
     private userService: UserService,
     private utility: Utility,

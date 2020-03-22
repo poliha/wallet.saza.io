@@ -8,7 +8,7 @@
           <ion-item>
             <ion-label position="stacked">Password</ion-label>
             <ion-input type="password" name="password" formControlName="password"></ion-input>
-            <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+            <ion-text color="danger small-font" *ngIf="password.invalid && (password.dirty || password.touched)">
               <div *ngIf="password.errors.required">
                 A value is required.
               </div>

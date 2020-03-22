@@ -23,6 +23,7 @@ export class ManageAccountsDetailPage implements OnInit {
   accountDetail: SazaAccount;
   userAccounts: SazaAccount[];
   pageTitle = 'Manage Account';
+  helpUrl = '#';
   showSubmitButton = false;
   showPrivateKeyIcon = 'eye';
   userPassword;

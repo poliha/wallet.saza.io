@@ -18,7 +18,7 @@ import { SazaError } from 'src/app/providers/errors';
 })
 export class ChangePasswordPage implements OnInit {
   pageTitle = 'Change Password';
-  helpUrl = '';
+  helpUrl = '#';
   changePasswordForm: FormGroup;
   oldPasswordHash: string;
   oldUserAccounts: SazaAccount[];

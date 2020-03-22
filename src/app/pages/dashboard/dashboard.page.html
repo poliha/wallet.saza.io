@@ -1,14 +1,13 @@
 <app-header [accountPicker]="showAccountPicker"></app-header>
 
-<ion-content>
-  <div *ngIf="!numberOfAccounts; else showDashboard">
-    <h3 class="ion-text-center ion-margin">Add a Stellar Account</h3>
-    <ion-item-divider color="light" sticky>
-      <ion-label>
-        New Stellar Account
-      </ion-label>
-    </ion-item-divider>
+<ion-content class="ion-padding">
+  <div *ngIf="!numberOfAccounts; else showDashboard" class="ion-padding">
+    <h3 class="ion-padding heading-border">Add a Stellar Account</h3>
+
     <div class="ion-padding">
+      <p class="ion-text-center">
+        Create a new account
+      </p>
       <ion-grid>
         <ion-row>
           <ion-col size-sm="4" offset-sm="4">
@@ -22,12 +21,10 @@
       </ion-grid>
     </div>
 
-    <ion-item-divider color="light" sticky>
-      <ion-label>
-        Link Existing Account
-      </ion-label>
-    </ion-item-divider>
     <div class="ion-padding">
+      <p class="ion-text-center">
+        Link an existing account
+      </p>
       <ion-grid>
         <ion-row>
           <ion-col size-sm="4" offset-sm="4">
@@ -40,23 +37,37 @@
         </ion-row>
       </ion-grid>
     </div>
+
+    <div class="ion-padding">
+      <p class="ion-text-center">
+        Import from a backup
+      </p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="4" offset-sm="4">
+            <ion-button class="ion-margin" expand="block" shape="round" [routerDirection]="'root'"
+              [routerLink]="'/import-account'">
+              <ion-icon slot="end" name="filing"></ion-icon>
+              Import
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
   </div>
 
   <ng-template #showDashboard>
-    <div>
-      <ion-item-divider color="light" sticky>
-        <ion-label>
-          Account Balance
-        </ion-label>
-      </ion-item-divider>
+    <div class="ion-margin-top ">
+      <h4 class="heading-border ion-padding">
+        Account Balance
+      </h4>
       <app-account-balance></app-account-balance>
     </div>
     <div class="ion-margin-top">
-      <ion-item-divider color="light" sticky>
-        <ion-label>
-          Operations
-        </ion-label>
-      </ion-item-divider>
+
+      <h3 class="heading-border ion-padding">
+        Operations
+      </h3>
       <app-account-history></app-account-history>
     </div>
   </ng-template>

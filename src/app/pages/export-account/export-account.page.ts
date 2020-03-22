@@ -16,6 +16,7 @@ export class ExportAccountPage implements OnInit {
   encryptionKey: String;
   dataToExport: String;
   pageTitle = 'Export Accounts';
+  helpUrl = '#';
   constructor(private userService: UserService, private utility: Utility) {}
 
   ngOnInit() {

@@ -42,6 +42,11 @@ export class AppComponent {
           url: '/operations/account-merge',
           icon: 'list',
         },
+        {
+          title: 'Operations Queue',
+          url: '/operations-queue',
+          icon: 'list',
+        },
       ],
     },
     {

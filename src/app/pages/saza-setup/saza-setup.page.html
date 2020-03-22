@@ -4,9 +4,8 @@
   <form [formGroup]="passwordForm">
     <ion-grid>
       <ion-row>
-        <ion-col size="4" offset="4">
-          <h3>
-            <ion-icon name="lock"></ion-icon>
+        <ion-col size-md="6" offset-md="3" size-lg="4" offset-lg="4">
+          <h3 class="heading-border ion-padding">
             Enter a password
           </h3>
         </ion-col>
@@ -17,7 +16,7 @@
           <ion-item>
             <ion-label position="stacked">Password</ion-label>
             <ion-input type="password" name="password" formControlName="password" placeholder="Password"></ion-input>
-            <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+            <ion-text color="danger small-font" *ngIf="password.invalid && (password.dirty || password.touched)">
               <p *ngIf="password.errors.required">
                 Value is required.
               </p>
@@ -34,7 +33,7 @@
             <ion-label position="stacked">Confirm Password</ion-label>
             <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
               placeholder="Confirm password"></ion-input>
-            <ion-text color="danger"
+            <ion-text color="danger small-font"
               *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
               <p *ngIf="confirmPassword.errors.required">
                 Value is required.

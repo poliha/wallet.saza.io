@@ -12,11 +12,12 @@
 
 // Applies a text wrap on ion options
 .alert-tappable.alert-radio {
-  height: auto;
-  contain: content;
+  min-height: 60px;
 }
 
 .alert-radio-label.sc-ion-alert-md,
 .alert-radio-label.sc-ion-alert-ios {
   white-space: normal;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

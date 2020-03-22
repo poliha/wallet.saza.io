@@ -27,7 +27,7 @@ export class SignTxPage implements OnInit {
   eligibleSigners: Set<any>;
   userAccounts = [];
   pageTitle = 'Sign Transaction';
-  helpUrl = '';
+  helpUrl = '#';
   txDetail: any;
   constructor(
     private formBuilder: FormBuilder,

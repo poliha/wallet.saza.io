@@ -29,7 +29,7 @@ export class BuildTxPage implements OnInit {
   pendingOperations = [];
   activeAccount: string;
   pageTitle = 'Build Transaction';
-  helpUrl = '';
+  helpUrl = '#';
   savedMemo = {
     memo: '',
     memo_type: '',

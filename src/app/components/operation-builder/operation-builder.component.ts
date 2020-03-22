@@ -27,7 +27,7 @@ export class OperationBuilderComponent implements OnInit {
   operationData: any;
   pageTitle = '';
   subTitle = 'Operation';
-  helpUrl = '';
+  helpUrl = '#';
   constructor() {
     const injector = InjectorService.getInjector();
     this.txService = injector.get(TxService);
