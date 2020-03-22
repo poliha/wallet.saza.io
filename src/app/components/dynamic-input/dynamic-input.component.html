@@ -3,7 +3,7 @@
 }">
   <ion-input type="{{ inputType }}" name="{{controlName}}" formControlName="{{controlName}}"
     placeholder="{{placeHolder}}" [value]="defaultValue"></ion-input>
-  <ion-text color="danger"
+  <ion-text color="danger small-font"
     *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
 
     <div *ngIf="form.controls[controlName].errors.required">

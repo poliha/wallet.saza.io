@@ -1,22 +1,27 @@
 <app-header [title]="pageTitle" [helpUrl]="helpUrl"></app-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="linkAccountForm" (submit)="formSubmit()">
     <ion-grid>
       <ion-row>
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Private Key</ion-label>
-            <ion-input type="text" name="privateKey" formControlName="privateKey" (keyup)="generateKeypair()">
-            </ion-input>
-            <ion-text color="danger" *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
-              <div *ngIf="privateKey.errors.required">
-                A value is required.
-              </div>
-              <div *ngIf="privateKey.errors.isValidPrivateKey">
-                Invalid Private Key
-              </div>
-            </ion-text>
+            <div>
+              <ion-input type="text" name="privateKey" formControlName="privateKey" (keyup)="generateKeypair()"
+                placeholder="SDQIXWGV...">
+              </ion-input>
+              <ion-text color="danger small-font"
+                *ngIf="privateKey.invalid && (privateKey.dirty || privateKey.touched)">
+                <div *ngIf="privateKey.errors.required">
+                  A value is required.
+                </div>
+                <div *ngIf="privateKey.errors.isValidPrivateKey">
+                  Invalid Private Key
+                </div>
+              </ion-text>
+            </div>
+
           </ion-item>
         </ion-col>
       </ion-row>

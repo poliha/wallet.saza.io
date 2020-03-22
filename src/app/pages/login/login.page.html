@@ -6,16 +6,18 @@
       <ion-row>
         <ion-col size-md="6" offset-md="3" size-lg="4" offset-lg="4">
           <ion-item>
-            <ion-label position="stacked">Password</ion-label>
-            <ion-input type="password" name="password" formControlName="password"></ion-input>
-            <ion-text color="danger small-font" *ngIf="password.invalid && (password.dirty || password.touched)">
-              <div *ngIf="password.errors.required">
-                A value is required.
-              </div>
-              <div *ngIf="password.errors.minlength">
-                Minimum length of {{password.errors.minlength.requiredLength}} characters required.
-              </div>
-            </ion-text>
+            <div>
+              <ion-input type="password" name="password" formControlName="password" placeholder="Enter Password">
+              </ion-input>
+              <ion-text color="danger small-font" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.errors.required">
+                  A value is required.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  Minimum length of {{password.errors.minlength.requiredLength}} characters required.
+                </div>
+              </ion-text>
+            </div>
           </ion-item>
         </ion-col>
       </ion-row>

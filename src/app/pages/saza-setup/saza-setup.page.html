@@ -4,50 +4,52 @@
   <form [formGroup]="passwordForm">
     <ion-grid>
       <ion-row>
-        <ion-col size-md="6" offset-md="3" size-lg="4" offset-lg="4">
-          <h3 class="heading-border ion-padding">
-            Enter a password
-          </h3>
+        <ion-col>
+          <p class="heading-border ion-padding">
+            Enter a password to secure your wallet.
+          </p>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col size-md="6" offset-md="3" size-lg="4" offset-lg="4">
           <ion-item>
-            <ion-label position="stacked">Password</ion-label>
-            <ion-input type="password" name="password" formControlName="password" placeholder="Password"></ion-input>
-            <ion-text color="danger small-font" *ngIf="password.invalid && (password.dirty || password.touched)">
-              <p *ngIf="password.errors.required">
-                Value is required.
-              </p>
-              <p *ngIf="password.errors.minlength">
-                Minimum length of {{password.errors.minlength.requiredLength}} characters required.
-              </p>
-              <p *ngIf="password.errors.isValidPassword">
-                {{password.errors.isValidPassword}}
-              </p>
-            </ion-text>
+            <div>
+              <ion-input type="password" name="password" formControlName="password" placeholder="Password"></ion-input>
+              <ion-text color="danger small-font" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <p *ngIf="password.errors.required">
+                  Value is required.
+                </p>
+                <p *ngIf="password.errors.minlength">
+                  Minimum length of {{password.errors.minlength.requiredLength}} characters required.
+                </p>
+                <p *ngIf="password.errors.isValidPassword">
+                  {{password.errors.isValidPassword}}
+                </p>
+              </ion-text>
+            </div>
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Confirm Password</ion-label>
-            <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
-              placeholder="Confirm password"></ion-input>
-            <ion-text color="danger small-font"
-              *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
-              <p *ngIf="confirmPassword.errors.required">
-                Value is required.
-              </p>
-              <p *ngIf="confirmPassword.errors.minlength">
-                Minimum length of {{confirmPassword.errors.minlength.requiredLength}} characters required.
-              </p>
-              <p *ngIf="confirmPassword.errors.equalTo">
-                Password mismatch
-              </p>
-              <p *ngIf="confirmPassword.errors.isValidPassword">
-                {{confirmPassword.errors.isValidPassword}}
-              </p>
-            </ion-text>
+            <div>
+              <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
+                placeholder="Confirm password"></ion-input>
+              <ion-text color="danger small-font"
+                *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                <p *ngIf="confirmPassword.errors.required">
+                  Value is required.
+                </p>
+                <p *ngIf="confirmPassword.errors.minlength">
+                  Minimum length of {{confirmPassword.errors.minlength.requiredLength}} characters required.
+                </p>
+                <p *ngIf="confirmPassword.errors.equalTo">
+                  Password mismatch
+                </p>
+                <p *ngIf="confirmPassword.errors.isValidPassword">
+                  {{confirmPassword.errors.isValidPassword}}
+                </p>
+              </ion-text>
+            </div>
           </ion-item>
         </ion-col>
       </ion-row>
