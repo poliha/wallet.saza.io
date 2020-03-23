@@ -186,6 +186,11 @@ const routes: Routes = [
       './pages/import-account/import-account.module#ImportAccountPageModule',
     canActivate: [AuthGuard],
   },
+  {
+    path: '**',
+    loadChildren: './pages/login/login.module#LoginPageModule',
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

@@ -15,7 +15,7 @@ export class AppComponent {
     {
       title: 'My Accounts',
       url: '/dashboard',
-      icon: 'dashboard',
+      icon: '',
     },
     {
       title: 'Common Tasks',
@@ -25,27 +25,27 @@ export class AppComponent {
         {
           title: 'Create Account',
           url: '/create-account',
-          icon: 'list',
+          icon: '',
         },
         {
           title: 'Link Account',
           url: '/link-account',
-          icon: 'list',
+          icon: '',
         },
         {
           title: 'Payment',
           url: '/operations/payment',
-          icon: 'list',
+          icon: '',
         },
         {
           title: 'Account Merge',
           url: '/operations/account-merge',
-          icon: 'list',
+          icon: '',
         },
         {
           title: 'Operations Queue',
           url: '/operations-queue',
-          icon: 'list',
+          icon: '',
         },
       ],
     },
@@ -55,69 +55,69 @@ export class AppComponent {
       icon: 'list',
       subPages: [
         {
-          title: 'Create Account',
-          url: '/operations/create-account',
-          icon: 'list',
-        },
-        {
-          title: 'Payment',
-          url: '/operations/payment',
-          icon: 'list',
-        },
-        {
-          title: 'Sell Offer',
-          url: '/operations/sell-offer',
-          icon: 'list',
-        },
-        {
-          title: 'Buy Offer',
-          url: '/operations/buy-offer',
-          icon: 'list',
-        },
-        {
-          title: 'Passive Offer',
-          url: '/operations/passive-offer',
-          icon: 'list',
-        },
-        {
-          title: 'Bump Sequence',
-          url: '/operations/bump-sequence',
-          icon: 'list',
-        },
-        {
-          title: 'Manage Data',
-          url: '/operations/manage-data',
-          icon: 'list',
-        },
-        {
           title: 'Account Merge',
           url: '/operations/account-merge',
-          icon: 'list',
+          icon: '',
         },
         {
           title: 'Allow Trust',
           url: '/operations/allow-trust',
-          icon: 'list',
+          icon: '',
         },
         {
           title: 'Change Trust',
           url: '/operations/change-trust',
-          icon: 'list',
+          icon: '',
         },
         {
-          title: 'Set Options',
-          url: '/operations/set-options',
-          icon: 'list',
+          title: 'Create Account',
+          url: '/operations/create-account',
+          icon: '',
+        },
+        {
+          title: 'Bump Sequence',
+          url: '/operations/bump-sequence',
+          icon: '',
+        },
+        {
+          title: 'Buy Offer',
+          url: '/operations/buy-offer',
+          icon: '',
+        },
+        {
+          title: 'Manage Data',
+          url: '/operations/manage-data',
+          icon: '',
+        },
+        {
+          title: 'Passive Offer',
+          url: '/operations/passive-offer',
+          icon: '',
         },
         {
           title: 'Path Payment Receive',
           url: '/operations/path-receive',
-          icon: 'list',
+          icon: '',
         },
         {
           title: 'Path Payment Send',
           url: '/operations/path-send',
-          icon: 'list',
+          icon: '',
+        },
+        {
+          title: 'Payment',
+          url: '/operations/payment',
+          icon: '',
+        },
+        {
+          title: 'Sell Offer',
+          url: '/operations/sell-offer',
+          icon: '',
+        },
+        {
+          title: 'Set Options',
+          url: '/operations/set-options',
+          icon: '',
         },
       ],
     },
@@ -129,7 +129,7 @@ export class AppComponent {
         {
           title: 'Settings',
           url: '/settings',
-          icon: 'cog',
+          icon: '',
         },
       ],
     },

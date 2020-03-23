@@ -1,18 +1,20 @@
-<div>
-  <ion-label position="stacked">Source <i *ngIf="!isRequired">(Optional)</i></ion-label>
+  <div>
+    <div class="ion-padding-bottom">
+      <ion-label position="stacked">Source <i *ngIf="!isRequired">(Optional)</i></ion-label>
+    </div>
 
-  <ion-select placeholder="Source Account" (ionChange)="accountChanged($event)">
-    <ion-select-option *ngFor="let a of userAccounts" [value]="a.public"
-      [selected]="a.public === selected ? true : false">{{a.public}}
-    </ion-select-option>
-    <ion-select-option value="custom">Custom public key</ion-select-option>
-  </ion-select>
+    <ion-select class="ion-padding" placeholder="Source Account" (ionChange)="accountChanged($event)">
+      <ion-select-option *ngFor="let a of userAccounts" [value]="a.public"
+        [selected]="a.public === selected ? true : false">{{a.public}}
+      </ion-select-option>
+      <ion-select-option value="custom">Custom public key</ion-select-option>
+    </ion-select>
 
-  <div *ngIf="showCustomInput">
-    <app-dynamic-input (ionChange)="customInputChanged($event)" [inputType]="'text'" [form]="customInputForm"
-      [controlName]="'customPublicKey'" [placeHolder]="'Custom Public key'" [defaultValue]="selected"
-      [isEd25519PublicKey]="'true'"></app-dynamic-input>
+    <div *ngIf="showCustomInput">
+      <app-dynamic-input (ionChange)="customInputChanged($event)" [inputType]="'text'" [form]="customInputForm"
+        [controlName]="'customPublicKey'" [placeHolder]="'Custom Public key'" [defaultValue]="selected"
+        [isEd25519PublicKey]="'true'"></app-dynamic-input>
+    </div>
+    <app-dynamic-input [inputType]="'text'" [form]="form" [controlName]="controlName" [isHidden]="true"
+      [isEd25519PublicKey]="'true'" [defaultValue]="selected" [isRequired]="isRequired"></app-dynamic-input>
   </div>
-  <app-dynamic-input [inputType]="'text'" [form]="form" [controlName]="controlName" [isHidden]="true"
-    [isEd25519PublicKey]="'true'" [defaultValue]="selected" [isRequired]="isRequired"></app-dynamic-input>
-</div>

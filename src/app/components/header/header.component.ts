@@ -15,13 +15,15 @@ export class HeaderComponent implements OnInit {
   @Input() showBackButton = false;
 
   isTestNetwork: boolean;
-
-  constructor(private userService: UserService) { }
+  isLoggedIn: boolean;
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.userService.activeNetwork.subscribe(data => {
       this.isTestNetwork = data.type === 'testnet' ? true : false;
+      this.userService.isAuthValid().then(authStatus => {
+        this.isLoggedIn = authStatus;
+      });
     });
   }
-
 }

@@ -131,3 +131,7 @@ ion-header {
   -webkit-transform: rotate(-180deg);
   display: inline-block;
 }
+
+.active-menu {
+  --background: var(--ion-color-light-shade, #d7d8da);
+}

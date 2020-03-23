@@ -11,31 +11,31 @@
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item-group *ngIf="p.subPages">
               <ion-item-divider>
-                <ion-label>{{p.title}}</ion-label>
-              </ion-item-divider>
-              <ion-item *ngFor="let s of p.subPages" [routerDirection]="'root'" [routerLink]="[s.url]">
-                <ion-icon slot="start" [name]="s.icon"></ion-icon>
                 <ion-label>
+                  <ion-icon *ngIf="p.icon" slot="start" [name]="p.icon"></ion-icon>
+
+                  {{p.title}}
+                </ion-label>
+              </ion-item-divider>
+              <ion-item *ngFor="let s of p.subPages" [routerDirection]="'root'" [routerLink]="[s.url]"
+                [routerLinkActive]="'active-menu'">
+                <ion-icon *ngIf="s.icon" slot="start" [name]="s.icon"></ion-icon>
+                <ion-label class="heading-border ion-padding-start">
                   {{s.title}}
                 </ion-label>
               </ion-item>
             </ion-item-group>
-            <ion-item *ngIf="!p.subPages" [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
+            <ion-item *ngIf="!p.subPages" [routerDirection]="'root'" [routerLink]="[p.url]"
+              [routerLinkActive]="'active-menu'">
+              <ion-icon *ngIf="p.icon" slot="start" [name]="p.icon"></ion-icon>
+              <ion-label class="heading-border ion-padding-start">
                 {{p.title}}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-item (click)="logout()">
-            <ion-label>
-              Logout
-            </ion-label>
-          </ion-item>
           <ion-item>
-            <ion-label>Choose Network</ion-label>
-          </ion-item>
-          <ion-item>
+            <ion-label>Network</ion-label>
+
             <div *ngIf="activeNetwork">
               <ion-segment (ionChange)="setNetwork($event)">
                 <ion-segment-button value="pubnet" [checked]="activeNetwork.type === 'pubnet' ? 'true' : 'false'">
@@ -46,6 +46,11 @@
                 </ion-segment-button>
               </ion-segment>
             </div>
+          </ion-item>
+          <ion-item (click)="logout()">
+            <ion-label>
+              Logout
+            </ion-label>
           </ion-item>
         </ion-list>
       </ion-content>

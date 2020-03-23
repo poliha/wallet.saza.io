@@ -5,8 +5,8 @@ import { ToastController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class NotificationService {
-  defaultDuration = 5000;
-  maxDuration = 10000;
+  defaultDuration = 3000;
+  maxDuration = 5000;
   defaultColour = 'primary';
 
   constructor(private toastCtrl: ToastController) {}
