@@ -1,5 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { HomePage } from './home.page';
@@ -15,14 +21,11 @@ describe('HomePage', () => {
     userServiceSpy = jasmine.createSpyObj('UserService', ['getPassword']);
     userServiceSpy.getPassword.and.returnValue(Promise.resolve(passwordValue));
     TestBed.configureTestingModule({
-      declarations: [ HomePage ],
+      declarations: [HomePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        { provide: UserService, useValue: userServiceSpy },
-      ],
+      providers: [{ provide: UserService, useValue: userServiceSpy }],
       imports: [RouterTestingModule.withRoutes([])],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -56,12 +59,17 @@ describe('HomePage', () => {
   describe('when there is a saved user password', () => {
     it('should be a login button', fakeAsync(() => {
       userServiceSpy.getPassword.and.returnValue(Promise.resolve('abc'));
-      component.ngOnInit();
       tick();
       fixture.detectChanges();
       const buttons = fixture.nativeElement.querySelectorAll('ion-button');
-      expect(buttons.length).toEqual(1, 'number of buttons on the page should be 1');
-      expect(buttons[0].textContent).toContain('Login', 'The button should be a login button');
+      expect(buttons.length).toEqual(
+        1,
+        'number of buttons on the page should be 1',
+      );
+      expect(buttons[0].textContent).toContain(
+        'Login',
+        'The button should be a login button',
+      );
     }));
   });
 });

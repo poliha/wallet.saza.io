@@ -4,6 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountPickerComponent } from './account-picker.component';
 import { of } from 'rxjs';
 import { UserService } from 'src/app/providers/providers';
+import { TruncatePublicKeyPipeModule } from 'src/app/pipes/truncate-public-key.module';
 
 describe('AccountPickerComponent', () => {
   let component: AccountPickerComponent;
@@ -11,17 +12,26 @@ describe('AccountPickerComponent', () => {
   let userServiceSpy;
 
   beforeEach(async(() => {
-    userServiceSpy = jasmine.createSpyObj('UserService', ['userAccounts']);
-    userServiceSpy.userAccounts = of([]);
+    const subFn = { subscribe: () => {} };
+    const getValueFn = { getValue: () => {} };
+    userServiceSpy = jasmine.createSpyObj('UserService', [
+      'userAccounts',
+      'activeAccount',
+      'setActiveAccount',
+    ]);
+    userServiceSpy.activeAccount = jasmine.createSpyObj('activeAccount', subFn);
+
+    userServiceSpy.userAccounts = jasmine.createSpyObj(
+      'userAccounts',
+      getValueFn,
+    );
 
     TestBed.configureTestingModule({
-      declarations: [ AccountPickerComponent ],
+      declarations: [AccountPickerComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        { provide: UserService, useValue: userServiceSpy },
-      ],
-    })
-    .compileComponents();
+      providers: [{ provide: UserService, useValue: userServiceSpy }],
+      imports: [TruncatePublicKeyPipeModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

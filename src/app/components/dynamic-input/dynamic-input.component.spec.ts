@@ -11,11 +11,10 @@ describe('DynamicInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DynamicInputComponent ],
+      declarations: [DynamicInputComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [ReactiveFormsModule, IonicModule]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule, IonicModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

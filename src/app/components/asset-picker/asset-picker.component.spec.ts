@@ -11,17 +11,17 @@ describe('AssetPickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssetPickerComponent ],
+      declarations: [AssetPickerComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [ReactiveFormsModule, IonicModule]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule, IonicModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AssetPickerComponent);
     component = fixture.componentInstance;
     component.form = new FormGroup({});
+    component.controlName = 'buying';
     fixture.detectChanges();
   });
 

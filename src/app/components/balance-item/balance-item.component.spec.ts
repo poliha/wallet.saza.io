@@ -9,15 +9,20 @@ describe('BalanceItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BalanceItemComponent ],
+      declarations: [BalanceItemComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BalanceItemComponent);
     component = fixture.componentInstance;
+    component.balance = {
+      balance: '10000.0000000',
+      buying_liabilities: '0.0000000',
+      selling_liabilities: '0.0000000',
+      asset_type: 'native',
+    };
     fixture.detectChanges();
   });
 

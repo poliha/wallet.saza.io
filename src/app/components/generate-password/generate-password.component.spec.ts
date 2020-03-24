@@ -13,13 +13,10 @@ describe('GeneratePasswordComponent', () => {
     utilitySpy = jasmine.createSpyObj('Utility', ['generatePassword']);
 
     TestBed.configureTestingModule({
-      declarations: [ GeneratePasswordComponent ],
+      declarations: [GeneratePasswordComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        {provide: Utility, useValue: utilitySpy}
-      ]
-    })
-    .compileComponents();
+      providers: [{ provide: Utility, useValue: utilitySpy }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

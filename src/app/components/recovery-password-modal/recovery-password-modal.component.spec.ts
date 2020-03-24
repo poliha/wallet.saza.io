@@ -13,13 +13,10 @@ describe('RecoveryPasswordModalComponent', () => {
     modalCtrlSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
 
     TestBed.configureTestingModule({
-      declarations: [ RecoveryPasswordModalComponent ],
+      declarations: [RecoveryPasswordModalComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        { provide: ModalController, useValue: modalCtrlSpy },
-      ]
-    })
-    .compileComponents();
+      providers: [{ provide: ModalController, useValue: modalCtrlSpy }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

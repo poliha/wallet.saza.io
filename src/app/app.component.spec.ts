@@ -10,15 +10,28 @@ import { AppComponent } from './app.component';
 import { UserService } from './providers/providers';
 
 describe('AppComponent', () => {
-
-  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy, userServiceSpy;
+  let statusBarSpy,
+    splashScreenSpy,
+    platformReadySpy,
+    platformSpy,
+    userServiceSpy;
 
   beforeEach(async(() => {
     statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
     splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
     platformReadySpy = Promise.resolve();
-    platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
-    userServiceSpy = jasmine.createSpyObj('UserService', ['setActiveNetwork', 'logout']);
+    const subFn = { subscribe: () => {} };
+    platformSpy = jasmine.createSpyObj('Platform', {
+      ready: platformReadySpy,
+    });
+    platformSpy.resume = jasmine.createSpyObj('resume', subFn);
+
+    userServiceSpy = jasmine.createSpyObj('UserService', [
+      'setActiveNetwork',
+      'logout',
+      'activeNetwork',
+    ]);
+    userServiceSpy.activeNetwork = jasmine.createSpyObj('activeNetwork', subFn);
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
@@ -27,9 +40,9 @@ describe('AppComponent', () => {
         { provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
-        { provide: UserService, useValue: userServiceSpy},
+        { provide: UserService, useValue: userServiceSpy },
       ],
-      imports: [ RouterTestingModule.withRoutes([])],
+      imports: [RouterTestingModule.withRoutes([])],
     }).compileComponents();
   }));
 
@@ -45,6 +58,7 @@ describe('AppComponent', () => {
     await platformReadySpy;
     expect(statusBarSpy.styleDefault).toHaveBeenCalled();
     expect(splashScreenSpy.hide).toHaveBeenCalled();
+    expect(platformSpy.resume.subscribe).toHaveBeenCalled();
   });
 
   it('should have menu labels', async () => {
@@ -53,8 +67,8 @@ describe('AppComponent', () => {
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
     expect(menuItems.length).toBeGreaterThan(2);
-    expect(menuItems[0].textContent).toContain('Home');
-    expect(menuItems[1].textContent).toContain('List');
+    expect(menuItems[0].textContent).toContain('My Accounts');
+    expect(menuItems[1].textContent).toContain('Common Tasks');
   });
 
   it('should have urls', async () => {
@@ -63,8 +77,11 @@ describe('AppComponent', () => {
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
     expect(menuItems.length).toBeGreaterThan(2);
-    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/home');
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/list');
+    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual(
+      '/dashboard',
+    );
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual(
+      '/create-account',
+    );
   });
-
 });
