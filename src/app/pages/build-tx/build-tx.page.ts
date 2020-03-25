@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   TxService,
-  Utility,
   StellarService,
   UserService,
   CustomValidators,
@@ -39,7 +38,6 @@ export class BuildTxPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private txService: TxService,
-    private utility: Utility,
     private stellarService: StellarService,
     private userService: UserService,
     private router: Router,

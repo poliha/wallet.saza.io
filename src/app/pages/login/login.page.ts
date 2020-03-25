@@ -21,12 +21,12 @@ export class LoginPage implements OnInit {
   subTitle = '';
   helpUrl = '#';
   constructor(
-    private formBuilder: FormBuilder,
-    private utility: Utility,
-    private userService: UserService,
-    private router: Router,
-    private notification: NotificationService,
-    private menu: MenuController,
+    public formBuilder: FormBuilder,
+    public utility: Utility,
+    public userService: UserService,
+    public router: Router,
+    public notification: NotificationService,
+    public menu: MenuController,
   ) {}
 
   ngOnInit() {

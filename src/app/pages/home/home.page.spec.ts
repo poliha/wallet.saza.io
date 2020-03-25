@@ -59,6 +59,7 @@ describe('HomePage', () => {
   describe('when there is a saved user password', () => {
     it('should be a login button', fakeAsync(() => {
       userServiceSpy.getPassword.and.returnValue(Promise.resolve('abc'));
+      component.ionViewWillEnter();
       tick();
       fixture.detectChanges();
       const buttons = fixture.nativeElement.querySelectorAll('ion-button');

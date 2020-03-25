@@ -12,21 +12,21 @@ describe('LinkAccountPage', () => {
   let fixture: ComponentFixture<LinkAccountPage>;
   let utilitySpy, userServiceSpy;
 
-
   beforeEach(async(() => {
+    const subFn = { subscribe: () => {} };
     utilitySpy = jasmine.createSpyObj('Utility', ['getHash']);
-    userServiceSpy = jasmine.createSpyObj('UserService', ['getPassword']);
+    userServiceSpy = jasmine.createSpyObj('UserService', ['userAccounts']);
+    userServiceSpy.userAccounts = jasmine.createSpyObj('userAccounts', subFn);
 
     TestBed.configureTestingModule({
-      declarations: [ LinkAccountPage ],
+      declarations: [LinkAccountPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: Utility, useValue: utilitySpy },
         { provide: UserService, useValue: userServiceSpy },
       ],
-      imports: [ReactiveFormsModule, RouterTestingModule, IonicModule]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule, RouterTestingModule, IonicModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

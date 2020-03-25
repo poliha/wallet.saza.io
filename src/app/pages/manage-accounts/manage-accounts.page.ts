@@ -12,7 +12,7 @@ export class ManageAccountsPage implements OnInit {
   pageTitle = 'Manage Accounts';
   helpUrl = '';
   userAccounts: SazaAccount[] = [];
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(public userService: UserService, public router: Router) {}
 
   ngOnInit() {}
 
