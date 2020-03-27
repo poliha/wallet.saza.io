@@ -15,14 +15,14 @@ import {
   NotificationService,
 } from 'src/app/providers/providers';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, NavController, MenuController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
-  let utilitySpy, userServiceSpy, routerSpy, notifySpy;
+  let utilitySpy, userServiceSpy, notifySpy;
 
   beforeEach(async(() => {
     utilitySpy = jasmine.createSpyObj('Utility', ['validateHash']);
@@ -30,7 +30,6 @@ describe('LoginPage', () => {
       'getPassword',
       'login',
     ]);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     notifySpy = jasmine.createSpyObj('NofificationService', ['success']);
 
     TestBed.configureTestingModule({
@@ -39,9 +38,7 @@ describe('LoginPage', () => {
       providers: [
         { provide: Utility, useValue: utilitySpy },
         { provide: UserService, useValue: userServiceSpy },
-        // { provide: Router, useValue: routerSpy },
         { provide: NotificationService, useValue: notifySpy },
-        // MenuController,
       ],
       imports: [ReactiveFormsModule, IonicModule, RouterTestingModule],
     }).compileComponents();
@@ -92,10 +89,11 @@ describe('LoginPage', () => {
       userServiceSpy.getPassword.and.returnValue(Promise.resolve('abc'));
       utilitySpy.validateHash.and.returnValue(true);
       userServiceSpy.login.and.returnValue(Promise.resolve('abc'));
-
+      const router = TestBed.get(Router);
+      const navigateSpy = spyOn(router, 'navigate');
       component.formSubmit();
       tick();
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['dashboard/']);
+      expect(navigateSpy).toHaveBeenCalledWith(['dashboard/']);
     }));
   });
 });
