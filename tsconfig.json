@@ -10,13 +10,13 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015", // angular8: The CLI's build command now automatically creates a modern ES2015 build with minimal polyfills and a compatible ES5 build for older browsers, and loads the appropriate file based on the browser. change back to es5 if needed
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    // angular8: The CLI's build command now automatically creates a modern ES2015
+    // build with minimal polyfills and a compatible ES5 build for older browsers,
+    // and loads the appropriate file based on the browser. To activate it,
+    // set "target" to es2015. Change back to es5 to disable.
+    "target": "es5",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
+    "downlevelIteration": true
   }
 }
