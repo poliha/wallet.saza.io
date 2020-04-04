@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "node patch-webpack.js",
-    "electron:dev": "ng build --base-href ./ && electron ."
+    "electron:dev": "ng build --base-href ./ && electron-forge start",
+    "electron:make": "ng build --prod --base-href ./ && electron-forge make"
   },
   "main": "main.js",
   "private": true,
@@ -53,6 +54,8 @@
     "@angular/compiler": "^8.2.14",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",
+    "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/maker-zip": "^6.0.0-beta.50",
     "@ionic/angular-toolkit": "^2.2.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "^2.0.8",
@@ -93,5 +96,22 @@
     "platforms": [
       "android"
     ]
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "dir": "./www"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
+          ]
+        }
+      ]
+    }
   }
 }
