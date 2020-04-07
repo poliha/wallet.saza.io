@@ -113,10 +113,7 @@ export class ForgotPasswordPage implements OnInit {
 
   createPasswordInput() {
     return this.formBuilder.group({
-      password: [
-        '',
-        Validators.compose([Validators.minLength(8), Validators.required]),
-      ],
+      password: ['', Validators.compose([Validators.required])],
     });
   }
 

@@ -9,6 +9,7 @@ import { ForgotPasswordPage } from './forgot-password.page';
 import { MaterialModule } from 'src/app/material.module';
 import { RecoveryPasswordModalComponentModule } from 'src/app/components/recovery-password-modal/recovery-password-modal.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
+import { RecoveryPasswordModalComponent } from 'src/app/components/recovery-password-modal/recovery-password-modal.component';
 
 const routes: Routes = [
   {
@@ -29,5 +30,6 @@ const routes: Routes = [
     HeaderComponentModule,
   ],
   declarations: [ForgotPasswordPage],
+  entryComponents: [RecoveryPasswordModalComponent],
 })
 export class ForgotPasswordPageModule {}
