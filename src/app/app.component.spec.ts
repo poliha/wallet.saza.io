@@ -81,7 +81,7 @@ describe('AppComponent', () => {
       '/dashboard',
     );
     expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual(
-      '/create-account',
+      '/new-account',
     );
   });
 });

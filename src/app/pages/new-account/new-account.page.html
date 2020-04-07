@@ -11,7 +11,7 @@
     </ion-row>
   </ion-grid>
 
-  <form *ngIf="keypairGenerated" [formGroup]="createAccountForm" (submit)="formSubmit()">
+  <form *ngIf="keypairGenerated" [formGroup]="newAccountForm" (submit)="formSubmit()">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -33,7 +33,7 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Tag</ion-label>
-            <app-dynamic-input [form]="createAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1"
+            <app-dynamic-input [form]="newAccountForm" [controlName]="'tag'" [inputType]="'text'" [minValue]="1"
               [placeHolder]="'My account'">
             </app-dynamic-input>
           </ion-item>
@@ -63,7 +63,7 @@
         <ion-col size-sm="4" offset-sm="4">
           <div class="ion-margin ion-text-center">
             <ion-button class="ion-margin" expand="block" shape="round" type="submit"
-              [disabled]="createAccountForm.invalid">
+              [disabled]="newAccountForm.invalid">
               <ion-icon slot="end" name="checkmark"></ion-icon>
               Save
             </ion-button>

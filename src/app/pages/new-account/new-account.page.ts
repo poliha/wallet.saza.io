@@ -10,16 +10,16 @@ import {
 import { SazaAccount } from '../../interfaces/saza';
 import { SazaError } from 'src/app/providers/errors';
 @Component({
-  selector: 'app-create-account',
-  templateUrl: './create-account.page.html',
-  styleUrls: ['./create-account.page.scss'],
+  selector: 'app-new-account',
+  templateUrl: './new-account.page.html',
+  styleUrls: ['./new-account.page.scss'],
 })
-export class CreateAccountPage implements OnInit {
-  createAccountForm: FormGroup;
+export class NewAccountPage implements OnInit {
+  newAccountForm: FormGroup;
   userAccounts = [];
   pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;
-  pageTitle = 'Create Account';
+  pageTitle = 'Add Account';
   helpUrl = '#';
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +47,7 @@ export class CreateAccountPage implements OnInit {
   }
 
   makeForm() {
-    this.createAccountForm = this.formBuilder.group({
+    this.newAccountForm = this.formBuilder.group({
       keysCopied: ['', Validators.requiredTrue],
       password: [
         '',
@@ -63,20 +63,20 @@ export class CreateAccountPage implements OnInit {
 
   // Getters for template
   get keysCopied() {
-    return this.createAccountForm.get('keysCopied');
+    return this.newAccountForm.get('keysCopied');
   }
   get password() {
-    return this.createAccountForm.get('password');
+    return this.newAccountForm.get('password');
   }
   get tag() {
-    return this.createAccountForm.get('tag');
+    return this.newAccountForm.get('tag');
   }
 
   async formSubmit() {
     // check that pairobj is not empty
     // check that password matches hash
     // encrypt secret key.
-    // create account object
+    // add account object
     // save account object
     // Clear form
     if (this.pairObj.public === '' || this.pairObj.private === '') {
@@ -108,7 +108,7 @@ export class CreateAccountPage implements OnInit {
     this.pairObj.private = '';
     this.pairObj.public = '';
     this.keypairGenerated = false;
-    this.createAccountForm.reset();
+    this.newAccountForm.reset();
     console.log('account saved');
   }
 }

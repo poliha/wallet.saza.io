@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { CreateAccountPage } from './create-account.page';
+import { NewAccountPage } from './new-account.page';
 import { CopyButtonComponentModule } from 'src/app/components/copy-button/copy-button.module';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
@@ -11,7 +11,7 @@ import { HeaderComponentModule } from 'src/app/components/header/header.module';
 const routes: Routes = [
   {
     path: '',
-    component: CreateAccountPage,
+    component: NewAccountPage,
   },
 ];
 
@@ -27,6 +27,6 @@ const routes: Routes = [
     HeaderComponentModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [CreateAccountPage],
+  declarations: [NewAccountPage],
 })
-export class CreateAccountPageModule {}
+export class NewAccountPageModule {}

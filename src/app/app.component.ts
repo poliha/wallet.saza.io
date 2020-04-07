@@ -23,8 +23,8 @@ export class AppComponent {
       icon: 'list',
       subPages: [
         {
-          title: 'Create Account',
-          url: '/create-account',
+          title: 'New Account',
+          url: '/new-account',
           icon: '',
         },
         {

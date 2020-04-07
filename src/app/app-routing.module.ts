@@ -30,9 +30,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'create-account',
-    loadChildren:
-      './pages/create-account/create-account.module#CreateAccountPageModule',
+    path: 'new-account',
+    loadChildren: './pages/new-account/new-account.module#NewAccountPageModule',
     canActivate: [AuthGuard],
   },
   {
