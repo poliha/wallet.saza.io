@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import {
@@ -10,6 +10,7 @@ import { RecoveryPasswordModalComponent } from 'src/app/components/recovery-pass
 import { Router } from '@angular/router';
 import { SazaAccount } from 'src/app/interfaces/saza';
 import { SazaError } from 'src/app/providers/errors';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-forgot-password',
@@ -29,6 +30,8 @@ export class ForgotPasswordPage implements OnInit {
   pageTitle = 'Forgot Password';
   subTitle = '';
   helpUrl = '#';
+
+  @ViewChild('stepper', { static: false }) stepper: MatStepper;
 
   constructor(
     private menu: MenuController,
@@ -109,6 +112,14 @@ export class ForgotPasswordPage implements OnInit {
   }
   get confirmNewPassword() {
     return this.changePasswordForm.get('confirmNewPassword');
+  }
+
+  previousStep() {
+    this.stepper.previous();
+  }
+
+  nextStep() {
+    this.stepper.next();
   }
 
   createPasswordInput() {

@@ -63,6 +63,14 @@ export class PathReceivePage extends OperationBuilderComponent
     return this.choosePathForm.get('selectedPath');
   }
 
+  previousStep() {
+    this.stepper.previous();
+  }
+
+  nextStep() {
+    this.stepper.next();
+  }
+
   async submitFindPathForm() {
     // get form data
     // validate form data
@@ -87,7 +95,7 @@ export class PathReceivePage extends OperationBuilderComponent
 
       this.sendParams.source = source;
 
-      this.stepper.next();
+      this.nextStep();
     } catch (error) {
       console.log(error);
     }
@@ -115,11 +123,11 @@ export class PathReceivePage extends OperationBuilderComponent
       asset_code: path.destination_asset_code,
       asset_issuer: path.destination_asset_issuer,
     });
-    this.sendParams.path = path.path.map(asset =>
+    this.sendParams.path = path.path.map((asset) =>
       this.utility.generateAsset(asset),
     );
 
-    this.stepper.next();
+    this.nextStep();
   }
 
   setOperationData() {

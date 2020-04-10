@@ -6,7 +6,7 @@
     <mat-step [stepControl]="findPathForm">
       <form [formGroup]="findPathForm">
         <ng-template matStepLabel>Find</ng-template>
-        <div>
+        <div class="ion-padding">
           <label>Destination</label>
 
           <app-dynamic-input [inputType]="'text'" [form]="findPathForm" [controlName]="'destination'"
@@ -14,13 +14,13 @@
           </app-dynamic-input>
         </div>
 
-        <div>
+        <div class="ion-padding">
           <label>Source Asset</label>
 
           <app-asset-picker [form]="findPathForm" [controlName]="'sourceAsset'" [displayType]="'manual'">
           </app-asset-picker>
         </div>
-        <div>
+        <div class="ion-padding">
           <label>Source Amount</label>
 
           <app-dynamic-input [form]="findPathForm" [controlName]="'sourceAmount'" [placeHolder]="'Amount'">
@@ -28,7 +28,8 @@
         </div>
 
         <div>
-          <button [disabled]="findPathForm.invalid" (click)="submitFindPathForm()" mat-button>Next</button>
+          <ion-button color="tertiary" [disabled]="findPathForm.invalid" (click)="submitFindPathForm()">Next
+          </ion-button>
         </div>
       </form>
     </mat-step>
@@ -58,27 +59,28 @@
         </p>
 
         <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button [disabled]="choosePathForm.invalid" (click)="submitChoosePathForm()" mat-button>Next</button>
+          <ion-button color="medium" (click)="previousStep()">Back</ion-button>
+          <ion-button color="tertiary" [disabled]="choosePathForm.invalid" (click)="submitChoosePathForm()">Next
+          </ion-button>
         </div>
       </form>
     </mat-step>
     <mat-step>
       <form [formGroup]="operationForm">
         <ng-template matStepLabel>Send Payment</ng-template>
-        <div>
+        <div class="ion-padding">
           <app-select-source [form]="operationForm" [controlName]="'source'" [isRequired]="true"></app-select-source>
         </div>
 
 
         <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button [disabled]="operationForm.invalid" (click)="saveOperation()" mat-button>Save<ion-icon slot="end"
-              name="add"></ion-icon>
-          </button>
-          <button [disabled]="operationForm.invalid" (click)="sendOperation()" mat-button>Send<ion-icon slot="end"
+          <ion-button color="medium" (click)="previousStep()">Back</ion-button>
+          <ion-button [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end" name="add">
+            </ion-icon>
+          </ion-button>
+          <ion-button [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end"
               name="checkmark"></ion-icon>
-          </button>
+          </ion-button>
         </div>
       </form>
     </mat-step>

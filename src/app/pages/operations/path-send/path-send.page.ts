@@ -62,6 +62,14 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
     return this.choosePathForm.get('selectedPath');
   }
 
+  previousStep() {
+    this.stepper.previous();
+  }
+
+  nextStep() {
+    this.stepper.next();
+  }
+
   async submitFindPathForm() {
     // get form data
     // validate form data
@@ -86,7 +94,7 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
 
       this.sendParams.destination = destination;
 
-      this.stepper.next();
+      this.nextStep();
     } catch (error) {
       console.log(error);
     }
@@ -114,11 +122,11 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
       asset_code: path.destination_asset_code,
       asset_issuer: path.destination_asset_issuer,
     });
-    this.sendParams.path = path.path.map(asset =>
+    this.sendParams.path = path.path.map((asset) =>
       this.utility.generateAsset(asset),
     );
 
-    this.stepper.next();
+    this.nextStep();
   }
 
   setOperationData() {
