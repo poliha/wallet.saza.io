@@ -65,16 +65,6 @@ export class AppComponent {
           icon: '',
         },
         {
-          title: 'Change Trust',
-          url: '/operations/change-trust',
-          icon: '',
-        },
-        {
-          title: 'Create Account',
-          url: '/operations/create-account',
-          icon: '',
-        },
-        {
           title: 'Bump Sequence',
           url: '/operations/bump-sequence',
           icon: '',
@@ -82,6 +72,16 @@ export class AppComponent {
         {
           title: 'Buy Offer',
           url: '/operations/buy-offer',
+          icon: '',
+        },
+        {
+          title: 'Change Trust',
+          url: '/operations/change-trust',
+          icon: '',
+        },
+        {
+          title: 'Create Account',
+          url: '/operations/create-account',
           icon: '',
         },
         {
@@ -151,7 +151,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.userService.activeNetwork.subscribe(data => {
+      this.userService.activeNetwork.subscribe((data) => {
         this.activeNetwork = data;
       });
     });
