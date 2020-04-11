@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Utility } from '../../../providers/providers';
 import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
+import { SazaError } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-payment',
@@ -60,11 +61,11 @@ export class PaymentPage extends OperationBuilderComponent implements OnInit {
       // make a create-account operation
       const { asset_type } = this.asset.value;
       if (asset_type !== 'native') {
-        this.notification.error(
+        throw new SazaError(
           'Can not send custom asset to inactive destination. Send XLM to create the destination account.',
         );
-        return;
       }
+      this.operationType = this.stellarService.operationType.CREATE_ACCOUNT;
       this.operationData = {
         destination,
         startingBalance: String(this.amount.value),
@@ -83,7 +84,7 @@ export class PaymentPage extends OperationBuilderComponent implements OnInit {
   }
 
   async saveOperation() {
-    this.setOperationData();
+    await this.setOperationData();
     await this.buildOperation();
     this.operationForm.reset({
       source: this.source.value,
@@ -92,7 +93,7 @@ export class PaymentPage extends OperationBuilderComponent implements OnInit {
   }
 
   async sendOperation() {
-    this.setOperationData();
+    await this.setOperationData();
     await this.buildTransaction();
   }
 }
