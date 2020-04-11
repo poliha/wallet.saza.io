@@ -6,7 +6,7 @@
       Transaction Details
     </ion-label>
   </ion-item-divider>
-  <ion-item (click)="viewOperations()" detail>
+  <ion-item [routerLink]="'/operations-queue'" detail>
     Operations
     <ion-badge slot="end" color="dark">{{pendingOperations.length}}</ion-badge>
   </ion-item>
@@ -24,7 +24,7 @@
     </ion-item>
     <ion-item-divider color="light" sticky>
       <ion-label>
-        Memo
+        Memo <i>(Optional)</i>
       </ion-label>
     </ion-item-divider>
     <ion-item>
@@ -76,7 +76,7 @@
     </ion-item>
     <ion-item-divider color="light" sticky>
       <ion-label>
-        Time bounds
+        Time bounds <i>(Optional)</i>
       </ion-label>
     </ion-item-divider>
     <ion-item>

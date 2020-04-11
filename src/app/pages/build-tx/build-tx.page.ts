@@ -7,9 +7,6 @@ import {
   CustomValidators,
   LoadingService,
 } from '../../providers/providers';
-import { Operation, xdr } from 'stellar-sdk';
-import { SazaAccount } from 'src/app/interfaces/saza';
-import { PickerController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { SazaError } from 'src/app/providers/errors';
@@ -45,13 +42,15 @@ export class BuildTxPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // set start date and end date for timebounds.
     const today = moment();
     this.startDate = today.toISOString();
     this.endDate = today.add(1, 'd').toISOString();
 
+    // get most recent network fees.
     this.stellarService
       .fees()
-      .then(data => {
+      .then((data) => {
         console.log('Fees: ', data);
         const { fee_charged, max_fee } = data;
         this.networkFees = {
@@ -60,21 +59,24 @@ export class BuildTxPage implements OnInit {
         };
         console.log('NFees: ', this.networkFees);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
 
-    this.txService.operations.subscribe(data => {
+    // get pending operations list
+    this.txService.operations.subscribe((data) => {
       this.pendingOperations = data;
       console.log('pendingOps', this.pendingOperations);
     });
 
-    this.userService.activeAccount.subscribe(data => {
+    // Get the active account. Used as the default transaction source.
+    this.userService.activeAccount.subscribe((data) => {
       this.activeAccount = data;
       console.log('active', this.activeAccount);
     });
 
+    // If any, used saved memo. E.g. from a federation request.
     this.txService
       .getMemo()
-      .then(data => {
+      .then((data) => {
         console.log('memeo: ', data);
         if (data) {
           this.savedMemo = data;
@@ -82,7 +84,7 @@ export class BuildTxPage implements OnInit {
           this.setMemoType(this.savedMemo.memo_type);
         }
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
 
     this.makeForm();
   }
@@ -134,10 +136,6 @@ export class BuildTxPage implements OnInit {
     this.memoType.patchValue(value);
   }
 
-  viewOperations() {
-    this.router.navigate(['operations-queue/']);
-  }
-
   async buildTransaction() {
     // load source account details from horizon
     // use loaded account to start transaction builder process
@@ -154,6 +152,7 @@ export class BuildTxPage implements OnInit {
         minTime: Number(this.minTime.value),
         maxTime: Number(this.maxTime.value),
       };
+      console.log('timebounds: ', timebounds);
       if (timebounds.maxTime < timebounds.minTime) {
         throw new SazaError(
           'Timebounds are invalid. "valid until" date is before "valid from" date',
@@ -173,6 +172,7 @@ export class BuildTxPage implements OnInit {
       const newTx = await this.stellarService.buildTransaction(txOptions);
       console.log('newTx', newTx);
       await this.txService.setTx(newTx);
+      this.buildTxForm.reset();
       this.router.navigate(['sign-tx/']);
     } catch (error) {
       console.log('error: ', error);
