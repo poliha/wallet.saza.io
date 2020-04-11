@@ -37,7 +37,7 @@ export class UserService {
     '',
   );
   public activeNetwork: BehaviorSubject<any> = new BehaviorSubject(
-    STELLAR_NETWORKS.pubnet,
+    STELLAR_NETWORKS.testnet,
   );
 
   constructor(public storage: Storage) {
@@ -174,7 +174,7 @@ export class UserService {
       let accountFound = false;
       let allAccounts: Array<SazaAccount> = [];
       if (accounts) {
-        allAccounts = accounts.map(a => {
+        allAccounts = accounts.map((a) => {
           if (a.public === data.public) {
             accountFound = true;
             a = { ...data };
@@ -210,7 +210,7 @@ export class UserService {
       return;
     }
     return this.getAccounts().then((accounts: Array<SazaAccount>) => {
-      const filteredAccounts = accounts.filter(a => a.public !== publicKey);
+      const filteredAccounts = accounts.filter((a) => a.public !== publicKey);
       this.setData(STORAGE_KEYS.ACCOUNTS, filteredAccounts);
       this.userAccounts.next(filteredAccounts);
       return filteredAccounts;
@@ -243,7 +243,7 @@ export class UserService {
       return false;
     }
 
-    if (values.some(v => v === null)) {
+    if (values.some((v) => v === null)) {
       return false;
     }
 
