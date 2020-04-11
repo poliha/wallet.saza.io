@@ -5,7 +5,15 @@
 
     <ion-select class="ion-padding" placeholder="Source Account" (ionChange)="accountChanged($event)">
       <ion-select-option *ngFor="let a of userAccounts" [value]="a.public"
-        [selected]="a.public === selected ? true : false">{{a.public}}
+        [selected]="a.public === selected ? true : false">
+        <div>
+          <p>
+            {{a.tag | titlecase}}
+          </p>
+          <p>
+            {{a.public | truncatePublicKey}}
+          </p>
+        </div>
       </ion-select-option>
       <ion-select-option value="custom">Custom public key</ion-select-option>
     </ion-select>

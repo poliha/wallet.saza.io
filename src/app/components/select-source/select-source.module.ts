@@ -6,10 +6,17 @@ import { IonicModule } from '@ionic/angular';
 
 import { SelectSourceComponent } from './select-source.component';
 import { DynamicInputComponentModule } from '../dynamic-input/dynamic-input.module';
+import { TruncatePublicKeyPipeModule } from 'src/app/pipes/truncate-public-key.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule, DynamicInputComponentModule ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    DynamicInputComponentModule,
+    TruncatePublicKeyPipeModule,
+  ],
   declarations: [SelectSourceComponent],
-  exports: [SelectSourceComponent]
+  exports: [SelectSourceComponent],
 })
 export class SelectSourceComponentModule {}
