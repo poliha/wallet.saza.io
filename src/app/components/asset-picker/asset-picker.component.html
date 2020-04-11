@@ -1,43 +1,23 @@
 <div [formGroup]="form">
-  <div [ngSwitch]="displayType">
-    <div *ngSwitchCase="'list'">
-      <ion-select placeholder="" (ionChange)="handleListChange($event.target.value)" [compareWith]="compareWith">
-        <ion-select-option [value]="null">Select Asset</ion-select-option>
-        <ion-select-option *ngFor="let b of balances" [value]="b">
-          {{b.asset_type === 'native' ? 'XLM' : b.asset_code }} | Bal : {{b.balance}}
-        </ion-select-option>
-        <ion-select-option value="manual">Enter Custom Asset</ion-select-option>
-      </ion-select>
-      <div class="text-danger"
-        *ngIf="form.controls[controlName].invalid && (form.controls[controlName].dirty || form.controls[controlName].touched)">
-        <div *ngIf="form.controls[controlName].errors.required">
-          An asset is required
-        </div>
-      </div>
-    </div>
-
-    <div *ngSwitchCase="'manual'">
-      <div [formGroupName]="controlName">
-        <ion-segment (ionChange)="setAssetType($event.target.value)" formControlName="asset_type">
-          <ion-segment-button value="native">
-            <ion-label>XLM</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="custom">
-            <ion-label>custom</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-        <div *ngIf="showCustomFields">
-          <ion-item>
-            <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_code'"
-              [placeHolder]="'Code'" [maxValue]="'12'" [isRequired]="false"></app-dynamic-input>
-          </ion-item>
-          <ion-item>
-            <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_issuer'"
-              [placeHolder]="'Issuer Public key'" [isEd25519PublicKey]="'true'" [isRequired]="false">
-            </app-dynamic-input>
-          </ion-item>
-        </div>
-      </div>
+  <div [formGroupName]="controlName">
+    <ion-segment (ionChange)="setAssetType($event.target.value)" formControlName="asset_type">
+      <ion-segment-button value="native">
+        <ion-label>XLM</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="custom">
+        <ion-label>custom</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <div *ngIf="showCustomInput">
+      <ion-item>
+        <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_code'" [placeHolder]="'Code'"
+          [maxValue]="'12'" [isRequired]="false"></app-dynamic-input>
+      </ion-item>
+      <ion-item>
+        <app-dynamic-input [inputType]="'text'" [form]="assetGroup" [controlName]="'asset_issuer'"
+          [placeHolder]="'Issuer Public key'" [isEd25519PublicKey]="'true'" [isRequired]="false">
+        </app-dynamic-input>
+      </ion-item>
     </div>
   </div>
 </div>

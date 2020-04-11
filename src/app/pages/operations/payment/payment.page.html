@@ -9,7 +9,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Asset</ion-label>
-      <app-asset-picker [form]="operationForm" [controlName]="'asset'" [displayType]="'manual'"></app-asset-picker>
+      <app-asset-picker [form]="operationForm" [controlName]="'asset'"></app-asset-picker>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Amount</ion-label>
@@ -21,10 +21,12 @@
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end" name="add"></ion-icon>
-</ion-button>
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end" name="checkmark"></ion-icon>
-</ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end"
+          name="add"></ion-icon>
+      </ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end"
+          name="checkmark"></ion-icon>
+      </ion-button>
     </div>
   </form>
 </ion-content>

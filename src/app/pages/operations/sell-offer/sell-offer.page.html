@@ -4,11 +4,11 @@
   <form [formGroup]="operationForm">
     <ion-item>
       <ion-label position="stacked">Selling</ion-label>
-      <app-asset-picker [form]="operationForm" [controlName]="'selling'" [displayType]="'manual'"></app-asset-picker>
+      <app-asset-picker [form]="operationForm" [controlName]="'selling'"></app-asset-picker>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Buying</ion-label>
-      <app-asset-picker [form]="operationForm" [controlName]="'buying'" [displayType]="'manual'"></app-asset-picker>
+      <app-asset-picker [form]="operationForm" [controlName]="'buying'"></app-asset-picker>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Price</ion-label>
@@ -32,10 +32,12 @@
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end" name="add"></ion-icon>
-</ion-button>
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end" name="checkmark"></ion-icon>
-</ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end"
+          name="add"></ion-icon>
+      </ion-button>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end"
+          name="checkmark"></ion-icon>
+      </ion-button>
     </div>
   </form>
 </ion-content>

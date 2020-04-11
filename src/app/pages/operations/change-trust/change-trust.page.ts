@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Utility } from '../../../providers/providers';
 import { FormGroup } from '@angular/forms';
 import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
+import { SazaError } from 'src/app/providers/errors';
 
 @Component({
   selector: 'app-change-trust',
@@ -38,12 +39,21 @@ export class ChangeTrustPage extends OperationBuilderComponent
   }
 
   setOperationData() {
+    if (
+      this.asset.value.asset_type &&
+      this.asset.value.asset_type === 'native'
+    ) {
+      throw new SazaError('Can not change trust to Lumens (XLM).');
+    }
     this.operationData = {
-      limit: String(this.limit.value),
       asset: this.utility.generateAsset(this.asset.value),
       source: this.source.value,
       opType: this.operationType,
     };
+
+    if (this.limit.value) {
+      this.operationData.limit = String(this.limit.value);
+    }
   }
 
   async saveOperation() {

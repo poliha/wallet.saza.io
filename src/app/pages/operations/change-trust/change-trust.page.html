@@ -3,14 +3,15 @@
 <ion-content class="ion-padding">
   <form [formGroup]="operationForm">
     <ion-item>
-      <!-- To do: hide xlm input -->
       <ion-label position="stacked">Asset</ion-label>
-      <app-asset-picker [form]="operationForm" [controlName]="'asset'" [displayType]="'manual'"></app-asset-picker>
+      <app-asset-picker [form]="operationForm" [controlName]="'asset'" [assetInput]="'custom'">
+      </app-asset-picker>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Trust Limit</ion-label>
-      <app-dynamic-input [form]="operationForm" [controlName]="'limit'" [placeHolder]="'Trust Limit'">
+      <app-dynamic-input [form]="operationForm" [controlName]="'limit'" [placeHolder]="'Trust Limit'"
+        [isRequired]="false" [defaultValue]="''">
       </app-dynamic-input>
     </ion-item>
 
@@ -19,10 +20,12 @@
     </ion-item>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end" name="add"></ion-icon>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="saveOperation()">Save<ion-icon slot="end"
+          name="add"></ion-icon>
 
       </ion-button>
-      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end" name="checkmark"></ion-icon>
+      <ion-button type="button" [disabled]="operationForm.invalid" (click)="sendOperation()">Send<ion-icon slot="end"
+          name="checkmark"></ion-icon>
 
       </ion-button>
     </div>
