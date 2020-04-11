@@ -13,7 +13,7 @@
     <ion-title *ngIf="subTitle" size="small" color="primary" class="ion-text-uppercase">{{subTitle}}</ion-title>
     <app-account-picker *ngIf="accountPicker"></app-account-picker>
     <ion-buttons slot="end">
-      <ion-button *ngIf="helpUrl" href="{{helpUrl}}">
+      <ion-button *ngIf="helpUrl" href="{{helpUrl}}" rel="external" target="_blank">
         <ion-icon slot="icon-only" name="help-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
