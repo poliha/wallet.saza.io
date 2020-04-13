@@ -20,7 +20,7 @@
         Fee: {{txDetail.fee}}
       </ion-label>
     </ion-item>
-    <ion-item (click)="viewOperations()" detail>
+    <ion-item [routerLink]="'/operations-queue'" detail>
       Operations
       <ion-badge slot="end" color="dark">{{txDetail.operations.length}}</ion-badge>
     </ion-item>
@@ -35,7 +35,7 @@
     </ion-item>
 
     <ion-item-divider color="light" sticky>
-      <ion-label>Signers for Custom Public Key</ion-label>
+      <ion-label>Additional signer? </ion-label>
       <ion-icon class="ion-padding" name="add-circle" (click)="addPrivateKeyInput()"></ion-icon>
 
     </ion-item-divider>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="ion-margin ion-text-center">
-      <ion-button type="button" [disabled]="signTxForm.invalid">
+      <ion-button type="button" [routerLink]="'/dashboard'">
         <ion-icon name="close" slot="end"></ion-icon>
         Cancel
       </ion-button>

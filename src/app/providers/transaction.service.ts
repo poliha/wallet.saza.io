@@ -21,6 +21,9 @@ export class TransactionService {
 
   getOperations() {
     return this.getData(STORAGE_KEYS.OPERATIONS).then((ops: any) => {
+      if (ops == null) {
+        ops = [];
+      }
       this.operations.next(ops);
       return ops;
     });
@@ -28,9 +31,6 @@ export class TransactionService {
 
   addOperation(data: any) {
     return this.getOperations().then((ops: Array<any>) => {
-      if (ops == null) {
-        ops = [];
-      }
       ops.push(data);
       this.setData(STORAGE_KEYS.OPERATIONS, ops);
       this.operations.next(ops);
@@ -47,6 +47,10 @@ export class TransactionService {
       this.setData(STORAGE_KEYS.OPERATIONS, ops);
       this.operations.next(ops);
     });
+  }
+
+  deleteAllOperations() {
+    return this.storage.remove(STORAGE_KEYS.OPERATIONS);
   }
 
   setTx(data: string) {

@@ -42,6 +42,15 @@ export class BuildTxPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.makeForm();
+    // Get the active account. Used as the default transaction source.
+    this.userService.activeAccount.subscribe((data) => {
+      this.activeAccount = data;
+      console.log('active', this.activeAccount);
+    });
+  }
+
+  ionViewWillEnter() {
     // set start date and end date for timebounds.
     const today = moment();
     this.startDate = today.toISOString();
@@ -67,12 +76,6 @@ export class BuildTxPage implements OnInit {
       console.log('pendingOps', this.pendingOperations);
     });
 
-    // Get the active account. Used as the default transaction source.
-    this.userService.activeAccount.subscribe((data) => {
-      this.activeAccount = data;
-      console.log('active', this.activeAccount);
-    });
-
     // If any, used saved memo. E.g. from a federation request.
     this.txService
       .getMemo()
@@ -85,8 +88,6 @@ export class BuildTxPage implements OnInit {
         }
       })
       .catch((error) => console.log(error));
-
-    this.makeForm();
   }
 
   makeForm() {

@@ -10,7 +10,6 @@ import {
   LoadingService,
 } from '../../providers/providers';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Operation, xdr, Transaction } from 'stellar-sdk';
 import { Router } from '@angular/router';
 import { SazaError, TransactionErrors } from 'src/app/providers/errors';
 
@@ -42,13 +41,15 @@ export class SignTxPage implements OnInit {
 
   ngOnInit() {
     this.makeForm();
-    this.userService.userAccounts.subscribe(data => (this.userAccounts = data));
+    this.userService.userAccounts.subscribe(
+      (data) => (this.userAccounts = data),
+    );
   }
 
   ionViewWillEnter() {
     this.txService
       .getTx()
-      .then(builtTx => {
+      .then((builtTx) => {
         if (!builtTx) {
           this.notify.info(
             'No transaction to sign. Please create an operation.',
@@ -61,10 +62,10 @@ export class SignTxPage implements OnInit {
         console.log('txDetail: ', this.txDetail);
         this.loadEligibleSigners();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         throw new SazaError(
-          'Unable to complete task: load transaction for signing',
+          'Unable to complete task: load transaction for signing. Please try again.',
         );
       });
   }
@@ -83,18 +84,18 @@ export class SignTxPage implements OnInit {
   loadEligibleSigners() {
     this.stellarService
       .txSigners(this.builtTx)
-      .then(eligibleSigners => {
+      .then((eligibleSigners) => {
         console.log('el: ', eligibleSigners);
         this.eligibleSigners = eligibleSigners;
         eligibleSigners.forEach((signer: string) => {
-          if (!this.userAccounts.find(acc => acc.public === signer)) {
+          if (!this.userAccounts.find((acc) => acc.public === signer)) {
             this.addPrivateKeyInput(signer);
           }
         });
       })
-      .catch(err => {
-        // to do handle error.
+      .catch((err) => {
         console.log(err);
+        throw new SazaError('Unable to determine signers.');
       });
   }
 
@@ -119,10 +120,6 @@ export class SignTxPage implements OnInit {
     this.privateKeyLabels.splice(index, 1);
   }
 
-  viewOperations() {
-    this.router.navigate(['operations-queue/']);
-  }
-
   // Getters for template
   get password() {
     return this.signTxForm.get('password');
@@ -137,8 +134,8 @@ export class SignTxPage implements OnInit {
       const trimmedPwd = String(this.password.value).trim();
       const privateKeys = [
         ...this.privateKeys.value
-          .map(key => key.privateKey)
-          .filter(key => Boolean(key)),
+          .map((key) => key.privateKey)
+          .filter((key) => Boolean(key)),
       ];
 
       const passwordHash = await this.userService.getPassword();
@@ -147,20 +144,25 @@ export class SignTxPage implements OnInit {
       }
 
       this.userAccounts
-        .filter(acc => {
+        .filter((acc) => {
           return this.eligibleSigners.has(acc.public);
         })
-        .forEach(acc => {
+        .forEach((acc) => {
           const decryptedKey = this.utility.decrypt(acc.private, trimmedPwd);
           privateKeys.push(decryptedKey);
         });
-      console.log('pKs: ', privateKeys);
+
       const signedTx = this.stellarService.signTx(this.builtTx, ...privateKeys);
+      console.log('signedTx: ', signedTx);
       const submitTx = await this.stellarService.submitTx(signedTx);
       console.log('submitTx: ', submitTx);
-      // to do clear built tx and ops
-      // show success or error
-      // redirect user
+
+      this.signTxForm.reset();
+      await this.txService.deleteAllOperations();
+      await this.txService.deleteTx();
+      await this.notify.success('Transaction submitted.');
+
+      return this.router.navigate(['dashboard']);
     } catch (error) {
       if (!error.response) {
         throw error;
