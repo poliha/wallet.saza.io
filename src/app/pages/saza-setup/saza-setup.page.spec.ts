@@ -12,12 +12,7 @@ import { By } from '@angular/platform-browser';
 describe('SazaSetupPage', () => {
   let component: SazaSetupPage;
   let fixture: ComponentFixture<SazaSetupPage>;
-  let utilitySpy,
-    userServiceSpy,
-    modalSpy,
-    modalCtrlSpy,
-    checkboxes,
-    useSuggestion;
+  let utilitySpy, userServiceSpy, modalSpy, modalCtrlSpy;
 
   beforeEach(async(() => {
     utilitySpy = jasmine.createSpyObj('Utility', [
@@ -27,7 +22,7 @@ describe('SazaSetupPage', () => {
     userServiceSpy = jasmine.createSpyObj('UserService', ['getPassword']);
     modalSpy = jasmine.createSpyObj('Modal', ['present']);
     modalCtrlSpy = jasmine.createSpyObj('ModalController', ['create']);
-    modalCtrlSpy.create.and.callFake(function() {
+    modalCtrlSpy.create.and.callFake(function () {
       return modalSpy;
     });
 
