@@ -1,7 +1,7 @@
 {
   "name": "saza-wallet",
-  "version": "0.0.1",
-  "author": "@PeterOliha",
+  "version": "0.1.0",
+  "author": "Peter Oliha <peter@oliha.dev>",
   "homepage": "https://saza.io/",
   "scripts": {
     "ng": "ng",
@@ -55,6 +55,7 @@
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",
     "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
     "@electron-forge/maker-zip": "^6.0.0-beta.50",
     "@ionic/angular-toolkit": "^2.2.0",
     "@types/jasmine": "~2.8.8",
@@ -80,7 +81,7 @@
     "tslint": "~5.12.0",
     "typescript": "^3.5.3"
   },
-  "description": "A cryptocurrency wallet that supports Stellar Lumens(XLM) and assets issued on the Stellar network.",
+  "description": "A wallet that supports Stellar Lumens(XLM) and assets issued on the Stellar network.",
   "cordova": {
     "plugins": {
       "cordova-sqlite-storage": {},
@@ -98,20 +99,6 @@
     ]
   },
   "config": {
-    "forge": {
-      "packagerConfig": {
-        "dir": "./www"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin",
-            "linux",
-            "win32"
-          ]
-        }
-      ]
-    }
+    "forge": "./forge.config.js"
   }
 }
