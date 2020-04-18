@@ -12,7 +12,6 @@ export class SazaErrorHandler implements ErrorHandler {
 
   handleError(error: any) {
     if (error.rejection) {
-      console.log('assign error = error.rejection.');
       error = error.rejection;
     }
 
