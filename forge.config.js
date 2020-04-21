@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = {
   packagerConfig: {
     "dir": "./www"
@@ -9,7 +12,21 @@ module.exports = {
   ],
   hooks: {
     postMake: (_, results) => {
-      results.map(({ artifacts }) => artifacts).flat().forEach(result => console.log(result));
+
+      const builds = results.map(({ artifacts }) => artifacts).flat();
+      try {
+        for (const b of builds) {
+          const destination = path.resolve('./dist', path.basename(b))
+          fs.copyFileSync(b, destination)
+          console.log(`copied: ${b} => ${destination}`);
+        }
+
+        console.log('All files copied to ./dist');
+
+      } catch (error) {
+        console.log(error)
+      }
+
     }
   }
 }
