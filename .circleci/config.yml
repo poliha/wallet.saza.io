@@ -5,8 +5,8 @@ commands:
     steps:
       - checkout
       - node/with-cache:
-        steps:
-          - run: npm install
+          steps:
+            - run: npm install
   run_linter:
     steps:
       - checkout
@@ -19,8 +19,8 @@ commands:
     steps:
       - checkout
       - run:
-        name: build electron package
-        command: ./scripts/electron-build.sh
+          name: build electron package
+          command: ./scripts/electron-build.sh
 
 orbs:
   node: circleci/node@1.1.6
@@ -38,7 +38,6 @@ jobs:
     steps:
       - install_deps
       - run_linter
-      - run_test
       - build_electron_pkg
 
 workflows:
@@ -48,20 +47,3 @@ workflows:
   build-and-release:
     jobs:
       - build_packages
-# orbs:
-#   node: circleci/node@1.1.6
-# jobs:
-#   lint-and-test:
-#     docker:
-#       - image: circleci/node:erbium-browsers
-#     steps:
-#       - checkout
-#       - node/with-cache:
-#           steps:
-#             - run: npm install
-#             - run: npm run lint
-#             - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-# workflows:
-#   build-and-test:
-#     jobs:
-#       - build-and-test

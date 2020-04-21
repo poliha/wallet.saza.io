@@ -12,7 +12,7 @@ mkdir dist
 
 
 echo "Building production release ..."
-#ng build --prod --base-href ./
+npm run build:prod
 
 echo "Making electron build ..."
-electron-forge make
+npm run electron:make
