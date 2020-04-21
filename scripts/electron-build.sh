@@ -12,7 +12,7 @@ mkdir dist
 
 
 echo "Building production release ..."
-ng build --prod --base-href ./
+node_modules/@angular/cli/bin/ng build --prod --base-href ./
 
 echo "Making electron build ..."
 node_modules/@electron-forge/cli/dist/electron-forge.js make
