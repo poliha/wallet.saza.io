@@ -5,8 +5,8 @@ commands:
     steps:
       - checkout
       - node/with-cache:
-        steps:
-          - run: npm install
+          steps:
+            - run: npm install
   run_linter:
     steps:
       - checkout
@@ -19,8 +19,8 @@ commands:
     steps:
       - checkout
       - run:
-        name: build electron package
-        command: ./scripts/electron-build.sh
+          name: build electron package
+          command: ./scripts/electron-build.sh
 
 orbs:
   node: circleci/node@1.1.6
