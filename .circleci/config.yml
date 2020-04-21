@@ -1,18 +1,67 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
-jobs:
-  build-and-test:
-    docker:
-      - image: circleci/node:erbium-browsers
+
+commands:
+  install_deps:
     steps:
       - checkout
       - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm run lint
-            - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+        steps:
+          - run: npm install
+  run_linter:
+    steps:
+      - checkout
+      - run: npm run lint
+  run_test:
+    steps:
+      - checkout
+      - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  build_electron_pkg:
+    steps:
+      - checkout
+      - run:
+        name: build electron package
+        command: ./scripts/electron-build.sh
+
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  lint-and-test:
+    docker:
+      - image: circleci/node:erbium-browsers
+    steps:
+      - install_deps
+      - run_linter
+      - run_test
+  build_packages:
+    docker:
+      - image: circleci/node:erbium
+    steps:
+      - install_deps
+      - run_linter
+      - run_test
+      - build_electron_pkg
+
 workflows:
-  build-and-test:
+  lint-and-test:
     jobs:
-      - build-and-test
+      - lint-and-test
+  build-and-release:
+    jobs:
+      - build_packages
+# orbs:
+#   node: circleci/node@1.1.6
+# jobs:
+#   lint-and-test:
+#     docker:
+#       - image: circleci/node:erbium-browsers
+#     steps:
+#       - checkout
+#       - node/with-cache:
+#           steps:
+#             - run: npm install
+#             - run: npm run lint
+#             - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+# workflows:
+#   build-and-test:
+#     jobs:
+#       - build-and-test
