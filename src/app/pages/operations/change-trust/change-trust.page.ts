@@ -18,7 +18,7 @@ export class ChangeTrustPage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Change Trust';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/change-trust';
     this.makeForm();
     this.operationType = this.stellarService.operationType.CHANGE_TRUST;
   }

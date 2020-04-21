@@ -25,7 +25,7 @@ export class SettingsPage implements OnInit {
     },
   ];
   pageTitle = 'Settings';
-  helpUrl = '';
+  helpUrl = 'https://docs.saza.io/wallet-actions/settings';
 
   constructor() {}
 

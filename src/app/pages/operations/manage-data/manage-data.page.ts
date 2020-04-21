@@ -16,7 +16,7 @@ export class ManageDataPage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Manage Data';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/manage-data';
     this.operationType = this.stellarService.operationType.MANAGE_DATA;
     this.makeForm();
   }

@@ -23,7 +23,7 @@ export class ManageAccountsDetailPage implements OnInit {
   accountDetail: SazaAccount;
   userAccounts: SazaAccount[];
   pageTitle = 'Manage Account';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/wallet-actions/settings/manage-accounts';
   showSubmitButton = false;
   showPrivateKeyIcon = 'eye';
   userPassword;
@@ -43,9 +43,9 @@ export class ManageAccountsDetailPage implements OnInit {
 
   ionViewWillEnter() {
     this.accountID = this.route.snapshot.paramMap.get('id');
-    this.userService.getPassword().then(pwd => (this.passwordHash = pwd));
+    this.userService.getPassword().then((pwd) => (this.passwordHash = pwd));
     this.getPassword();
-    this.userService.getAccounts().then(data => {
+    this.userService.getAccounts().then((data) => {
       if (!data) {
         return;
       }
@@ -138,7 +138,7 @@ export class ManageAccountsDetailPage implements OnInit {
         },
         {
           text: 'Continue',
-          handler: inputData => {
+          handler: (inputData) => {
             console.log('inputDate: ', inputData);
             const trimmedPassword = String(inputData.password).trim();
             if (

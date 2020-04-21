@@ -16,7 +16,7 @@ export class SetOptionsPage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Set Options';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/set-options';
     this.operationType = this.stellarService.operationType.SET_OPTIONS;
     this.makeForm();
   }

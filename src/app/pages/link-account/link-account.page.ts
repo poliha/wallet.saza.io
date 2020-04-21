@@ -22,7 +22,7 @@ export class LinkAccountPage implements OnInit {
   pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;
   pageTitle = 'Link Account';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/wallet-actions/link-account';
   constructor(
     private formBuilder: FormBuilder,
     private utility: Utility,
@@ -31,7 +31,9 @@ export class LinkAccountPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe(data => (this.userAccounts = data));
+    this.userService.userAccounts.subscribe(
+      (data) => (this.userAccounts = data),
+    );
     this.makeForm();
   }
 

@@ -16,7 +16,7 @@ export class CreateAccountPage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Create Account';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/create-account';
     this.operationType = this.stellarService.operationType.CREATE_ACCOUNT;
     this.makeForm();
   }

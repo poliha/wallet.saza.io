@@ -34,7 +34,8 @@ export class PathReceivePage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Path Payment Strict Receive';
-    this.helpUrl = '';
+    this.helpUrl =
+      'https://docs.saza.io/stellar-operations/path-payment-receive';
     this.operationType = this.stellarService.operationType.PATH_PAYMENT_STRICT_RECEIVE;
     this.makeForm();
   }

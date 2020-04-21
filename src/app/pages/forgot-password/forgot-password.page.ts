@@ -29,7 +29,7 @@ export class ForgotPasswordPage implements OnInit {
   };
   pageTitle = 'Forgot Password';
   subTitle = '';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/getting-started/forgot-password';
 
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
 

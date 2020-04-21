@@ -9,16 +9,18 @@ import { TxService, StellarService } from 'src/app/providers/providers';
 export class OperationsQueuePage implements OnInit {
   operations = [];
   pageTitle = 'Pending Operations';
-  helpUrl = '';
-  constructor(private txService: TxService, private stellarService: StellarService) { }
+  helpUrl = 'https://docs.saza.io/wallet-actions/operations-queue';
+  constructor(
+    private txService: TxService,
+    private stellarService: StellarService,
+  ) {}
 
   ngOnInit() {
-    this.txService.operations.subscribe(data => {
+    this.txService.operations.subscribe((data) => {
       console.log('pending ops: ', data);
       this.operations = this.stellarService.getOperationObject(data);
       this.pageTitle = `Pending Operations (${this.operations.length})`;
       console.log('pending ops: ', this.operations);
     });
   }
-
 }

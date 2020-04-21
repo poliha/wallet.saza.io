@@ -17,7 +17,8 @@ export class PassiveOfferPage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Passive Offer';
-    this.helpUrl = '';
+    this.helpUrl =
+      'https://docs.saza.io/stellar-operations/create-passive-sell-offer';
     this.operationType = this.stellarService.operationType.CREATE_PASSIVE_SELL_OFFER;
     this.makeForm();
   }

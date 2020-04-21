@@ -18,7 +18,7 @@ export class BumpSequencePage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Bump Sequence';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/bump-sequence';
     this.operationType = this.stellarService.operationType.BUMP_SEQUENCE;
     this.makeForm();
   }

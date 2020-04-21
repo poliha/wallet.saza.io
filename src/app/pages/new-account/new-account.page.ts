@@ -20,7 +20,7 @@ export class NewAccountPage implements OnInit {
   pairObj: { public: string; private: string } = { public: '', private: '' };
   keypairGenerated = false;
   pageTitle = 'Add Account';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/wallet-actions/new-account';
   constructor(
     private formBuilder: FormBuilder,
     private utility: Utility,
@@ -29,7 +29,9 @@ export class NewAccountPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe(data => (this.userAccounts = data));
+    this.userService.userAccounts.subscribe(
+      (data) => (this.userAccounts = data),
+    );
     this.makeForm();
   }
 

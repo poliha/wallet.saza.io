@@ -25,7 +25,7 @@ export class BuildTxPage implements OnInit {
   pendingOperations = [];
   activeAccount: string;
   pageTitle = 'Build Transaction';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/wallet-actions/build-transaction';
   savedMemo = {
     memo: '',
     memo_type: '',

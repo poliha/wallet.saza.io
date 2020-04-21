@@ -16,7 +16,7 @@ export class AllowTrustPage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Allow Trust';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/allow-trust';
     this.operationType = this.stellarService.operationType.ALLOW_TRUST;
     this.makeForm();
   }

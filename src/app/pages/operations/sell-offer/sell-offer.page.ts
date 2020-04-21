@@ -9,9 +9,6 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./sell-offer.page.scss'],
 })
 export class SellOfferPage extends OperationBuilderComponent implements OnInit {
-  pageTitle = 'Sell Offer';
-  subTitle = 'Operation';
-  helpUrl = '';
   constructor(private utility: Utility) {
     super();
   }
@@ -19,7 +16,7 @@ export class SellOfferPage extends OperationBuilderComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Sell Offer';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/sell-offer';
     this.operationType = this.stellarService.operationType.MANAGE_SELL_OFFER;
     this.makeForm();
   }

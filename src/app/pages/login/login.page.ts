@@ -18,8 +18,7 @@ import { SazaError } from 'src/app/providers/errors';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   pageTitle = 'Login';
-  subTitle = '';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/getting-started/login';
   constructor(
     public formBuilder: FormBuilder,
     public utility: Utility,

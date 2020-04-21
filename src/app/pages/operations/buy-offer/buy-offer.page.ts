@@ -16,7 +16,7 @@ export class BuyOfferPage extends OperationBuilderComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Buy Offer';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/buy-offer';
     this.operationType = this.stellarService.operationType.MANAGE_BUY_OFFER;
     this.makeForm();
   }

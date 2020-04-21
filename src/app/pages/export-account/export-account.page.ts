@@ -16,11 +16,11 @@ export class ExportAccountPage implements OnInit {
   encryptionKey: String;
   dataToExport: String;
   pageTitle = 'Export Accounts';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/wallet-actions/settings/export-account';
   constructor(private userService: UserService, private utility: Utility) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe(data => {
+    this.userService.userAccounts.subscribe((data) => {
       this.userAccounts = data;
       console.log('user account', this.userAccounts);
     });
@@ -55,7 +55,7 @@ export class ExportAccountPage implements OnInit {
     this.encryptionKey = this.utility.generatePassword();
 
     this.dataToExport = this.userAccounts
-      .map(account => {
+      .map((account) => {
         const privatekey = this.utility.decrypt(account.private, userPassword);
         const encryptedKey = this.utility.encrypt(
           privatekey,

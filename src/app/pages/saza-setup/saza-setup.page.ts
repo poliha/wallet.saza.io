@@ -20,8 +20,7 @@ import { SazaError } from 'src/app/providers/errors';
 export class SazaSetupPage implements OnInit {
   passwordForm: FormGroup;
   pageTitle = 'Setup Wallet';
-  subTitle = '';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/getting-started/setup-wallet';
   constructor(
     private formBuilder: FormBuilder,
     private utility: Utility,
@@ -37,7 +36,7 @@ export class SazaSetupPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.userService.getPassword().then(password => {
+    this.userService.getPassword().then((password) => {
       if (!password) {
         this.menu.enable(false);
       } else {

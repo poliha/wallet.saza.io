@@ -17,7 +17,7 @@ export class PaymentPage extends OperationBuilderComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Payment';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/wallet-actions/send-payment';
     this.operationType = this.stellarService.operationType.PAYMENT;
     this.makeForm();
   }

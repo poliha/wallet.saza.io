@@ -18,7 +18,7 @@ export class ImportAccountPage implements OnInit {
   importAccountForm: FormGroup;
   dataToImport: String;
   pageTitle = 'Import Accounts';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/wallet-actions/settings/import-account';
   constructor(
     private userService: UserService,
     private utility: Utility,
@@ -26,7 +26,7 @@ export class ImportAccountPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe(data => {
+    this.userService.userAccounts.subscribe((data) => {
       this.userAccounts = data;
       console.log('user account', this.userAccounts);
     });
@@ -79,6 +79,11 @@ export class ImportAccountPage implements OnInit {
     });
 
     console.log('dataToImport: ', dataToImport);
+
+    if (!dataToImport || !Array.isArray(dataToImport)) {
+      throw new SazaError('Invalid backup data provided.');
+    }
+
     for (const account of dataToImport) {
       const privatekey = this.utility.decrypt(account, backupKey);
       const encryptedKey = this.utility.encrypt(privatekey, userPassword);

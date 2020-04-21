@@ -33,7 +33,7 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Path Payment Strict Send';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/path-payment-send';
     this.operationType = this.stellarService.operationType.PATH_PAYMENT_STRICT_SEND;
     this.makeForm();
   }

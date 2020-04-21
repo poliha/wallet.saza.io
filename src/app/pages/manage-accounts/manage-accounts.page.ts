@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 })
 export class ManageAccountsPage implements OnInit {
   pageTitle = 'Manage Accounts';
-  helpUrl = '';
+  helpUrl = 'https://docs.saza.io/wallet-actions/settings/manage-accounts';
   userAccounts: SazaAccount[] = [];
   constructor(public userService: UserService, public router: Router) {}
 
   ngOnInit() {}
 
   ionViewWillEnter() {
-    this.userService.getAccounts().then(data => {
+    this.userService.getAccounts().then((data) => {
       if (!Array.isArray(data) || !data.length) {
         return this.router.navigate(['/dashboard']);
       }

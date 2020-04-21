@@ -16,7 +16,7 @@ export class AccountMergePage extends OperationBuilderComponent
   ngOnInit() {
     super.ngOnInit();
     this.pageTitle = 'Account Merge';
-    this.helpUrl = '';
+    this.helpUrl = 'https://docs.saza.io/stellar-operations/account-merge';
     this.operationType = this.stellarService.operationType.ACCOUNT_MERGE;
     this.makeForm();
   }

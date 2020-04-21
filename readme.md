@@ -1,7 +1,7 @@
 # Saza
 
 A wallet that supports Stellar Lumens(XLM) and assets issued on the [Stellar](https://www.stellar.org/) network.
-Available on android and Desktop.
+Available on Android and Linux desktop.
 
 ## Features
 

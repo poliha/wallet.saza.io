@@ -26,7 +26,7 @@ export class SignTxPage implements OnInit {
   eligibleSigners: Set<any>;
   userAccounts = [];
   pageTitle = 'Sign Transaction';
-  helpUrl = '#';
+  helpUrl = 'https://docs.saza.io/wallet-actions/sign-transaction';
   txDetail: any;
   constructor(
     private formBuilder: FormBuilder,
