@@ -37,3 +37,4 @@ UserInterfaceState.xcuserstate
 out
 *.apk
 .env*
+dist/

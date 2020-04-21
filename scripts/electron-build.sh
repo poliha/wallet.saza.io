@@ -15,4 +15,4 @@ echo "Building production release ..."
 ng build --prod --base-href ./
 
 echo "Making electron build ..."
-electron-forge make
+node_modules/@electron-forge/cli/dist/electron-forge.js make
