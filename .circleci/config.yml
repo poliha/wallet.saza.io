@@ -19,6 +19,9 @@ commands:
     steps:
       - checkout
       - run:
+          name: Install electron-forge
+          command: npm i -g @electron-forge/cli
+      - run:
           name: build electron package
           command: ./scripts/electron-build.sh
 
