@@ -64,7 +64,8 @@ jobs:
           command: |
             if [ "$(ls -A ~/project/dist/)" ]
             then
-              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ~/project/dist/
+              ls -alh ~/project/dist/
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ~/project/dist/
             else
               echo "No files found"
             fi
