@@ -40,7 +40,8 @@ jobs:
       - run_linter
       - build_electron_pkg
       - persist_to_workspace:
-          - dist
+          paths:
+            - dist
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
