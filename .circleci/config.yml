@@ -4,9 +4,14 @@ commands:
   install_deps:
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run: npm install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
   run_linter:
     steps:
       - checkout
