@@ -39,6 +39,18 @@ jobs:
       - install_deps
       - run_linter
       - build_electron_pkg
+      - persist_to_workspace:
+          - dist
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ./dist
+      - run:
+          name: 'Publish Release on GitHub'
+          command: |
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ./dist/
 
 workflows:
   lint-and-test:
@@ -47,3 +59,11 @@ workflows:
   build-and-release:
     jobs:
       - build_packages
+      - publish-github-release:
+          requires:
+            - build_packages
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^saza-v*/
