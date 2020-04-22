@@ -51,20 +51,20 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - projects/dist
+            - project/dist
 
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
     steps:
       - attach_workspace:
-          at: ~/projects/dist
+          at: ~/project/dist
       - run:
           name: 'Publish Release on GitHub'
           command: |
-            if [ "$(ls -A ~/projects/dist/)" ]
+            if [ "$(ls -A ~/project/dist/)" ]
             then
-              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ~/projects/dist/
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ~/project/dist/
             else
               echo "No files found"
             fi
