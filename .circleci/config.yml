@@ -49,21 +49,22 @@ jobs:
       - run_linter
       - build_electron_pkg
       - persist_to_workspace:
-          root: workspace
-          paths:
-            - dist
+          root: ~/
+          path:
+            - projects/dist
+
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/projects/dist
       - run:
           name: 'Publish Release on GitHub'
           command: |
-            if [ "$(ls -A /tmp/workspace/dist/)" ]
+            if [ "$(ls -A ~/projects/dist/)" ]
             then
-              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} /tmp/workspace/dist/
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ~/projects/dist/
             else
               echo "No files found"
             fi
