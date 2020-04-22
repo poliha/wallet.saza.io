@@ -50,7 +50,7 @@ jobs:
       - build_electron_pkg
       - persist_to_workspace:
           root: ~/
-          path:
+          paths:
             - projects/dist
 
   publish-github-release:
