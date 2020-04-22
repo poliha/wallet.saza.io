@@ -24,6 +24,8 @@ commands:
 
 orbs:
   node: circleci/node@1.1.6
+  working_directory: /tmp
+
 jobs:
   lint-and-test:
     docker:
@@ -40,6 +42,7 @@ jobs:
       - run_linter
       - build_electron_pkg
       - persist_to_workspace:
+          root: workspace
           paths:
             - dist
   publish-github-release:
@@ -47,11 +50,16 @@ jobs:
       - image: cibuilds/github:0.10
     steps:
       - attach_workspace:
-          at: ./dist
+          at: /tmp/workspace
       - run:
           name: 'Publish Release on GitHub'
           command: |
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ./dist/
+            if [ "$(ls -A /tmp/workspace/dist/)" ]
+            then
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} /tmp/workspace/dist/
+            else
+              echo "No files found"
+            fi
 
 workflows:
   lint-and-test:
