@@ -75,7 +75,10 @@ workflows:
       - lint-and-test
   build-and-release:
     jobs:
-      - build_packages
+      - build_packages:
+          filters:
+            tags:
+              only: /.*/
       - publish-github-release:
           requires:
             - build_packages
