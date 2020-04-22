@@ -4,9 +4,14 @@ commands:
   install_deps:
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run: npm install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
   run_linter:
     steps:
       - checkout
@@ -22,8 +27,12 @@ commands:
           name: build electron package
           command: ./scripts/electron-build.sh
 
-orbs:
-  node: circleci/node@1.1.6
+executors:
+  my-executor:
+    docker:
+      - image: 'circleci/node:erbium'
+    working_directory: /tmp
+
 jobs:
   lint-and-test:
     docker:
@@ -39,6 +48,26 @@ jobs:
       - install_deps
       - run_linter
       - build_electron_pkg
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/dist
+
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ~/project/dist
+      - run:
+          name: 'Publish Release on GitHub'
+          command: |
+            if [ "$(ls -A ~/project/dist/)" ]
+            then
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} ~/project/dist/
+            else
+              echo "No files found"
+            fi
 
 workflows:
   lint-and-test:
@@ -46,4 +75,15 @@ workflows:
       - lint-and-test
   build-and-release:
     jobs:
-      - build_packages
+      - build_packages:
+          filters:
+            tags:
+              only: /.*/
+      - publish-github-release:
+          requires:
+            - build_packages
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^saza-v.*/
