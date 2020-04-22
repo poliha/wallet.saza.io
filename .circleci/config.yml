@@ -22,9 +22,11 @@ commands:
           name: build electron package
           command: ./scripts/electron-build.sh
 
-orbs:
-  node: circleci/node@1.1.6
-  working_directory: /tmp
+executors:
+  my-executor:
+    docker:
+      - image: 'circleci/node:erbium'
+    working_directory: /tmp
 
 jobs:
   lint-and-test:
