@@ -30,7 +30,7 @@
           <div *ngIf="keypairGenerated">
             <ion-item>
               <ion-label>
-                <ion-text>Public Key <app-copy-button [copyInput]="pairObj.public" (copyOutput)="itemCopied($event)">
+                <ion-text>Public Key <app-copy-button [copyInput]="pairObj.public">
                   </app-copy-button>
                 </ion-text>
                 <p class="ion-text-wrap">{{pairObj.public}}</p>
@@ -38,7 +38,7 @@
             </ion-item>
             <ion-item>
               <ion-label>
-                <ion-text>Private Key <app-copy-button [copyInput]="pairObj.private" (copyOutput)="itemCopied($event)">
+                <ion-text>Private Key <app-copy-button [copyInput]="pairObj.private">
                   </app-copy-button>
                 </ion-text>
                 <p class="ion-text-wrap">{{pairObj.private}}</p>

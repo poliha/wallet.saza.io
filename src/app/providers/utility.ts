@@ -14,6 +14,7 @@ import {
 import * as bcrypt from 'bcryptjs';
 import * as niceware from 'niceware';
 import { SazaAccount } from '../interfaces/saza';
+import { SazaError } from './errors';
 // import { Validators, FormControl } from '@angular/forms';
 
 @Injectable()
@@ -67,7 +68,6 @@ export class Utility {
 
       return rtnObj;
     } catch (error) {
-      console.log('encrypt error: ', error);
       return false;
     }
   }
@@ -89,7 +89,6 @@ export class Utility {
 
       return decipheredText;
     } catch (error) {
-      console.log('decrypt error: ', error);
       return false;
     }
   }
@@ -113,7 +112,7 @@ export class Utility {
   generateAsset(assetObj) {
     try {
       if (!assetObj.asset_type) {
-        throw new Error('Invalid asset type');
+        throw new SazaError('Invalid asset type');
       }
 
       if (assetObj.asset_type === 'native') {
@@ -124,7 +123,6 @@ export class Utility {
         assetObj.asset_issuer,
       );
     } catch (error) {
-      console.error('generateAsset Error: ', error);
       return false;
     }
   }
@@ -168,7 +166,7 @@ export class Utility {
         const privatekey = this.decrypt(account.private, currentPassword);
         const encryptedKey = this.encrypt(privatekey, newPassword);
         if (!privatekey || !encryptedKey) {
-          throw new Error('Encryption failed with new password.');
+          throw new SazaError('Encryption failed with new password.');
         }
         account.private = encryptedKey;
         return account;
@@ -181,7 +179,6 @@ export class Utility {
         accounts: newAccounts,
       };
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

@@ -30,7 +30,6 @@ export class AccountPickerComponent implements OnInit {
   }
 
   accountChanged(event) {
-    console.log('accountChanged: ', event.target.value);
     this.userService.setActiveAccount(event.target.value);
   }
 }

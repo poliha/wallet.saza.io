@@ -66,10 +66,6 @@ export class LinkAccountPage implements OnInit {
     });
   }
 
-  itemCopied(item) {
-    console.log('item: ', item);
-  }
-
   // Getters for template
   get privateKey() {
     return this.linkAccountForm.get('privateKey');

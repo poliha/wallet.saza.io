@@ -35,7 +35,6 @@ export class AuthGuardService
     const isAuthLink = this.isAuthUrl(state.url);
 
     this.isLoggedIn = await this.userService.isAuthValid();
-    console.log('AG, islogged in: ', this.isLoggedIn);
     if (isAuthLink) {
       if (!this.isLoggedIn) {
         return true;

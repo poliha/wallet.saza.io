@@ -93,7 +93,7 @@ export class PathReceivePage extends OperationBuilderComponent
 
       this.nextStep();
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 

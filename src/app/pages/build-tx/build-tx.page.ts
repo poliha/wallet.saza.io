@@ -59,20 +59,19 @@ export class BuildTxPage implements OnInit {
     this.stellarService
       .fees()
       .then((data) => {
-        console.log('Fees: ', data);
         const { fee_charged, max_fee } = data;
         this.networkFees = {
           minFee: fee_charged.min,
           maxFee: max_fee.p99,
         };
-        console.log('NFees: ', this.networkFees);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        throw error;
+      });
 
     // get pending operations list
     this.txService.operations.subscribe((data) => {
       this.pendingOperations = data;
-      console.log('pendingOps', this.pendingOperations);
     });
 
     // If any, used saved memo. E.g. from a federation request.
@@ -85,7 +84,9 @@ export class BuildTxPage implements OnInit {
           this.setMemoType(this.savedMemo.memo_type);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        throw error;
+      });
   }
 
   makeForm() {
@@ -151,7 +152,6 @@ export class BuildTxPage implements OnInit {
         minTime: Number(this.minTime.value),
         maxTime: Number(this.maxTime.value),
       };
-      console.log('timebounds: ', timebounds);
       if (timebounds.maxTime < timebounds.minTime) {
         throw new SazaError(
           'Timebounds are invalid. "valid until" date is before "valid from" date',
@@ -166,15 +166,11 @@ export class BuildTxPage implements OnInit {
         source: this.source.value,
       };
 
-      console.log('txOptions: ', txOptions);
-
       const newTx = await this.stellarService.buildTransaction(txOptions);
-      console.log('newTx', newTx);
       await this.txService.setTx(newTx);
       this.buildTxForm.reset();
       this.router.navigate(['sign-tx/']);
     } catch (error) {
-      console.log('error: ', error);
       throw error;
     } finally {
       await this.loadingService.stop();

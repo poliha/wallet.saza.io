@@ -35,10 +35,6 @@ export class ExportAccountPage implements OnInit {
     return this.exportAccountForm.get('password');
   }
 
-  itemCopied(item) {
-    console.log('item: ', item);
-  }
-
   toggleExportGenerated() {
     this.exportGenerated = !this.exportGenerated;
   }

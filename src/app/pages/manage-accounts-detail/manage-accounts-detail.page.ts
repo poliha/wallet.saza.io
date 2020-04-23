@@ -80,10 +80,6 @@ export class ManageAccountsDetailPage implements OnInit {
     return this.accountTagInput.setFocus();
   }
 
-  itemCopied(item) {
-    console.log('item: ', item);
-  }
-
   async showPrivateKey() {
     this.togglePrivateKeyDisplay();
   }

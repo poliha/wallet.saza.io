@@ -58,10 +58,6 @@ export class NewAccountPage implements OnInit {
     });
   }
 
-  itemCopied(item) {
-    console.log('item: ', item);
-  }
-
   // Getters for template
   get keysCopied() {
     return this.newAccountForm.get('keysCopied');

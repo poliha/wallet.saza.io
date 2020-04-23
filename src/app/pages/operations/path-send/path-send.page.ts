@@ -91,7 +91,7 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
 
       this.nextStep();
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 
