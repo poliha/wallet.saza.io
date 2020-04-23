@@ -46,10 +46,6 @@ export class PathReceivePage extends OperationBuilderComponent
       selectedPath: new FormControl('', Validators.required),
     });
     this.operationForm = new FormGroup({});
-
-    console.log('choosepathForm: ', this.choosePathForm);
-
-    console.log('sendForm: ', this.operationForm);
   }
 
   // Getters for template
@@ -91,7 +87,6 @@ export class PathReceivePage extends OperationBuilderComponent
         destinationAsset: this.utility.generateAsset(destinationAsset),
       });
 
-      console.log('paths found: ', paths);
       this.pathsFound = paths;
 
       this.sendParams.source = source;
@@ -135,7 +130,6 @@ export class PathReceivePage extends OperationBuilderComponent
     const { destination } = this.operationForm.value;
     this.sendParams.destination = destination;
     this.sendParams.opType = this.operationType;
-    console.log('sendParams: ', this.sendParams);
 
     this.operationData = {
       ...this.sendParams,

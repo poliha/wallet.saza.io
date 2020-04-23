@@ -56,7 +56,6 @@ export class ManageAccountsDetailPage implements OnInit {
         return;
       }
 
-      console.log('acctDetail: ', this.accountDetail);
       this.makeForm();
     });
   }
@@ -139,7 +138,6 @@ export class ManageAccountsDetailPage implements OnInit {
         {
           text: 'Continue',
           handler: (inputData) => {
-            console.log('inputDate: ', inputData);
             const trimmedPassword = String(inputData.password).trim();
             if (
               !this.utility.validateHash(trimmedPassword, this.passwordHash)

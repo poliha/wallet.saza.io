@@ -58,7 +58,6 @@ export class OperationBuilderComponent implements OnInit {
   async buildOperation() {
     try {
       await this.loadingService.start();
-      console.log('operationsData: ', this.operationData);
       if (!this._operationType) {
         throw new SazaError('Invalid operation type.');
       }
@@ -89,7 +88,6 @@ export class OperationBuilderComponent implements OnInit {
       })
       .then(() => {
         this.notification.success('Operation Added');
-        console.log(`optype(${this.operationType}): `, this.operationXDR);
       });
   }
 

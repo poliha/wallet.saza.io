@@ -46,7 +46,6 @@ export class BuildTxPage implements OnInit {
     // Get the active account. Used as the default transaction source.
     this.userService.activeAccount.subscribe((data) => {
       this.activeAccount = data;
-      console.log('active', this.activeAccount);
     });
   }
 
@@ -80,7 +79,6 @@ export class BuildTxPage implements OnInit {
     this.txService
       .getMemo()
       .then((data) => {
-        console.log('memeo: ', data);
         if (data) {
           this.savedMemo = data;
           this.memoValue.patchValue(this.savedMemo.memo);

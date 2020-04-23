@@ -15,14 +15,12 @@ export class HomePage {
     this.menu.enable(false);
     this.userService
       .getPassword()
-      .then(password => {
-        console.log('pwd: ', password);
+      .then((password) => {
         if (password) {
           this.userHasPassword = true;
         }
       })
-      .catch(e => {
-        console.error(e);
+      .catch((e) => {
         throw new SazaError('Unable to load user details.');
       });
   }

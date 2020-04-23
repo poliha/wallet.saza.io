@@ -42,14 +42,10 @@ export class ChangePasswordPage implements OnInit {
     this.oldPasswordHash = await this.userService.getPassword();
     this.oldUserAccounts = await this.userService.getAccounts();
     this.oldRecoveryPassword = await this.userService.getPasswordRecovery();
-    console.log('oldPW: ', this.oldPasswordHash);
-    console.log('oldUA: ', this.oldUserAccounts);
-    console.log('oldPR: ', this.oldRecoveryPassword);
   }
 
   makeForm() {
     this.changePasswordForm = new FormGroup({});
-    console.log('form: ', this.changePasswordForm);
   }
 
   // Getters for template
@@ -139,7 +135,6 @@ export class ChangePasswordPage implements OnInit {
     });
 
     modal.onDidDismiss().then(() => {
-      console.log('modal dismissed');
       this.router.navigate(['settings/']);
     });
 

@@ -83,8 +83,6 @@ export class ForgotPasswordPage implements OnInit {
         ]),
       ],
     });
-
-    console.log('forgot password form: ', this.changePasswordForm);
   }
 
   async loadData() {
@@ -135,7 +133,6 @@ export class ForgotPasswordPage implements OnInit {
 
   async validateRecoveryPassword() {
     try {
-      console.log(this.passwords.value);
       const passwords: Array<string> = this.passwords.value;
       const passwordString = passwords
         .map((item: any) => item.password.trim())
@@ -145,7 +142,6 @@ export class ForgotPasswordPage implements OnInit {
       if (!storedRecovery) {
         throw new SazaError('Recovery password not stored.');
       }
-      console.log('storedRec: ', storedRecovery);
       const recoveredPassword = this.utility.decrypt(
         storedRecovery,
         passwordString,
@@ -213,7 +209,6 @@ export class ForgotPasswordPage implements OnInit {
     });
 
     modal.onDidDismiss().then(() => {
-      console.log('modal dismissed');
       this.router.navigate(['dasbhboard/']);
     });
 

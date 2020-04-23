@@ -23,7 +23,6 @@ export class AccountMergePage extends OperationBuilderComponent
 
   makeForm() {
     this.operationForm = new FormGroup({});
-    console.log('form: ', this.operationForm);
   }
 
   // Getters for template

@@ -40,7 +40,6 @@ export class LinkAccountPage implements OnInit {
   generateKeypair() {
     const pair = this.utility.keypairFromPrivateKey(this.privateKey.value);
     if (!pair) {
-      console.log('pair: ', pair);
       this.keypairGenerated = false;
       throw new SazaError('Invalid Private Key');
     }
@@ -121,6 +120,5 @@ export class LinkAccountPage implements OnInit {
     this.pairObj.public = '';
     this.keypairGenerated = false;
     this.linkAccountForm.reset();
-    console.log('account saved');
   }
 }

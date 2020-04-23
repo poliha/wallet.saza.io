@@ -38,7 +38,6 @@ export class NewAccountPage implements OnInit {
   generateKeypair() {
     const pair = this.utility.randomKeypair();
     if (!pair) {
-      console.log('pair: ', pair);
       this.keypairGenerated = false;
       throw new SazaError('Unable to generate keypair.');
     }
@@ -111,6 +110,5 @@ export class NewAccountPage implements OnInit {
     this.pairObj.public = '';
     this.keypairGenerated = false;
     this.newAccountForm.reset();
-    console.log('account saved');
   }
 }

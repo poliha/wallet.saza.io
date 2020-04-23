@@ -18,23 +18,19 @@ export class AccountPickerComponent implements OnInit {
 
   loadAccount() {
     this.userAccounts = this.userService.userAccounts.getValue();
-    console.log('accountPicker: ', this.userAccounts);
-    this.userService.activeAccount.subscribe(activeAccount => {
-      console.log('active account', activeAccount);
+    this.userService.activeAccount.subscribe((activeAccount) => {
       // default to the first account if available
       if (!activeAccount && this.userAccounts.length) {
-        console.log('setting active account');
         this.activeAccount = this.userAccounts[0].public;
         this.userService.setActiveAccount(this.activeAccount);
       } else {
         this.activeAccount = activeAccount;
       }
-      console.log('active account: ', this.activeAccount);
     });
   }
 
   accountChanged(event) {
-    console.log('a: ', event.target.value);
+    console.log('accountChanged: ', event.target.value);
     this.userService.setActiveAccount(event.target.value);
   }
 }

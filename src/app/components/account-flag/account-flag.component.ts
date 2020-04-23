@@ -19,7 +19,6 @@ export class AccountFlagComponent implements OnInit {
   }
 
   makeForm() {
-    console.log('Making flags form...');
     this.flagsGroup = new FormGroup({
       authRequired: new FormControl(false),
       authRevocable: new FormControl(false),
@@ -31,7 +30,6 @@ export class AccountFlagComponent implements OnInit {
 
     this.form.removeControl(this.controlName);
     this.form.addControl(this.controlName, this.flagsGroup);
-    console.log('Made flags form...', this.flagsGroup);
   }
 
   // getters

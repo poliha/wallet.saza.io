@@ -45,7 +45,6 @@ export class SazaDateTimeComponent implements OnInit {
   }
 
   makeForm() {
-    console.log('Making datetime input...');
     this.dateTimeGroup = new FormGroup({
       date: new FormControl(''),
       time: new FormControl(''),
@@ -53,8 +52,6 @@ export class SazaDateTimeComponent implements OnInit {
 
     this.form.removeControl(this.controlName);
     this.form.addControl(this.controlName, new FormControl(''));
-    console.log('Made datetime input...', this.dateTimeGroup);
-    console.log('datetime input parent...', this.form);
   }
 
   // getters
@@ -119,8 +116,6 @@ export class SazaDateTimeComponent implements OnInit {
     this.selectedDate.minutes(this.selectedTime.minutes);
     this.selectedDate.seconds(this.selectedTime.seconds);
     this.timeString = this.selectedDate.format('HH:mm:ss');
-    console.log('SD: ', this.selectedDate.toString());
-    console.log('SD unix: ', this.selectedDate.unix());
 
     this.setDateTime();
   }
@@ -161,7 +156,6 @@ export class SazaDateTimeComponent implements OnInit {
    */
   async openPicker() {
     if (!this.selectedDate) {
-      console.log('Select date');
       this.showSelectDateMessage = !this.showSelectDateMessage;
       setTimeout(() => {
         this.showSelectDateMessage = !this.showSelectDateMessage;
@@ -179,8 +173,7 @@ export class SazaDateTimeComponent implements OnInit {
         },
         {
           text: 'Confirm',
-          handler: value => {
-            console.log(`Got Value: `, value);
+          handler: (value) => {
             const { hours, minutes, seconds } = value;
             this.timeChanged({ hours, minutes, seconds });
           },

@@ -37,7 +37,6 @@ export class Utility {
    */
   getHash(text: any, saltRounds = 10): string {
     const hashString = bcrypt.hashSync(text, saltRounds);
-    console.log('hashString: ', hashString);
     return hashString;
   }
 
@@ -74,7 +73,6 @@ export class Utility {
   }
 
   decrypt(cipherObj, password) {
-    console.log('CO: ', cipherObj, ' PW: ', password);
     try {
       const numIteration = 4096;
       const salt = Forge.util.hexToBytes(cipherObj.salt);
@@ -132,7 +130,7 @@ export class Utility {
   }
 
   validateAccountTag(userAccounts = [], tag = '') {
-    const tagExists = account => account.tag === tag;
+    const tagExists = (account) => account.tag === tag;
     if (!tag || userAccounts.some(tagExists)) {
       return this.generatePassword(2);
     }
@@ -146,7 +144,7 @@ export class Utility {
   }
 
   range(size, start = 0) {
-    return [...Array(size).keys()].map(i => i + start);
+    return [...Array(size).keys()].map((i) => i + start);
   }
 
   changePassword({
@@ -166,7 +164,7 @@ export class Utility {
       const encrpytedPassword = this.encrypt(newPassword, recoveryPassword);
 
       // encrypt user accounts with new password.
-      const newAccounts = accounts.map(account => {
+      const newAccounts = accounts.map((account) => {
         const privatekey = this.decrypt(account.private, currentPassword);
         const encryptedKey = this.encrypt(privatekey, newPassword);
         if (!privatekey || !encryptedKey) {

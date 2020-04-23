@@ -158,7 +158,6 @@ export class AppComponent {
 
     this.platform.resume.subscribe(async () => {
       const isAuthValid = await this.userService.isAuthValid();
-      console.log('isAuthValid: ', isAuthValid);
       if (!isAuthValid) {
         this.userService.logout();
       }
