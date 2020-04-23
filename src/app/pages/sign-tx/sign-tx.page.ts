@@ -146,7 +146,7 @@ export class SignTxPage implements OnInit {
         });
 
       const signedTx = this.stellarService.signTx(this.builtTx, ...privateKeys);
-      const submitTx = await this.stellarService.submitTx(signedTx);
+      await this.stellarService.submitTx(signedTx);
 
       this.signTxForm.reset();
       await this.txService.deleteAllOperations();

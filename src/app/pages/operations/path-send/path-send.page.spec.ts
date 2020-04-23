@@ -9,7 +9,7 @@ import {
 } from 'src/app/providers/providers';
 import { Utility } from 'src/app/providers/utility';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { MaterialModule } from 'src/app/material.module';
 import { InjectorService } from 'src/app/providers/injector.service';

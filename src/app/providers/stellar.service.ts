@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  Networks,
   Keypair,
-  Asset,
   Operation,
   TransactionBuilder,
-  StrKey,
   FederationServer,
-  StellarTomlResolver,
   Memo,
-  Account,
   Server,
   xdr,
   TimeoutInfinite,

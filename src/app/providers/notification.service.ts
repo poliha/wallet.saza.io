@@ -44,7 +44,7 @@ export class NotificationService {
 
     toast.present();
 
-    const event = await toast.onDidDismiss();
+    await toast.onDidDismiss();
   }
 
   success(message: string) {

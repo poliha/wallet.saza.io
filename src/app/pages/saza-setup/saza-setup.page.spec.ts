@@ -6,8 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Utility, UserService } from 'src/app/providers/providers';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ModalController, IonicModule } from '@ionic/angular';
-import { By } from '@angular/platform-browser';
-// import { element } from '@angular/core/src/render3';
 
 describe('SazaSetupPage', () => {
   let component: SazaSetupPage;

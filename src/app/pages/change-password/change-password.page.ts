@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import {
-  UserService,
-  Utility,
-  NotificationService,
-} from 'src/app/providers/providers';
+import { UserService, Utility } from 'src/app/providers/providers';
 import { SazaAccount } from 'src/app/interfaces/saza';
 import { ModalController } from '@ionic/angular';
 import { RecoveryPasswordModalComponent } from 'src/app/components/recovery-password-modal/recovery-password-modal.component';
@@ -28,7 +24,6 @@ export class ChangePasswordPage implements OnInit {
   constructor(
     private userService: UserService,
     private utility: Utility,
-    private notify: NotificationService,
     private modalController: ModalController,
     private router: Router,
   ) {}

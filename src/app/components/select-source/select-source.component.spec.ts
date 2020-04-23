@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectSourceComponent } from './select-source.component';
 import { UserService } from 'src/app/providers/providers';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TruncatePublicKeyPipeModule } from 'src/app/pipes/truncate-public-key.module';
 
 describe('SelectSourceComponent', () => {

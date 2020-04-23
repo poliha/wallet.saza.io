@@ -1,21 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as Forge from 'node-forge';
-import {
-  Keypair,
-  Asset,
-  Operation,
-  TransactionBuilder,
-  StrKey,
-  FederationServer,
-  StellarTomlResolver,
-  Memo,
-  Account,
-} from 'stellar-sdk';
+import { Keypair, Asset } from 'stellar-sdk';
 import * as bcrypt from 'bcryptjs';
 import * as niceware from 'niceware';
 import { SazaAccount } from '../interfaces/saza';
 import { SazaError } from './errors';
-// import { Validators, FormControl } from '@angular/forms';
 
 @Injectable()
 export class Utility {

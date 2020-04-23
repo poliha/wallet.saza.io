@@ -13,12 +13,10 @@ describe('AccountHistoryDetailPage', () => {
   let userServiceSpy;
 
   beforeEach(async(() => {
-    const subFn = { subscribe: () => {} };
     userServiceSpy = jasmine.createSpyObj('UserService', [
       'getAccountHistory',
       'isAuthValid',
     ]);
-    //  userServiceSpy.activeNetwork = jasmine.createSpyObj('activeNetwork', subFn);
 
     TestBed.configureTestingModule({
       declarations: [AccountHistoryDetailPage],
