@@ -4,6 +4,8 @@ commands:
   install_deps:
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/saza-repo
       - restore_cache: # special step to restore the dependency cache
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: dependency-cache-{{ checksum "package-lock.json" }}
@@ -15,28 +17,35 @@ commands:
   run_linter:
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/saza-repo
       - run: npm run lint
   run_test:
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/saza-repo
       - run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
   build_electron_pkg:
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/saza-repo
       - run:
           name: build electron package
           command: ./scripts/electron-build.sh
 
-executors:
-  my-executor:
-    docker:
-      - image: 'circleci/node:erbium'
-    working_directory: /tmp
+# executors:
+#   my-executor:
+#     docker:
+#       - image: 'circleci/node:erbium'
+#     working_directory: /tmp
 
 jobs:
   lint-and-test:
     docker:
       - image: circleci/node:erbium-browsers
+    working_directory: ~/saza-repo
     steps:
       - install_deps
       - run_linter
@@ -44,27 +53,34 @@ jobs:
   build_packages:
     docker:
       - image: circleci/node:erbium
+    working_directory: ~/saza-repo
     steps:
       - install_deps
       - run_linter
       - build_electron_pkg
       - persist_to_workspace:
-          root: ~/
+          root: .
           paths:
-            - project/dist
+            - dist
 
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
+    working_directory: ~/saza-repo
     steps:
       - attach_workspace:
-          at: ~/project/dist
+          at: ~/saza-repo
+      - run:
+          name: list directory content
+          command: ls -alh .
+      - run:
+          name: list dist directory content
+          command: ls -alh ./dist/
       - run:
           name: 'Publish Release on GitHub'
           command: |
-            if [ "$(ls -A ~/project/dist/)" ]
+            if [ "$(ls -A ./dist/)" ]
             then
-              ls -alh ~/project/dist/
               ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ~/project/dist/
             else
               echo "No files found"
