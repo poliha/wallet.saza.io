@@ -35,12 +35,6 @@ commands:
           name: build electron package
           command: ./scripts/electron-build.sh
 
-# executors:
-#   my-executor:
-#     docker:
-#       - image: 'circleci/node:erbium'
-#     working_directory: /tmp
-
 jobs:
   lint-and-test:
     docker:
@@ -89,10 +83,7 @@ jobs:
 workflows:
   lint-and-test:
     jobs:
-      - lint-and-test:
-          filters:
-            branches:
-              ignore: /.*/
+      - lint-and-test
   build-and-release:
     jobs:
       - build_packages:
