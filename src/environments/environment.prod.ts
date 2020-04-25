@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  AUTH_TIMEOUT: 180000,
+  AUTH_TIMEOUT: 180000, // 3mins
   DB_NAME: '_sazaDBOfflineProd',
 };
 

@@ -18,18 +18,21 @@
   </div>
   <ng-template #showExport>
     <div>
-      <p class="ion-text-wrap">Backup key <app-copy-button [copyInput]="encryptionKey">
+      <p class="ion-text-wrap"><span class="large-font">Backup key</span>
+        <app-copy-button [copyInput]="encryptionKey">
         </app-copy-button>
       </p>
 
-      <ion-label>{{encryptionKey}}</ion-label>
+      <p class="normal-font highlight-bg">{{encryptionKey}}</p>
     </div>
     <div>
-      <p class="ion-text-wrap">Account Backup <app-copy-button [copyInput]="dataToExport">
+      <p class="ion-text-wrap">
+        <span class="large-font">Backup Data</span>
+        <app-copy-button [copyInput]="dataToExport">
         </app-copy-button>
       </p>
-
-      <ion-note class="ion-text-wrap">{{dataToExport}}</ion-note>
+      <ion-textarea disabled readonly [value]="dataToExport" rows="10">
+      </ion-textarea>
     </div>
 
     <div class="ion-margin ion-text-center">
