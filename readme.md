@@ -60,6 +60,12 @@ ionic cordova run android
 
 Note that you will need to configure your andriod development environment. Android studion might be required. See the [Ionic guide](https://ionicframework.com/docs/developing/android) about developing for android for more details.
 
+#### Electron app in dev
+
+```bash
+npm run electron:dev
+```
+
 ### For usage
 
 #### Build and electron desktop app

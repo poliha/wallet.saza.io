@@ -292,7 +292,6 @@ export class StellarService {
   }
 
   async buildOperation(operationData) {
-    // to do export constant of optype names ans use that instead
     // if opsObj.source, check if source is active, raise error if not
     // switch type - 14 conditions
     // build operation based on type.
