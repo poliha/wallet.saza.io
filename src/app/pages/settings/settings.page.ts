@@ -23,6 +23,14 @@ export class SettingsPage implements OnInit {
       title: 'Import Accounts',
       url: '/import-account',
     },
+    {
+      title: 'Privacy Policy',
+      url: '/privacy-policy',
+    },
+    {
+      title: 'Usage Terms',
+      url: '/usage-terms',
+    },
   ];
   pageTitle = 'Settings';
   helpUrl = 'https://docs.saza.io/wallet-actions/settings';
