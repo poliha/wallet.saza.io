@@ -16,8 +16,8 @@ module.exports = {
       const builds = results.map(({ artifacts }) => artifacts).flat();
       try {
         for (const build of builds) {
-          const destination = path.resolve('./dist', path.basename(b))
-          fs.copyFileSync(b, destination)
+          const destination = path.resolve('./dist', path.basename(build))
+          fs.copyFileSync(build, destination)
           console.log(`copied: ${build} => ${destination}`);
         }
 
