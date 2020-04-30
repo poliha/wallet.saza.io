@@ -5,13 +5,14 @@ Available on Android and Linux desktop.
 
 ## Features
 
-Saza supports the following actions
+Key features include
 
 - All Stellar [operations](https://www.stellar.org/developers/guides/concepts/list-of-operations.html).
-- Multiple Stellar accounts
+- Path Finding and Path payments.
+- Multiple Stellar accounts.
 - Assets issued on the Stellar network.
 - Submit transactions with multiple operations.
-- Allows multiple transaction signers
+- Allows multiple transaction signers.
 - and much more...
 
 ## Key storage
@@ -58,7 +59,13 @@ Open `http://localhost:8100` on a browser.
 ionic cordova run android
 ```
 
-Note that you will need to configure your andriod development environment. Android studion might be required. See the [Ionic guide](https://ionicframework.com/docs/developing/android) about developing for android for more details.
+**Note**: You will need to configure your andriod development environment. Android studion might be required. See the [Ionic guide](https://ionicframework.com/docs/developing/android) about developing for android for more details.
+
+#### Electron app in dev
+
+```bash
+npm run electron:dev
+```
 
 ### For usage
 

@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  Networks,
   Keypair,
-  Asset,
   Operation,
   TransactionBuilder,
-  StrKey,
   FederationServer,
-  StellarTomlResolver,
   Memo,
-  Account,
   Server,
   xdr,
   TimeoutInfinite,
@@ -51,7 +46,7 @@ export class StellarService {
   }
 
   initializeService() {
-    this.userService.activeNetwork.subscribe(data => {
+    this.userService.activeNetwork.subscribe((data) => {
       this.activeNetwork = data;
       this.server = new Server(this.activeNetwork.horizon);
     });
@@ -62,7 +57,6 @@ export class StellarService {
       const accountDetail = await this.server.loadAccount(accountID);
       return accountDetail;
     } catch (error) {
-      console.log('error: ', error);
       if (error instanceof NotFoundError) {
         throw new SazaError(`${accountID} is not active. Please fund account.`);
       } else {
@@ -81,7 +75,7 @@ export class StellarService {
         .call();
       return accountEffects;
     } catch (error) {
-      console.log('error: ', error);
+      throw new SazaError('Error occured while loading account effects.');
     }
   }
 
@@ -95,7 +89,7 @@ export class StellarService {
         .call();
       return accountOperations;
     } catch (error) {
-      console.log('error: ', error);
+      throw new SazaError('Error occured while loading account operations.');
     }
   }
 
@@ -104,7 +98,7 @@ export class StellarService {
       const feeStats = await this.server.feeStats();
       return feeStats;
     } catch (error) {
-      console.log('error: ', error);
+      throw new SazaError('Error occured while loading fees.');
     }
   }
 
@@ -122,7 +116,7 @@ export class StellarService {
     });
 
     // add operations
-    operations.forEach(op => {
+    operations.forEach((op) => {
       const opBuffer = Buffer.from(op.tx, 'base64');
       const opXdr = xdr.Operation.fromXDR(opBuffer);
       newTx = newTx.addOperation(opXdr);
@@ -143,10 +137,7 @@ export class StellarService {
     }
 
     const builtTx = newTx.build();
-    const txXdr = builtTx
-      .toEnvelope()
-      .toXDR()
-      .toString('base64');
+    const txXdr = builtTx.toEnvelope().toXDR().toString('base64');
 
     return txXdr;
   }
@@ -163,12 +154,11 @@ export class StellarService {
       const txObj = new Transaction(tx);
       const publicKeySet = new Set([txObj.source]);
 
-      txObj.operations.forEach(op => {
+      txObj.operations.forEach((op) => {
         publicKeySet.add(op.source);
       });
       return publicKeySet;
     } catch (error) {
-      console.log('err: ', error);
       return new Set();
     }
   }
@@ -197,10 +187,9 @@ export class StellarService {
       const txSigner = await this.operationSigners(txObj.source, 'allow_trust');
       allSigners.push(...txSigner);
 
-      allSigners.forEach(s => signerSet.add(s));
+      allSigners.forEach((s) => signerSet.add(s));
       return signerSet;
     } catch (error) {
-      console.log('err: ', error);
       return new Set();
     }
   }
@@ -208,7 +197,6 @@ export class StellarService {
   async operationSigners(source: string, opType: string) {
     try {
       const accountDetail = await this.loadAccount(source);
-      console.log(accountDetail);
       const { signers, thresholds } = accountDetail;
       if (signers.length === 1) {
         return [signers[0].key];
@@ -217,7 +205,6 @@ export class StellarService {
         return this.eligibleSigners(thresholds[opThreshold], signers);
       }
     } catch (error) {
-      console.log('err: ', error);
       return [];
     }
   }
@@ -274,12 +261,9 @@ export class StellarService {
 
   signTx(tx: string, ...privateKeys: string[]) {
     const txObj = new Transaction(tx, this.activeNetwork.passphrase);
-    console.log('PKs: ', privateKeys);
-    privateKeys.forEach(key => {
-      console.log('key: ', key);
+    privateKeys.forEach((key) => {
       txObj.sign(Keypair.fromSecret(key));
     });
-    console.log('signedTx obj', txObj);
     return txObj.toXDR();
   }
 
@@ -287,10 +271,8 @@ export class StellarService {
     try {
       const txObj = new Transaction(tx);
       const txResult = await this.server.submitTransaction(txObj);
-      console.log('txResult: ', txResult);
       return txResult;
     } catch (error) {
-      console.log('error: ', error);
       throw error;
     }
   }
@@ -300,19 +282,16 @@ export class StellarService {
       const result = await FederationServer.resolve(address);
       return result;
     } catch (error) {
-      console.log('error: ', error);
       throw error;
     }
   }
 
   async isAccountActive(accountID: string) {
     const result = await this.loadAccount(accountID);
-    console.log('result is: ', result);
     return Boolean(result);
   }
 
   async buildOperation(operationData) {
-    // to do export constant of optype names ans use that instead
     // if opsObj.source, check if source is active, raise error if not
     // switch type - 14 conditions
     // build operation based on type.
@@ -321,7 +300,7 @@ export class StellarService {
       if (opData.source) {
         const isSourceActive = await this.isAccountActive(opData.source);
         if (!isSourceActive) {
-          throw new Error('Source account is not active.');
+          throw new SazaError('Source account is not active.');
         }
       }
 
@@ -367,11 +346,10 @@ export class StellarService {
           newOp = Operation.bumpSequence(opData);
           break;
         default:
-          throw new Error('invalid operation type');
+          throw new SazaError('invalid operation type');
       }
       return newOp.toXDR().toString('base64');
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -385,7 +363,7 @@ export class StellarService {
     if (!Array.isArray(opList) || !opList.length) {
       return [];
     }
-    return opList.map(op => {
+    return opList.map((op) => {
       const opBuffer = Buffer.from(op.tx, 'base64');
       const opXdr = xdr.Operation.fromXDR(opBuffer);
       return Operation.fromXDRObject(opXdr);
@@ -403,13 +381,11 @@ export class StellarService {
     const operationParams: any = {};
 
     // remove null values
-    Object.keys(params).forEach(param => {
+    Object.keys(params).forEach((param) => {
       if (params[param]) {
         operationParams[param] = params[param];
       }
     });
-
-    console.log('opsParams: ', operationParams);
 
     const AUTH_FLAGS = {
       authRequired: AuthRequiredFlag,
@@ -450,7 +426,6 @@ export class StellarService {
       };
     }
 
-    console.log('opsParams 1: ', operationParams);
     return operationParams;
   }
 
@@ -467,10 +442,9 @@ export class StellarService {
           options.destinationAmount,
         )
         .call();
-      console.log('response: ', records);
       return records;
     } catch (error) {
-      console.log('error: ', error);
+      throw new SazaError('Error occured while finding paths.');
     }
   }
 
@@ -487,10 +461,9 @@ export class StellarService {
           options.destination,
         )
         .call();
-      console.log('response: ', records);
       return records;
     } catch (error) {
-      console.log('error: ', error);
+      throw new SazaError('Error occured while finding paths.');
     }
   }
 }

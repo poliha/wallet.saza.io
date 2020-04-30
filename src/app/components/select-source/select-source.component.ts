@@ -20,15 +20,13 @@ export class SelectSourceComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.userAccounts.subscribe(data => {
+    this.userService.userAccounts.subscribe((data) => {
       this.userAccounts = data;
-      console.log('accountPicker', this.userAccounts);
     });
     this.makeForm();
   }
 
   makeForm() {
-    console.log('Making customInputForm...');
     this.customInputForm = new FormGroup({});
   }
 
@@ -39,7 +37,6 @@ export class SelectSourceComponent implements OnInit {
 
   accountChanged(event) {
     const eventValue = event.target.value;
-    console.log('a: ', eventValue);
     this.customInputForm.reset();
     this.form.controls[this.controlName].reset();
     this.toggleCustomInput(eventValue);
@@ -56,7 +53,6 @@ export class SelectSourceComponent implements OnInit {
 
   customInputChanged(event) {
     const eventValue = event.target.value;
-    console.log('a: ', eventValue);
     this.setControlNameValue(eventValue);
   }
 

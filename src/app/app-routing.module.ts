@@ -14,6 +14,15 @@ const routes: Routes = [
     loadChildren: './pages/home/home.module#HomePageModule',
   },
   {
+    path: 'usage-terms',
+    loadChildren: './pages/usage-terms/usage-terms.module#UsageTermsPageModule',
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren:
+      './pages/privacy-policy/privacy-policy.module#PrivacyPolicyPageModule',
+  },
+  {
     path: 'saza-setup',
     loadChildren: './pages/saza-setup/saza-setup.module#SazaSetupPageModule',
     canActivate: [AuthGuard],

@@ -33,7 +33,7 @@ export class OperationsQueueDetailPage implements OnInit {
 
   ionViewWillEnter() {
     this.operationId = this.route.snapshot.paramMap.get('id');
-    this.txService.getOperations().then(data => {
+    this.txService.getOperations().then((data) => {
       if (!data) {
         return;
       }
@@ -48,7 +48,6 @@ export class OperationsQueueDetailPage implements OnInit {
         this.splitOpNamePipe.transform(this.operationDetail.type),
       );
       this.pageTitle = this.operationDetail.type;
-      console.log('od: ', this.operationDetail);
     });
   }
 

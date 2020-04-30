@@ -8,11 +8,10 @@ import { ModalController, AlertController } from '@ionic/angular';
 })
 export class RecoveryPasswordModalComponent {
   @Input() recoveryPassword: string;
-  constructor(private modalController: ModalController, private alertCtrl: AlertController) { }
-
-  itemCopied(item) {
-    console.log('item: ', item);
-  }
+  constructor(
+    private modalController: ModalController,
+    private alertCtrl: AlertController,
+  ) {}
 
   closeModal() {
     this.modalController.dismiss();
@@ -21,23 +20,23 @@ export class RecoveryPasswordModalComponent {
   async isPasswordSaved() {
     const alert = await this.alertCtrl.create({
       header: 'Are you sure?',
-      message: 'This password can not be reset. Ensure that you have saved it before you continue.',
+      message:
+        'This password can not be reset. Ensure that you have saved it before you continue.',
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => { }
+          handler: () => {},
         },
         {
           text: 'Continue',
           handler: () => {
             this.closeModal();
-          }
-        }
+          },
+        },
       ],
     });
 
     await alert.present();
   }
-
 }

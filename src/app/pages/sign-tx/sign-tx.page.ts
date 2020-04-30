@@ -57,13 +57,10 @@ export class SignTxPage implements OnInit {
           return this.router.navigate(['dashboard']);
         }
         this.builtTx = builtTx;
-        console.log('builtTx: ', this.builtTx);
         this.txDetail = this.stellarService.loadTransactionObject(this.builtTx);
-        console.log('txDetail: ', this.txDetail);
         this.loadEligibleSigners();
       })
       .catch((error) => {
-        console.log(error);
         throw new SazaError(
           'Unable to complete task: load transaction for signing. Please try again.',
         );
@@ -78,14 +75,12 @@ export class SignTxPage implements OnInit {
       ],
       privateKeys: this.formBuilder.array([]),
     });
-    console.log('form: ', this.signTxForm);
   }
 
   loadEligibleSigners() {
     this.stellarService
       .txSigners(this.builtTx)
       .then((eligibleSigners) => {
-        console.log('el: ', eligibleSigners);
         this.eligibleSigners = eligibleSigners;
         eligibleSigners.forEach((signer: string) => {
           if (!this.userAccounts.find((acc) => acc.public === signer)) {
@@ -94,7 +89,6 @@ export class SignTxPage implements OnInit {
         });
       })
       .catch((err) => {
-        console.log(err);
         throw new SazaError('Unable to determine signers.');
       });
   }
@@ -112,7 +106,6 @@ export class SignTxPage implements OnInit {
     this.privateKeyLabels.push(label);
     this.privateKeyInputs = this.signTxForm.get('privateKeys') as FormArray;
     this.privateKeyInputs.push(this.createPrivateKeyInput());
-    console.log('form: ', this.signTxForm);
   }
 
   removePrivateKeyInput(index) {
@@ -153,9 +146,7 @@ export class SignTxPage implements OnInit {
         });
 
       const signedTx = this.stellarService.signTx(this.builtTx, ...privateKeys);
-      console.log('signedTx: ', signedTx);
-      const submitTx = await this.stellarService.submitTx(signedTx);
-      console.log('submitTx: ', submitTx);
+      await this.stellarService.submitTx(signedTx);
 
       this.signTxForm.reset();
       await this.txService.deleteAllOperations();
@@ -167,10 +158,6 @@ export class SignTxPage implements OnInit {
       if (!error.response) {
         throw error;
       } else {
-        console.log('handle submit errors');
-
-        console.log(Object.keys(error.response));
-
         const {
           data: {
             extras: {
@@ -178,7 +165,6 @@ export class SignTxPage implements OnInit {
             },
           },
         } = error.response;
-        console.log('Error extras: ', transaction, operations);
 
         const errorMessages = [];
         if (!transaction) {
@@ -190,10 +176,8 @@ export class SignTxPage implements OnInit {
         if (operations) {
           const { operations: submittedOperations } = this.txDetail;
           operations.forEach((value, key) => {
-            console.log(`${key}:${value}`);
             if (value !== 'op_success') {
               const opType = submittedOperations[key].type;
-              console.log(`opType: ${opType}:${value}`);
 
               const opError =
                 TransactionErrors[opType][String(value).toUpperCase()];

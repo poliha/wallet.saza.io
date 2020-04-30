@@ -44,10 +44,6 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
       selectedPath: new FormControl('', Validators.required),
     });
     this.operationForm = new FormGroup({});
-
-    console.log('choosepathForm: ', this.choosePathForm);
-
-    console.log('sendForm: ', this.operationForm);
   }
 
   // Getters for template
@@ -89,14 +85,13 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
         sourceAsset: this.utility.generateAsset(sourceAsset),
       });
 
-      console.log('paths found: ', paths);
       this.pathsFound = paths;
 
       this.sendParams.destination = destination;
 
       this.nextStep();
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 
@@ -133,7 +128,6 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
     const { source } = this.operationForm.value;
     this.sendParams.source = source;
     this.sendParams.opType = this.operationType;
-    console.log('sendParams: ', this.sendParams);
 
     this.operationData = {
       ...this.sendParams,

@@ -31,8 +31,7 @@
     <ion-item>
       <ion-input #publicKey type="text" [value]="accountDetail.public" disabled>
       </ion-input>
-      <app-copy-button class="ion-padding" [buttonSize]="'small'" [copyInput]="accountDetail.public"
-        (copyOutput)="itemCopied($event)">
+      <app-copy-button class="ion-padding" [buttonSize]="'small'" [copyInput]="accountDetail.public">
       </app-copy-button>
     </ion-item>
 
@@ -48,8 +47,7 @@
       <ion-button class="ion-float-end" fill="none" shape="round" (click)="showPrivateKey()" size="small">
         <ion-icon slot="end" name="{{showPrivateKeyIcon}}"></ion-icon>
       </ion-button>
-      <app-copy-button class="ion-padding" [buttonSize]="'small'" [copyInput]="decryptedPrivateKey"
-        (copyOutput)="itemCopied($event)">
+      <app-copy-button class="ion-padding" [buttonSize]="'small'" [copyInput]="decryptedPrivateKey">
       </app-copy-button>
     </ion-item>
 

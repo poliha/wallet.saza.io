@@ -1,20 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as Forge from 'node-forge';
-import {
-  Keypair,
-  Asset,
-  Operation,
-  TransactionBuilder,
-  StrKey,
-  FederationServer,
-  StellarTomlResolver,
-  Memo,
-  Account,
-} from 'stellar-sdk';
+import { Keypair, Asset } from 'stellar-sdk';
 import * as bcrypt from 'bcryptjs';
 import * as niceware from 'niceware';
 import { SazaAccount } from '../interfaces/saza';
-// import { Validators, FormControl } from '@angular/forms';
+import { SazaError } from './errors';
 
 @Injectable()
 export class Utility {
@@ -37,7 +27,6 @@ export class Utility {
    */
   getHash(text: any, saltRounds = 10): string {
     const hashString = bcrypt.hashSync(text, saltRounds);
-    console.log('hashString: ', hashString);
     return hashString;
   }
 
@@ -68,13 +57,11 @@ export class Utility {
 
       return rtnObj;
     } catch (error) {
-      console.log('encrypt error: ', error);
       return false;
     }
   }
 
   decrypt(cipherObj, password) {
-    console.log('CO: ', cipherObj, ' PW: ', password);
     try {
       const numIteration = 4096;
       const salt = Forge.util.hexToBytes(cipherObj.salt);
@@ -91,7 +78,6 @@ export class Utility {
 
       return decipheredText;
     } catch (error) {
-      console.log('decrypt error: ', error);
       return false;
     }
   }
@@ -115,7 +101,7 @@ export class Utility {
   generateAsset(assetObj) {
     try {
       if (!assetObj.asset_type) {
-        throw new Error('Invalid asset type');
+        throw new SazaError('Invalid asset type');
       }
 
       if (assetObj.asset_type === 'native') {
@@ -126,13 +112,12 @@ export class Utility {
         assetObj.asset_issuer,
       );
     } catch (error) {
-      console.error('generateAsset Error: ', error);
       return false;
     }
   }
 
   validateAccountTag(userAccounts = [], tag = '') {
-    const tagExists = account => account.tag === tag;
+    const tagExists = (account) => account.tag === tag;
     if (!tag || userAccounts.some(tagExists)) {
       return this.generatePassword(2);
     }
@@ -146,7 +131,7 @@ export class Utility {
   }
 
   range(size, start = 0) {
-    return [...Array(size).keys()].map(i => i + start);
+    return [...Array(size).keys()].map((i) => i + start);
   }
 
   changePassword({
@@ -166,11 +151,11 @@ export class Utility {
       const encrpytedPassword = this.encrypt(newPassword, recoveryPassword);
 
       // encrypt user accounts with new password.
-      const newAccounts = accounts.map(account => {
+      const newAccounts = accounts.map((account) => {
         const privatekey = this.decrypt(account.private, currentPassword);
         const encryptedKey = this.encrypt(privatekey, newPassword);
         if (!privatekey || !encryptedKey) {
-          throw new Error('Encryption failed with new password.');
+          throw new SazaError('Encryption failed with new password.');
         }
         account.private = encryptedKey;
         return account;
@@ -183,7 +168,6 @@ export class Utility {
         accounts: newAccounts,
       };
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

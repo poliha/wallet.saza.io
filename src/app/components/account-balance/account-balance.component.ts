@@ -17,9 +17,8 @@ export class AccountBalanceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.activeAccount.subscribe(data => {
+    this.userService.activeAccount.subscribe((data) => {
       this.activeAccount = data;
-      console.log('active account', this.activeAccount);
       this.loadAccount();
     });
   }
@@ -30,7 +29,6 @@ export class AccountBalanceComponent implements OnInit {
     }
     this.accountBalance = [];
     const data = await this.stellarService.loadAccount(this.activeAccount);
-    console.log('data: ', data);
     if (!data) {
       return;
     }

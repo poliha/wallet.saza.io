@@ -5,7 +5,6 @@ import { SazaDateTimeComponent } from './saza-date-time.component';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { Utility } from 'src/app/providers/utility';
-import { PickerController } from '@ionic/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SazaDateTimeComponent', () => {

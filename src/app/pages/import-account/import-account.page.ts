@@ -28,7 +28,6 @@ export class ImportAccountPage implements OnInit {
   ngOnInit() {
     this.userService.userAccounts.subscribe((data) => {
       this.userAccounts = data;
-      console.log('user account', this.userAccounts);
     });
     this.makeForm();
   }
@@ -77,8 +76,6 @@ export class ImportAccountPage implements OnInit {
       const [text, salt, iv] = data.split('|');
       return { text, salt, iv };
     });
-
-    console.log('dataToImport: ', dataToImport);
 
     if (!dataToImport || !Array.isArray(dataToImport)) {
       throw new SazaError('Invalid backup data provided.');

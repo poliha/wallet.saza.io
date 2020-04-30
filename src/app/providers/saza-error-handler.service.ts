@@ -31,9 +31,7 @@ export class SazaErrorHandler implements ErrorHandler {
 
     this.notification.error(this.errorMessages.join('\n'));
     this.errorMessages = [];
-    console.log('error: ', error);
-
-    console.log('error stack: ', error.stack);
+    console.error('error: ', error);
     return;
   }
 }

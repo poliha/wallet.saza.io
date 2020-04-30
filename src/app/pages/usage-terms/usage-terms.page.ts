@@ -2,22 +2,21 @@ import { Component } from '@angular/core';
 import { UserService } from 'src/app/providers/providers';
 import { MenuController } from '@ionic/angular';
 import { SazaError } from 'src/app/providers/errors';
+
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-usage-terms',
+  templateUrl: './usage-terms.page.html',
+  styleUrls: ['./usage-terms.page.scss'],
 })
-export class HomePage {
-  userHasPassword = false;
+export class UsageTermsPage {
   constructor(private userService: UserService, private menu: MenuController) {}
 
   ionViewWillEnter() {
-    this.menu.enable(false);
     this.userService
-      .getPassword()
-      .then((password) => {
-        if (password) {
-          this.userHasPassword = true;
+      .isAuthValid()
+      .then((isValid) => {
+        if (!isValid) {
+          this.menu.enable(false);
         }
       })
       .catch((e) => {
@@ -26,6 +25,8 @@ export class HomePage {
   }
 
   ionViewWillLeave() {
-    this.menu.enable(true);
+    if (!this.menu.isEnabled()) {
+      this.menu.enable(true);
+    }
   }
 }

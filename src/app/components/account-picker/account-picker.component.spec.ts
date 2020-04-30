@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountPickerComponent } from './account-picker.component';
-import { of } from 'rxjs';
 import { UserService } from 'src/app/providers/providers';
 import { TruncatePublicKeyPipeModule } from 'src/app/pipes/truncate-public-key.module';
 

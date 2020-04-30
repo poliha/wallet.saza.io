@@ -33,10 +33,8 @@ export class AuthGuardService
     state: RouterStateSnapshot,
   ): Promise<boolean> {
     const isAuthLink = this.isAuthUrl(state.url);
-    console.log('AG, isAuthUrl: ', isAuthLink);
 
     this.isLoggedIn = await this.userService.isAuthValid();
-    console.log('AG, islogged in: ', this.isLoggedIn);
     if (isAuthLink) {
       if (!this.isLoggedIn) {
         return true;
@@ -68,6 +66,6 @@ export class AuthGuardService
 
   // checks if url is an auth url
   isAuthUrl(nextUrl: string) {
-    return this.authLinks.some(link => nextUrl.includes(link));
+    return this.authLinks.some((link) => nextUrl.includes(link));
   }
 }

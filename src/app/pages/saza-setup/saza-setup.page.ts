@@ -99,9 +99,6 @@ export class SazaSetupPage implements OnInit {
       trimmedPwd,
       recoveryPassword,
     );
-    console.log('PE: ', encrpytedPassword);
-    console.log('PH: ', passwordHash);
-    console.log('PR: ', recoveryPassword);
     // save hash of primary password
     await this.userService.setPassword(passwordHash);
     // save encrypted password
@@ -118,7 +115,6 @@ export class SazaSetupPage implements OnInit {
     });
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      console.log('modal dismissed');
       this.router.navigate(['login/']);
     });
 
@@ -134,7 +130,6 @@ export class SazaSetupPage implements OnInit {
     }
 
     if (!status) {
-      console.log(status);
       this.notification.error('Please complete wallet setup.');
     }
     return status;

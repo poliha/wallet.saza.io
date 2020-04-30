@@ -22,7 +22,6 @@ export class ExportAccountPage implements OnInit {
   ngOnInit() {
     this.userService.userAccounts.subscribe((data) => {
       this.userAccounts = data;
-      console.log('user account', this.userAccounts);
     });
     this.makeForm();
   }
@@ -34,10 +33,6 @@ export class ExportAccountPage implements OnInit {
   // Getters for template
   get password() {
     return this.exportAccountForm.get('password');
-  }
-
-  itemCopied(item) {
-    console.log('item: ', item);
   }
 
   toggleExportGenerated() {
@@ -69,8 +64,6 @@ export class ExportAccountPage implements OnInit {
       })
       .join(';');
 
-    console.log('encKey: ', this.encryptionKey);
-    console.log('exp: ', this.dataToExport);
     this.exportAccountForm.reset();
     this.toggleExportGenerated();
   }

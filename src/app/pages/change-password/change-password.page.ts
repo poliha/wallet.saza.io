@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import {
-  UserService,
-  Utility,
-  NotificationService,
-} from 'src/app/providers/providers';
+import { UserService, Utility } from 'src/app/providers/providers';
 import { SazaAccount } from 'src/app/interfaces/saza';
 import { ModalController } from '@ionic/angular';
 import { RecoveryPasswordModalComponent } from 'src/app/components/recovery-password-modal/recovery-password-modal.component';
@@ -28,7 +24,6 @@ export class ChangePasswordPage implements OnInit {
   constructor(
     private userService: UserService,
     private utility: Utility,
-    private notify: NotificationService,
     private modalController: ModalController,
     private router: Router,
   ) {}
@@ -42,14 +37,10 @@ export class ChangePasswordPage implements OnInit {
     this.oldPasswordHash = await this.userService.getPassword();
     this.oldUserAccounts = await this.userService.getAccounts();
     this.oldRecoveryPassword = await this.userService.getPasswordRecovery();
-    console.log('oldPW: ', this.oldPasswordHash);
-    console.log('oldUA: ', this.oldUserAccounts);
-    console.log('oldPR: ', this.oldRecoveryPassword);
   }
 
   makeForm() {
     this.changePasswordForm = new FormGroup({});
-    console.log('form: ', this.changePasswordForm);
   }
 
   // Getters for template
@@ -139,7 +130,6 @@ export class ChangePasswordPage implements OnInit {
     });
 
     modal.onDidDismiss().then(() => {
-      console.log('modal dismissed');
       this.router.navigate(['settings/']);
     });
 

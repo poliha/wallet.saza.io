@@ -41,7 +41,6 @@ export class UserService {
   );
 
   constructor(public storage: Storage) {
-    console.log('User service setup');
     this.getAccounts();
     this.getActiveAccount();
     this.getActiveNetwork();

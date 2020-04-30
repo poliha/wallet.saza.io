@@ -38,3 +38,4 @@ out
 *.apk
 .env*
 dist/
+*.aab

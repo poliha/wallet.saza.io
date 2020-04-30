@@ -8,9 +8,12 @@ import { InjectorService } from './app/providers/injector.service';
 
 if (environment.production) {
   enableProdMode();
+  if (window) {
+    window.console.log = function () {};
+  }
 }
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
-  .then(loadedModule => InjectorService.setInjector(loadedModule.injector))
-  .catch(err => console.log(err));
+  .then((loadedModule) => InjectorService.setInjector(loadedModule.injector))
+  .catch((err) => console.log(err));

@@ -34,9 +34,7 @@ export class NotificationService {
         {
           text: 'Done',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          },
+          handler: () => {},
         },
       ];
       toastOptions.duration = this.maxDuration;
@@ -46,8 +44,7 @@ export class NotificationService {
 
     toast.present();
 
-    const event = await toast.onDidDismiss();
-    console.log('dismiss event: ', event);
+    await toast.onDidDismiss();
   }
 
   success(message: string) {

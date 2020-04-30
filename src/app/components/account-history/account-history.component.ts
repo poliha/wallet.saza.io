@@ -24,9 +24,8 @@ export class AccountHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.activeAccount.subscribe(data => {
+    this.userService.activeAccount.subscribe((data) => {
       this.activeAccount = data;
-      console.log('active account', this.activeAccount);
       this.loadHistory();
     });
   }
@@ -41,7 +40,6 @@ export class AccountHistoryComponent implements OnInit {
 
       this.accountHistory = [];
       const data = await this.stellarService.loadOperations(this.activeAccount);
-      console.log('data: ', data);
       if (!data) {
         return;
       }
@@ -58,7 +56,6 @@ export class AccountHistoryComponent implements OnInit {
   async viewHistoryDetail(data) {
     // save in storage
     // navigate to  account-history-detail page
-    console.log(data);
     await this.userService.setAccountHistory(JSON.stringify(data));
     this.router.navigate(['account-history-detail/']);
   }
@@ -71,7 +68,6 @@ export class AccountHistoryComponent implements OnInit {
       if (!resp) {
         return;
       }
-      console.log('more: ', resp);
       const { next, records } = resp;
       this.accountHistory.push(...records);
       this.nextPage = next;

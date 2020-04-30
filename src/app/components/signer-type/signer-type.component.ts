@@ -29,7 +29,6 @@ export class SignerTypeComponent implements OnInit {
     if (!this.form && !this.controlName) {
       throw new Error('Missing form and control name fields');
     }
-    console.log('Making signer form...');
     this.signerGroup = new FormGroup(
       {
         signerType: new FormControl(),
@@ -41,7 +40,6 @@ export class SignerTypeComponent implements OnInit {
 
     this.form.removeControl(this.controlName);
     this.form.addControl(this.controlName, this.signerGroup);
-    console.log('Made signer form...', this.form);
   }
 
   // getters

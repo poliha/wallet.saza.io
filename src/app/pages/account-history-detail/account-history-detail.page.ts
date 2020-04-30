@@ -16,23 +16,28 @@ export class AccountHistoryDetailPage implements OnInit {
   subTitle = 'Account History';
   compareFn = (a, b) => 0; // preserves object order
 
-  constructor(private userService: UserService,
-    private splitOpNamePipe: SplitOpName, private titleCasePipe: TitleCasePipe) { }
+  constructor(
+    private userService: UserService,
+    private splitOpNamePipe: SplitOpName,
+    private titleCasePipe: TitleCasePipe,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
-    this.userService.getAccountHistory().then(data => {
-      if (!data) { return; }
+    this.userService.getAccountHistory().then((data) => {
+      if (!data) {
+        return;
+      }
       this.formatData(JSON.parse(data));
     });
   }
 
   formatData(data) {
-    console.log('data: ', data);
     const fieldsToRemove = ['type_i', 'price_r', 'paging_token'];
-    this.pageTitle = this.titleCasePipe.transform(this.splitOpNamePipe.transform(data.type));
+    this.pageTitle = this.titleCasePipe.transform(
+      this.splitOpNamePipe.transform(data.type),
+    );
     const { _links: links, transaction_attr: txData, ...output } = data;
     // to do: display these?
     this.operationLinks = links;
@@ -47,7 +52,7 @@ export class AccountHistoryDetailPage implements OnInit {
           };
         }
         return acc;
-      }, {})
+      }, {}),
     };
   }
 }

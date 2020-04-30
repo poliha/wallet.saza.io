@@ -18,7 +18,6 @@ export class AssetPickerComponent implements OnInit {
   }
 
   makeForm() {
-    console.log('Making asset form...');
     this.assetGroup = new FormGroup({
       asset_type: new FormControl(
         this.assetInput,
@@ -29,7 +28,6 @@ export class AssetPickerComponent implements OnInit {
     this.form.removeControl(this.controlName);
     this.form.addControl(this.controlName, this.assetGroup);
     this.form.get(this.controlName).updateValueAndValidity();
-    console.log('Made asset form...', this.form);
   }
 
   // getters
@@ -51,7 +49,6 @@ export class AssetPickerComponent implements OnInit {
   }
 
   setAssetType(value) {
-    console.log('saV: ', value);
     if (!value) {
       return;
     }

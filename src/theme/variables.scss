@@ -135,3 +135,9 @@ ion-header {
 .active-menu {
   --background: var(--ion-color-light-shade, #d7d8da);
 }
+
+.highlight-bg {
+  background-color: var(--ion-color-light-shade, #d7d8da);
+  padding: 15px;
+  border-radius: 20px;
+}
