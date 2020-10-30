@@ -11,6 +11,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asset-picker.module';
+import { OperationBuilderComponentModule } from 'src/app/components/operation-builder/operation-builder.module';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
     SelectSourceComponentModule,
     ReactiveFormsModule,
     AssetPickerComponentModule,
+    OperationBuilderComponentModule,
   ],
   declarations: [PathSendPage],
 })

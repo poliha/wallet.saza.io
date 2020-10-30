@@ -10,12 +10,13 @@ import { TxService } from '../../../providers/providers';
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
+import { OperationBuilderComponentModule } from 'src/app/components/operation-builder/operation-builder.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: CreateAccountPage
-  }
+    component: CreateAccountPage,
+  },
 ];
 
 @NgModule({
@@ -28,8 +29,9 @@ const routes: Routes = [
     DynamicInputComponentModule,
     SelectSourceComponentModule,
     HeaderComponentModule,
+    OperationBuilderComponentModule,
   ],
   providers: [TxService],
-  declarations: [CreateAccountPage]
+  declarations: [CreateAccountPage],
 })
 export class CreateAccountPageModule {}

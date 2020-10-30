@@ -10,12 +10,13 @@ import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dy
 import { TxService } from 'src/app/providers/providers';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
+import { OperationBuilderComponentModule } from 'src/app/components/operation-builder/operation-builder.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: AccountMergePage
-  }
+    component: AccountMergePage,
+  },
 ];
 
 @NgModule({
@@ -28,10 +29,9 @@ const routes: Routes = [
     DynamicInputComponentModule,
     SelectSourceComponentModule,
     HeaderComponentModule,
+    OperationBuilderComponentModule,
   ],
   declarations: [AccountMergePage],
-  providers: [
-    TxService,
-  ]
+  providers: [TxService],
 })
 export class AccountMergePageModule {}

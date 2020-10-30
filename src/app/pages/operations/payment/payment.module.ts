@@ -11,12 +11,13 @@ import { AssetPickerComponentModule } from 'src/app/components/asset-picker/asse
 import { DynamicInputComponentModule } from 'src/app/components/dynamic-input/dynamic-input.module';
 import { SelectSourceComponentModule } from 'src/app/components/select-source/select-source.module';
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
+import { OperationBuilderComponentModule } from 'src/app/components/operation-builder/operation-builder.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: PaymentPage
-  }
+    component: PaymentPage,
+  },
 ];
 
 @NgModule({
@@ -30,10 +31,9 @@ const routes: Routes = [
     DynamicInputComponentModule,
     SelectSourceComponentModule,
     HeaderComponentModule,
+    OperationBuilderComponentModule,
   ],
-  providers: [
-    TxService,
-  ],
-  declarations: [PaymentPage]
+  providers: [TxService],
+  declarations: [PaymentPage],
 })
 export class PaymentPageModule {}

@@ -11,6 +11,7 @@ import { SelectSourceComponentModule } from 'src/app/components/select-source/se
 import { HeaderComponentModule } from 'src/app/components/header/header.module';
 import { AccountFlagComponentModule } from 'src/app/components/account-flag/account-flag.module';
 import { SignerTypeComponentModule } from 'src/app/components/signer-type/signer-type.module';
+import { OperationBuilderComponentModule } from 'src/app/components/operation-builder/operation-builder.module';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
     HeaderComponentModule,
     AccountFlagComponentModule,
     SignerTypeComponentModule,
+    OperationBuilderComponentModule,
   ],
   declarations: [SetOptionsPage],
 })
