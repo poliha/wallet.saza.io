@@ -19,5 +19,6 @@
     "lib": ["es2018", "dom"],
     "downlevelIteration": true,
     "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true
   }
 }
