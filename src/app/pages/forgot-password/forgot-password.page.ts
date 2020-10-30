@@ -31,7 +31,7 @@ export class ForgotPasswordPage implements OnInit {
   subTitle = '';
   helpUrl = 'https://docs.saza.io/getting-started/forgot-password';
 
-  @ViewChild('stepper', { static: false }) stepper: MatStepper;
+  @ViewChild('stepper') stepper: MatStepper;
 
   constructor(
     private menu: MenuController,

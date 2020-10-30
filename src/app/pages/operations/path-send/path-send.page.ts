@@ -24,7 +24,7 @@ export class PathSendPage extends OperationBuilderComponent implements OnInit {
     source: '',
     opType: '',
   };
-  @ViewChild('stepper', { static: false }) stepper: MatStepper;
+  @ViewChild('stepper') stepper: MatStepper;
 
   constructor(private utility: Utility) {
     super();

@@ -15,8 +15,8 @@ import { IonInput, AlertController } from '@ionic/angular';
   styleUrls: ['./manage-accounts-detail.page.scss'],
 })
 export class ManageAccountsDetailPage implements OnInit {
-  @ViewChild('accountTagInput', { static: false }) accountTagInput: IonInput;
-  @ViewChild('privateKey', { static: false }) privateKey: IonInput;
+  @ViewChild('accountTagInput') accountTagInput: IonInput;
+  @ViewChild('privateKey') privateKey: IonInput;
 
   updateTagForm: FormGroup;
   accountID;
