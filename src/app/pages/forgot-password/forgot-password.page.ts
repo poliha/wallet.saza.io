@@ -10,7 +10,7 @@ import { RecoveryPasswordModalComponent } from 'src/app/components/recovery-pass
 import { Router } from '@angular/router';
 import { SazaAccount } from 'src/app/interfaces/saza';
 import { SazaError } from 'src/app/providers/errors';
-import { MatStepper } from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-forgot-password',

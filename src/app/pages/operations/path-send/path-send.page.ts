@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
 import { Utility } from 'src/app/providers/utility';
 import { OperationBuilderComponent } from 'src/app/components/operation-builder/operation-builder.component';
 
