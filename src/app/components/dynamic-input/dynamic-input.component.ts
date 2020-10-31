@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { UnsignedHyper } from 'stellar-sdk';
+import StellarSdk from 'stellar-sdk';
 import { CustomValidators } from '../../providers/providers';
 
+const { UnsignedHyper } = StellarSdk;
 @Component({
   selector: 'app-dynamic-input',
   templateUrl: './dynamic-input.component.html',

@@ -4,8 +4,10 @@ import {
   FormGroup,
   ValidationErrors,
 } from '@angular/forms';
-import { StrKey, UnsignedHyper } from 'stellar-sdk';
+import StellarSdk from 'stellar-sdk';
 import { Buffer } from 'buffer';
+
+const { StrKey, UnsignedHyper } = StellarSdk;
 
 export class CustomValidators extends Validators {
   static requiredIf(otherControlName) {

@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
+import StellarSdk from 'stellar-sdk';
+import { Buffer } from 'buffer';
+import { UserService } from './user.service';
+import { SazaError } from './errors';
+import { NotFoundError } from 'stellar-sdk';
+
+const {
   Keypair,
   Operation,
   TransactionBuilder,
@@ -12,11 +18,7 @@ import {
   AuthRequiredFlag,
   AuthRevocableFlag,
   AuthImmutableFlag,
-} from 'stellar-sdk';
-import { Buffer } from 'buffer';
-import { UserService } from './user.service';
-import { SazaError } from './errors';
-import { NotFoundError } from 'stellar-sdk';
+} = StellarSdk;
 
 @Injectable({
   providedIn: 'root',
