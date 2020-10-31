@@ -1,7 +1,9 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import { NotificationService } from './notification.service';
-import { BadRequestError, NotFoundError } from 'stellar-sdk';
+import StellarSdk from 'stellar-sdk';
 import { SazaError } from './errors';
+
+const { BadRequestError, NotFoundError } = StellarSdk;
 
 @Injectable({
   providedIn: 'root',
