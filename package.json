@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "^0.901.0",
-    "@angular-devkit/build-angular": "^0.803.25",
+    "@angular-devkit/build-angular": "^15.0.4",
     "@angular-devkit/core": "^9.1.0",
     "@angular-devkit/schematics": "^9.1.0",
     "@angular/cli": "^8.3.20",
@@ -58,7 +58,7 @@
     "@electron-forge/cli": "^6.0.0-beta.50",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
     "@electron-forge/maker-zip": "^6.0.0-beta.50",
-    "@ionic/angular-toolkit": "^2.2.0",
+    "@ionic/angular-toolkit": "^2.3.3",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^10.17.6",
